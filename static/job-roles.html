@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SkillTech AI — Job Roles</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600;700;800;900&family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=JetBrains+Mono:wght@100;300;400;700&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── CURSOR ── */
+* { cursor: none !important; }
+#cursor { position: fixed; z-index: 9999; pointer-events: none; }
+#cursor-ring { width: 32px; height: 32px; border: 1.5px solid rgba(20,184,166,.6); border-radius: 50%; position: absolute; top: -16px; left: -16px; transition: width .25s, height .25s, border-color .25s; }
+#cursor-dot { width: 4px; height: 4px; background: #14b8a6; border-radius: 50%; position: absolute; top: -2px; left: -2px; }
+.cursor-expand #cursor-ring { width: 52px; height: 52px; top: -26px; left: -26px; border-color: rgba(244,63,110,.5); }
+
+/* ── TOKENS ── */
+:root {
+  --bg:    #f8fafc;
+  --bg2:   #ffffff;
+  --bg3:   #f1f5f9;
+  --panel: #ffffff;
+
+  --g:  #14b8a6;  --g2: #0d9488;
+  --b:  #3b82f6;  --b2: #2563eb;
+  --m:  #f43f6e;  --m2: #e11d48;
+  --y:  #f59e0b;  --o:  #f97316;
+  --v:  #7c3aed;  --v2: #6d28d9;
+
+  --rim:  rgba(15,23,42,.07);
+  --rim2: rgba(20,184,166,.3);
+
+  --ink:  #0f172a;
+  --ink2: #475569;
+  --ink3: #94a3b8;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 8px rgba(0,0,0,.04);
+  --shadow:    0 4px 16px rgba(0,0,0,.08), 0 1px 4px rgba(0,0,0,.04);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,.1), 0 4px 12px rgba(0,0,0,.05);
+
+  --f-disp: 'Unbounded', monospace;
+  --f-ui:   'Figtree', sans-serif;
+  --f-code: 'JetBrains Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-ui); font-size: 15px; min-height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg3); }
+::-webkit-scrollbar-thumb { background: rgba(20,184,166,.25); border-radius: 10px; }
+
+/* ── PARTICLES ── */
+#particle-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .4; }
+
+/* ── NAV ── */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 500; height: 64px; display: flex; align-items: center; padding: 0 48px; background: rgba(255,255,255,.92); border-bottom: 1px solid var(--rim); backdrop-filter: blur(24px) saturate(1.8); box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 4px 24px rgba(0,0,0,.04); }
+.nav::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--g), var(--b), var(--m)); opacity: .6; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; flex-shrink: 0; }
+.brand-hex { width: 36px; height: 36px; position: relative; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(20,184,166,.1), rgba(59,130,246,.1)); border-radius: 8px; border: 1px solid rgba(20,184,166,.2); }
+.brand-hex svg { position: absolute; inset: 0; animation: hex-spin 10s linear infinite; }
+@keyframes hex-spin { to { transform: rotate(360deg); } }
+.brand-inner { font-size: 16px; z-index: 1; position: relative; }
+.brand-name { font-family: var(--f-disp); font-size: 12px; font-weight: 700; letter-spacing: .06em; color: var(--ink); }
+.brand-name span { color: var(--g); }
+.brand-tag { font-family: var(--f-code); font-size: 9px; color: var(--ink3); letter-spacing: .12em; text-transform: uppercase; margin-top: 2px; }
+.nav-sep { width: 1px; height: 20px; background: var(--rim); margin: 0 28px; }
+.nav-links { display: flex; gap: 2px; }
+.nl { padding: 6px 14px; font-family: var(--f-ui); font-size: 13px; font-weight: 600; letter-spacing: .02em; color: var(--ink2); text-decoration: none; border-radius: 6px; border: 1px solid transparent; transition: all .18s; }
+.nl:hover { color: var(--ink); background: rgba(0,0,0,.04); }
+.nl.active { color: var(--g2); border-color: rgba(20,184,166,.2); background: rgba(20,184,166,.06); }
+.nl-live { display: flex; align-items: center; gap: 6px; }
+.nl-live::after { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--g); box-shadow: 0 0 6px var(--g); animation: blink 1.6s ease infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
+.nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.status-pill { display: flex; align-items: center; gap: 6px; padding: 5px 14px; border: 1px solid rgba(20,184,166,.2); border-radius: 20px; background: rgba(20,184,166,.06); font-family: var(--f-code); font-size: 10px; color: var(--g2); letter-spacing: .05em; }
+.sdot-inline { width: 6px; height: 6px; border-radius: 50%; background: var(--g); box-shadow: 0 0 6px var(--g); animation: blink 2s ease infinite; flex-shrink: 0; }
+.ver-badge { font-family: var(--f-code); font-size: 9px; color: var(--ink3); padding: 3px 8px; border: 1px solid var(--rim); border-radius: 4px; background: var(--bg); letter-spacing: .08em; }
+
+/* ── LAYOUT ── */
+main { position: relative; z-index: 2; padding-top: 64px; }
+.holo-grid { position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(rgba(15,23,42,.018) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,.018) 1px, transparent 1px); background-size: 56px 56px; }
+.page { max-width: 1200px; margin: 0 auto; padding: 40px 48px 100px; }
+
+/* ── PAGE HEADER ── */
+.page-header { margin-bottom: 32px; animation: slideUp .5s ease both; }
+@keyframes slideUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+.page-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-code); font-size: 9px; color: var(--g2); letter-spacing: .14em; text-transform: uppercase; border: 1px solid rgba(20,184,166,.22); border-radius: 20px; padding: 4px 14px; background: rgba(20,184,166,.06); margin-bottom: 16px; }
+.page-eyebrow::before { content: '◈'; }
+.page-title { font-family: var(--f-disp); font-size: clamp(24px,3.2vw,42px); font-weight: 800; color: var(--ink); letter-spacing: -.03em; line-height: 1.05; margin-bottom: 12px; }
+.page-title .hl { background: linear-gradient(90deg, var(--g), var(--b)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.page-sub { font-family: var(--f-ui); font-size: 15px; color: var(--ink2); line-height: 1.85; max-width: 560px; }
+
+/* ── FILTER BAR ── */
+.filter-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; animation: slideUp .5s .06s ease both; }
+.filter-label { font-family: var(--f-code); font-size: 8.5px; color: var(--ink3); letter-spacing: .1em; text-transform: uppercase; margin-right: 4px; }
+.filter-btn { padding: 7px 18px; border-radius: 20px; border: 1px solid var(--rim); background: var(--bg3); font-family: var(--f-code); font-size: 9px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink3); cursor: pointer; transition: all .17s; }
+.filter-btn:hover { border-color: rgba(20,184,166,.25); color: var(--ink2); }
+.filter-btn.active { background: rgba(20,184,166,.08); border-color: rgba(20,184,166,.28); color: var(--g2); }
+
+/* ── COUNT STRIP ── */
+.count-strip { display: flex; gap: 10px; margin-bottom: 28px; animation: slideUp .5s .08s ease both; flex-wrap: wrap; }
+.count-chip { font-family: var(--f-code); font-size: 9px; color: var(--ink3); letter-spacing: .06em; padding: 5px 14px; border: 1px solid var(--rim); border-radius: 20px; background: var(--bg2); box-shadow: var(--shadow-sm); }
+.count-chip span { color: var(--g2); font-weight: 700; margin-right: 4px; }
+
+/* ── ROLES GRID ── */
+.roles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 14px; }
+
+/* ── ROLE CARD ── */
+.role-card {
+  background: var(--panel); border: 1px solid var(--rim);
+  border-radius: 12px; overflow: hidden; position: relative;
+  transition: border-color .25s, transform .25s, box-shadow .25s, opacity .5s, translate .5s;
+  opacity: 0; transform: translateY(20px);
+  box-shadow: var(--shadow-sm);
+}
+.role-card.visible { opacity: 1; transform: translateY(0); }
+.role-card:hover {
+  border-color: var(--card-accent-rim, rgba(20,184,166,.3));
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* top accent line */
+.role-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--card-accent, var(--g)), transparent); opacity: .5; transition: opacity .25s; }
+.role-card:hover::before { opacity: 1; }
+
+/* ── LEFT ACCENT BAR ── */
+.card-accent-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--card-accent, var(--g)); opacity: .35; transition: opacity .25s; border-radius: 0 0 0 0; }
+.role-card:hover .card-accent-bar { opacity: .7; }
+
+.card-top { padding: 20px 20px 16px 24px; }
+.card-top-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
+.role-emoji { font-size: 26px; transition: transform .25s; }
+.role-card:hover .role-emoji { transform: scale(1.1); }
+
+/* level badge */
+.level-badge { font-family: var(--f-code); font-size: 8px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; border: 1px solid; flex-shrink: 0; }
+.lb-be   { background: rgba(59,130,246,.07);  border-color: rgba(59,130,246,.22);  color: var(--b2); }
+.lb-dip  { background: rgba(20,184,166,.07);  border-color: rgba(20,184,166,.22);  color: var(--g2); }
+.lb-both { background: rgba(124,58,237,.07);  border-color: rgba(124,58,237,.22);  color: var(--v2); }
+.lb-msc  { background: rgba(244,63,110,.07);  border-color: rgba(244,63,110,.22);  color: var(--m2); }
+
+.role-name { font-family: var(--f-disp); font-size: 11.5px; font-weight: 700; color: var(--ink); letter-spacing: .01em; margin-bottom: 10px; line-height: 1.35; transition: color .2s; }
+.role-card:hover .role-name { color: var(--card-accent, var(--g2)); }
+
+.role-skills-label { font-family: var(--f-code); font-size: 8px; color: var(--ink3); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 7px; }
+.skills-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.skill-tag { font-family: var(--f-code); font-size: 8.5px; letter-spacing: .03em; padding: 3px 9px; border-radius: 20px; border: 1px solid var(--rim); background: var(--bg3); color: var(--ink3); transition: all .18s; cursor: default; }
+.role-card:hover .skill-tag { border-color: rgba(20,184,166,.18); color: var(--ink2); background: rgba(20,184,166,.04); }
+
+/* card footer */
+.card-foot { padding: 12px 20px 14px 24px; border-top: 1px solid var(--rim); background: var(--bg3); display: flex; align-items: center; justify-content: space-between; }
+.salary-val { font-family: var(--f-disp); font-size: 12px; font-weight: 700; color: var(--ink); }
+.salary-lbl { font-family: var(--f-code); font-size: 7.5px; color: var(--ink3); letter-spacing: .08em; text-transform: uppercase; margin-top: 2px; }
+
+/* demand dots */
+.demand-dots { display: flex; gap: 3px; justify-content: flex-end; margin-bottom: 3px; }
+.dd { width: 6px; height: 6px; border-radius: 50%; background: var(--rim); transition: all .3s; }
+.dd.lit { background: var(--card-accent, var(--g)); box-shadow: 0 0 4px var(--card-accent, var(--g)); }
+.role-level-txt { font-family: var(--f-code); font-size: 8px; color: var(--ink3); letter-spacing: .05em; text-align: right; }
+
+/* ── CTA ROW ── */
+.card-cta { padding: 0 20px 14px 24px; }
+.card-cta-btn { width: 100%; padding: 9px; background: var(--ink); border: none; border-radius: 8px; color: #fff; font-family: var(--f-disp); font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; transition: all .2s; box-shadow: 0 2px 8px rgba(15,23,42,.12); position: relative; overflow: hidden; }
+.card-cta-btn::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(20,184,166,.25), rgba(59,130,246,.2)); opacity: 0; transition: opacity .2s; }
+.card-cta-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(15,23,42,.2); }
+.card-cta-btn:hover::before { opacity: 1; }
+
+/* ── TOAST ── */
+#toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(36px); padding: 10px 20px; background: var(--panel); border: 1px solid var(--rim); border-radius: 8px; font-family: var(--f-code); font-size: 10px; font-weight: 700; letter-spacing: .07em; color: var(--ink2); opacity: 0; transition: all .25s cubic-bezier(.2,1,.3,1); z-index: 600; white-space: nowrap; box-shadow: var(--shadow-lg); }
+#toast.on { transform: translateX(-50%) translateY(0); opacity: 1; }
+#toast.ok  { border-color: rgba(20,184,166,.3);  color: var(--g2);  background: rgba(20,184,166,.06); }
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px) { .page { padding: 28px 20px 80px; } }
+@media(max-width:700px) {
+  .nav { padding: 0 16px; }
+  .nav-links { display: none; }
+  .nav-sep { display: none; }
+  .roles-grid { grid-template-columns: 1fr; }
+}
+</style>
+<link rel="stylesheet" href="chat-widget.css"/>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor"><div id="cursor-ring"></div><div id="cursor-dot"></div></div>
+
+<!-- PARTICLES -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="brand" href="overview.html">
+    <div class="brand-hex">
+      <svg viewBox="0 0 36 36" fill="none">
+        <polygon points="18,2 33,10 33,26 18,34 3,26 3,10" stroke="rgba(20,184,166,.5)" stroke-width="1" fill="none"/>
+        <polygon points="18,6 29,12.5 29,23.5 18,30 7,23.5 7,12.5" stroke="rgba(20,184,166,.25)" stroke-width=".5" fill="none"/>
+      </svg>
+      <div class="brand-inner">⚡</div>
+    </div>
+    <div>
+      <div class="brand-name">Skill<span>Tech</span></div>
+      <div class="brand-tag">TN · EV · Automotive</div>
+    </div>
+  </a>
+  <div class="nav-sep"></div>
+  <nav class="nav-links">
+    <a class="nl" href="overview.html">Overview</a>
+    <a class="nl" href="industry-analytics.html">Analytics</a>
+    <a class="nl nl-live" href="index.html">Skill Analyser</a>
+    <a class="nl" href="course-finder.html">Courses</a>
+    <a class="nl active" href="job-roles.html">Job Roles</a>
+    <a class="nl" href="tn-companies.html">Companies</a>
+  </nav>
+  <div class="nav-right">
+    <div class="status-pill"><div class="sdot-inline"></div><span>Online</span></div>
+    <div class="ver-badge">v2.0</div>
+  </div>
+</nav>
+
+<main>
+<div class="holo-grid"></div>
+<div class="page">
+
+  <div class="page-header">
+    <div class="page-eyebrow">TN EV &amp; Automotive · 20+ Roles Mapped</div>
+    <div class="page-title">Job <span class="hl">Roles</span></div>
+    <div class="page-sub">20+ roles mapped with required skills, salary ranges, and education requirements for Tamil Nadu's EV and automotive industry.</div>
+  </div>
+
+  <div class="filter-bar">
+    <span class="filter-label">Filter by level</span>
+    <button class="filter-btn active" onclick="filterRoles('all',this)">All Roles</button>
+    <button class="filter-btn" onclick="filterRoles('be',this)">B.E. / M.E.</button>
+    <button class="filter-btn" onclick="filterRoles('diploma',this)">Diploma / ITI</button>
+  </div>
+
+  <div class="count-strip" id="countStrip"></div>
+
+  <div class="roles-grid" id="rolesGrid"></div>
+
+</div>
+</main>
+
+<div id="toast"></div>
+
+<script>
+'use strict';
+
+const ROLES = [
+  /* ── B.E. / M.E. ── */
+  { e:'🔋', n:'EV Battery Engineer',
+    skills:['EV battery','BMS','lithium-ion','cell balancing','DC-DC converter','Python','MATLAB'],
+    salary:'₹4–9 LPA', level:'B.E. / M.E.', lTag:'B.E.', lCls:'lb-be', cat:'be',
+    accent:'#3b82f6', accentRim:'rgba(59,130,246,.3)', demand:4 },
+  { e:'⚡', n:'EV Powertrain Engineer',
+    skills:['Motor control','inverter','power electronics','BLDC','EV powertrain','CAN Bus'],
+    salary:'₹5–12 LPA', level:'B.E. / M.E.', lTag:'B.E.', lCls:'lb-be', cat:'be',
+    accent:'#14b8a6', accentRim:'rgba(20,184,166,.35)', demand:5 },
+  { e:'💻', n:'Embedded Systems Engineer',
+    skills:['Embedded C','microcontroller','Arduino','Raspberry Pi','IoT','RTOS','CAN Bus'],
+    salary:'₹4–9 LPA', level:'B.E.', lTag:'B.E.', lCls:'lb-be', cat:'be',
+    accent:'#7c3aed', accentRim:'rgba(124,58,237,.3)', demand:4 },
+  { e:'🔌', n:'EV Charging Infra Engineer',
+    skills:['Charging systems','power electronics','EV battery','safety standards','ISO 15118'],
+    salary:'₹4–8 LPA', level:'B.E.', lTag:'B.E.', lCls:'lb-be', cat:'be',
+    accent:'#14b8a6', accentRim:'rgba(20,184,166,.35)', demand:4 },
+  { e:'🤖', n:'Robotics Engineer',
+    skills:['Robotics','PLC','automation','servo motor','motion control','Python'],
+    salary:'₹5–11 LPA', level:'B.E.', lTag:'B.E.', lCls:'lb-be', cat:'be',
+    accent:'#3b82f6', accentRim:'rgba(59,130,246,.3)', demand:4 },
+  { e:'📐', n:'Mechanical Design Engineer',
+    skills:['SolidWorks','AutoCAD','CAD','GD&T','FMEA','FEA','BOM'],
+    salary:'₹3–7 LPA', level:'B.E.', lTag:'B.E.', lCls:'lb-be', cat:'be',
+    accent:'#f97316', accentRim:'rgba(249,115,22,.3)', demand:3 },
+  { e:'📊', n:'Data Analyst — Automotive',
+    skills:['Python','SQL','MATLAB','data analysis','machine learning','Power BI'],
+    salary:'₹4–10 LPA', level:'B.E. / M.Sc.', lTag:'B.E.', lCls:'lb-msc', cat:'be',
+    accent:'#f43f6e', accentRim:'rgba(244,63,110,.3)', demand:4 },
+  { e:'🌐', n:'IoT / Connected Vehicles',
+    skills:['IoT','Python','embedded systems','MQTT','AWS IoT','OTA updates'],
+    salary:'₹4–9 LPA', level:'B.E.', lTag:'B.E.', lCls:'lb-be', cat:'be',
+    accent:'#3b82f6', accentRim:'rgba(59,130,246,.3)', demand:4 },
+  { e:'🛡️', n:'Functional Safety Engineer',
+    skills:['ISO 26262','risk assessment','FMEA','IATF','safety management','AUTOSAR'],
+    salary:'₹4–8 LPA', level:'B.E.', lTag:'B.E.', lCls:'lb-be', cat:'be',
+    accent:'#f43f6e', accentRim:'rgba(244,63,110,.3)', demand:3 },
+  { e:'⚙️', n:'Power Electronics Engineer',
+    skills:['power electronics','inverter','DC-DC converter','IGBT','MOSFET','LTspice'],
+    salary:'₹5–11 LPA', level:'B.E. / M.E.', lTag:'B.E.', lCls:'lb-be', cat:'be',
+    accent:'#f59e0b', accentRim:'rgba(245,158,11,.3)', demand:4 },
+  { e:'🔬', n:'R&D Engineer — EV',
+    skills:['battery chemistry','electrochemistry','MATLAB','Python','prototyping','testing'],
+    salary:'₹5–12 LPA', level:'M.E. / M.Sc.', lTag:'M.E.', lCls:'lb-msc', cat:'be',
+    accent:'#14b8a6', accentRim:'rgba(20,184,166,.35)', demand:3 },
+  /* ── Diploma / ITI ── */
+  { e:'🤖', n:'Automation Technician',
+    skills:['PLC','SCADA','HMI','VFD','ladder logic','pneumatics'],
+    salary:'₹2.5–5 LPA', level:'Diploma / ITI', lTag:'Diploma', lCls:'lb-dip', cat:'diploma',
+    accent:'#14b8a6', accentRim:'rgba(20,184,166,.35)', demand:4 },
+  { e:'⚙️', n:'CNC Machinist',
+    skills:['CNC','CAD','CAM','GD&T','metrology','machining','G-code'],
+    salary:'₹2–4.5 LPA', level:'Diploma / ITI', lTag:'Diploma', lCls:'lb-dip', cat:'diploma',
+    accent:'#f97316', accentRim:'rgba(249,115,22,.3)', demand:3 },
+  { e:'🏭', n:'Production Supervisor',
+    skills:['lean manufacturing','kaizen','six sigma','FMEA','5S','production planning'],
+    salary:'₹3–6 LPA', level:'Diploma / B.E.', lTag:'Both', lCls:'lb-both', cat:'diploma',
+    accent:'#f59e0b', accentRim:'rgba(245,158,11,.3)', demand:3 },
+  { e:'🔧', n:'EV Service Technician',
+    skills:['EV battery','high-voltage safety','diagnostics','CAN Bus','PPE','BMS'],
+    salary:'₹2–4 LPA', level:'Diploma / ITI', lTag:'Diploma', lCls:'lb-dip', cat:'diploma',
+    accent:'#14b8a6', accentRim:'rgba(20,184,166,.35)', demand:5 },
+  { e:'💡', n:'Electrical Maintenance Tech',
+    skills:['transformer','switchgear','earthing','PPE','work permit','circuit breaker'],
+    salary:'₹2–4.5 LPA', level:'Diploma / ITI', lTag:'Diploma', lCls:'lb-dip', cat:'diploma',
+    accent:'#f59e0b', accentRim:'rgba(245,158,11,.3)', demand:3 },
+  { e:'🎯', n:'Quality Inspector',
+    skills:['quality control','metrology','GD&T','5S','IATF','SPC','audit'],
+    salary:'₹2–4.5 LPA', level:'Diploma / ITI', lTag:'Diploma', lCls:'lb-dip', cat:'diploma',
+    accent:'#f43f6e', accentRim:'rgba(244,63,110,.3)', demand:3 },
+  { e:'🔩', n:'Welding Technician',
+    skills:['welding','fabrication','quality control','5S','PPE','metrology'],
+    salary:'₹2–4 LPA', level:'ITI', lTag:'ITI', lCls:'lb-dip', cat:'diploma',
+    accent:'#f97316', accentRim:'rgba(249,115,22,.3)', demand:3 },
+  { e:'🖥️', n:'SCADA / DCS Operator',
+    skills:['SCADA','DCS','HMI','PID control','Modbus','alarm management'],
+    salary:'₹2.5–5 LPA', level:'Diploma', lTag:'Diploma', lCls:'lb-dip', cat:'diploma',
+    accent:'#3b82f6', accentRim:'rgba(59,130,246,.3)', demand:3 },
+  { e:'📦', n:'Supply Chain Coordinator',
+    skills:['production planning','documentation','ERP','lean manufacturing','reporting','QC'],
+    salary:'₹2.5–5 LPA', level:'Diploma / B.Com.', lTag:'Both', lCls:'lb-both', cat:'diploma',
+    accent:'#7c3aed', accentRim:'rgba(124,58,237,.3)', demand:2 },
+];
+
+let currentFilter = 'all';
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderRoles('all');
+  setupCursor();
+  setupParticles();
+});
+
+/* ── CURSOR ── */
+function setupCursor(){
+  const cur=document.getElementById('cursor'), rng=document.getElementById('cursor-ring');
+  let mx=-100,my=-100,rx=-100,ry=-100;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+  (function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;rng.style.transform=`translate(${rx-mx}px,${ry-my}px)`;requestAnimationFrame(loop);})();
+}
+function hoverOn(){ document.getElementById('cursor').classList.add('cursor-expand'); }
+function hoverOff(){ document.getElementById('cursor').classList.remove('cursor-expand'); }
+
+/* ── PARTICLES ── */
+function setupParticles(){
+  const c=document.getElementById('particle-canvas'),ctx=c.getContext('2d');
+  let W,H,pts=[];
+  const r=()=>{W=c.width=innerWidth;H=c.height=innerHeight;};
+  r();window.addEventListener('resize',r);
+  for(let i=0;i<65;i++)pts.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,radius:Math.random()*1.3+.3,col:['#14b8a6','#3b82f6','#f43f6e','#f59e0b'][Math.floor(Math.random()*4)],alpha:Math.random()*.12+.04});
+  let pmx=0,pmy=0;
+  document.addEventListener('mousemove',e=>{pmx=e.clientX;pmy=e.clientY;});
+  (function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(let i=0;i<pts.length;i++){
+      for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.hypot(dx,dy);if(d<100){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(20,184,166,${(1-d/100)*.04})`;ctx.lineWidth=.4;ctx.stroke();}}
+      const mdx=pts[i].x-pmx,mdy=pts[i].y-pmy,md=Math.hypot(mdx,mdy);
+      if(md<80){pts[i].vx+=mdx/md*.3;pts[i].vy+=mdy/md*.3;}
+      pts[i].vx*=.99;pts[i].vy*=.99;pts[i].x+=pts[i].vx;pts[i].y+=pts[i].vy;
+      if(pts[i].x<0)pts[i].x=W;if(pts[i].x>W)pts[i].x=0;if(pts[i].y<0)pts[i].y=H;if(pts[i].y>H)pts[i].y=0;
+      ctx.beginPath();ctx.arc(pts[i].x,pts[i].y,pts[i].radius,0,Math.PI*2);ctx.fillStyle=pts[i].col;ctx.globalAlpha=pts[i].alpha;ctx.fill();ctx.globalAlpha=1;
+    }
+    requestAnimationFrame(draw);
+  })();
+}
+
+/* ── RENDER ── */
+function renderRoles(filter){
+  const list = filter==='all' ? ROLES : ROLES.filter(r=>r.cat===filter);
+  const grid = document.getElementById('rolesGrid');
+  grid.innerHTML = '';
+
+  const beCount  = ROLES.filter(r=>r.cat==='be').length;
+  const dipCount = ROLES.filter(r=>r.cat==='diploma').length;
+  document.getElementById('countStrip').innerHTML = `
+    <div class="count-chip"><span>${ROLES.length}</span>Total roles</div>
+    <div class="count-chip"><span>${beCount}</span>B.E. / M.E.</div>
+    <div class="count-chip"><span>${dipCount}</span>Diploma / ITI</div>
+    <div class="count-chip"><span>${ROLES.filter(r=>r.demand>=4).length}</span>High demand</div>`;
+
+  list.forEach((r, i) => {
+    const card = document.createElement('div');
+    card.className = 'role-card';
+    card.style.cssText = `--card-accent:${r.accent};--card-accent-rim:${r.accentRim};transition:opacity .5s ${i*.04}s,transform .5s ${i*.04}s,border-color .25s,box-shadow .25s;`;
+
+    const dots = Array.from({length:5},(_,di)=>`<div class="dd${di<r.demand?' lit':''}"></div>`).join('');
+
+    card.innerHTML = `
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <div class="card-top-row">
+          <div class="role-emoji">${r.e}</div>
+          <span class="level-badge ${r.lCls}">${r.lTag}</span>
+        </div>
+        <div class="role-name">${r.n}</div>
+        <div class="role-skills-label">Key skills</div>
+        <div class="skills-tags">${r.skills.map(s=>`<span class="skill-tag">${s}</span>`).join('')}</div>
+      </div>
+      <div class="card-foot">
+        <div>
+          <div class="salary-val">${r.salary}</div>
+          <div class="salary-lbl">Salary range</div>
+        </div>
+        <div>
+          <div class="demand-dots">${dots}</div>
+          <div class="role-level-txt">${r.level}</div>
+        </div>
+      </div>
+      <div class="card-cta">
+        <button class="card-cta-btn">Analyse my fit for this role →</button>
+      </div>`;
+
+    card.addEventListener('mouseenter', hoverOn);
+    card.addEventListener('mouseleave', hoverOff);
+    card.querySelector('.card-cta-btn').addEventListener('click', e => {
+      e.stopPropagation();
+      showToast(`Opening Skill Analyser for ${r.n}…`, 'ok');
+      setTimeout(()=>{ window.location.href='index.html'; }, 600);
+    });
+
+    grid.appendChild(card);
+    requestAnimationFrame(()=>{ setTimeout(()=>card.classList.add('visible'), i*50); });
+  });
+}
+
+function filterRoles(filter, btn){
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.role-card').forEach(c=>{ c.classList.remove('visible'); c.style.transition='opacity .2s,transform .2s'; });
+  setTimeout(()=>renderRoles(filter), 220);
+}
+
+function showToast(msg, type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='on '+(type||'');
+  clearTimeout(t._t); t._t=setTimeout(()=>t.className='',2800);
+}
+</script>
+<script src="chat-widget.js"></script>
+</body>
+</html>

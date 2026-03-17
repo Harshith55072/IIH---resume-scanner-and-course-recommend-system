@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SkillTech AI — TN Workforce Command Center</title>
+<link rel="stylesheet" href="overviewstyles.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="chat-widget.css"/>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">Skill<span>Tech</span> AI</div>
+  <div class="loader-bar-track"><div class="loader-bar-fill"></div></div>
+  <div class="loader-text">INITIALISING WORKFORCE ANALYTICS...</div>
+</div>
+
+<!-- CUSTOM CURSOR -->
+<div id="cursor">
+  <div id="cursor-ring"></div>
+  <div id="cursor-dot"></div>
+</div>
+
+<!-- PARTICLE CANVAS -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="brand" href="#">
+    <div class="brand-hex">
+      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="18,2 33,10 33,26 18,34 3,26 3,10" stroke="rgba(20,184,166,.5)" stroke-width="1" fill="none"/>
+        <polygon points="18,6 29,12.5 29,23.5 18,30 7,23.5 7,12.5" stroke="rgba(20,184,166,.25)" stroke-width=".5" fill="none"/>
+      </svg>
+      <div class="brand-inner">⚡</div>
+    </div>
+    <div>
+      <div class="brand-name">Skill<span>Tech</span></div>
+      <div class="brand-tag">TN · EV · Automotive</div>
+    </div>
+  </a>
+
+  <div class="nav-sep"></div>
+
+  <nav class="nav-links">
+    <a class="nl active" href="#">Overview</a>
+    <a class="nl" href="industry-analytics.html">Analytics</a>
+    <a class="nl nl-live" href="index.html">Skill Analyser</a>
+    <a class="nl" href="course-finder.html">Courses</a>
+    <a class="nl" href="job-roles.html">Job Roles</a>
+    <a class="nl" href="tn-companies.html">Companies</a>
+  </nav>
+
+  <div class="nav-right">
+    <div class="status-pill">
+      <div style="width:5px;height:5px;border-radius:50%;background:var(--g);box-shadow:0 0 6px var(--g);animation:blink 1.6s ease infinite;"></div>
+      SYSTEM ONLINE
+    </div>
+    <div class="ver-badge">v2.0</div>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ════════ HERO ════════ -->
+  <section class="hero" id="hero">
+    <div class="holo-grid"></div>
+
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <div class="eyebrow-line"></div>
+        <div class="eyebrow-text">Tamil Nadu · EV &amp; Automotive Sector · 2025</div>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="line1">WORKFORCE</span>
+        <span class="line2">INTELLIGENCE</span>
+        <span class="line3">PLATFORM</span>
+      </h1>
+
+      <p class="hero-desc">
+        AI-powered analytics platform mapping skill demand across Tamil Nadu's EV and automotive sector. Identify gaps, find targeted upskilling, and connect to 20+ industry roles in real-time.
+      </p>
+
+      <div class="hero-ctas">
+        <a class="btn-primary" href="index.html">Launch Skill Analyser</a>
+        <a class="btn-ghost" href="industry-analytics.html">View Analytics →</a>
+      </div>
+
+      <div class="stat-strip">
+        <div class="stat-item" style="--c:var(--g)">
+          <div class="stat-val" data-count="420000" data-prefix="" data-suffix="L+">4.2L+</div>
+          <div class="stat-lbl">EV Jobs by 2030</div>
+          <div class="stat-delta up">↑ 38% YoY</div>
+        </div>
+        <div class="stat-item" style="--c:var(--m)">
+          <div class="stat-val" data-count="67" data-suffix="%">67%</div>
+          <div class="stat-lbl">Skill Gap Rate</div>
+          <div class="stat-delta dn">Target &lt;30%</div>
+        </div>
+        <div class="stat-item" style="--c:var(--b)">
+          <div class="stat-val" data-count="314">314</div>
+          <div class="stat-lbl">Courses Mapped</div>
+          <div class="stat-delta up">82 Skills</div>
+        </div>
+        <div class="stat-item" style="--c:var(--y)">
+          <div class="stat-val" data-count="30" data-suffix="+">30+</div>
+          <div class="stat-lbl">Hiring Companies</div>
+          <div class="stat-delta up">Ather · Ola · TVS</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <canvas id="globe-canvas"></canvas>
+    </div>
+  </section>
+
+
+
+  <!-- ════════ PLATFORM TOOLS ════════ -->
+  <section class="section" id="tools">
+    <div class="holo-grid"></div>
+
+    <div class="section-label reveal">
+      <span class="sl-num">// 01</span>
+      <span class="sl-text">Platform Modules</span>
+      <div class="sl-line"></div>
+    </div>
+
+    <h2 class="section-title reveal">Three Core <span>Tools</span></h2>
+
+    <div class="tools-grid">
+
+      <a class="tool-card" href="index.html" style="--tc-color:var(--g)">
+        <div class="tc-glow"></div>
+        <div class="tc-scan"></div>
+        <div class="tc-corner"></div>
+        <div class="tc-body">
+          <div class="tc-icon">🎯</div>
+          <div class="tc-title">SKILL ANALYSER</div>
+          <div class="tc-desc">Upload a resume or describe your background. The AI engine extracts skills, scores your match against target roles, and returns a prioritised learning roadmap.</div>
+          <div class="tc-tags">
+            <span class="tc-tag">Resume Upload</span>
+            <span class="tc-tag">Gap Analysis</span>
+            <span class="tc-tag">AI Chat</span>
+            <span class="tc-tag">Match Score</span>
+          </div>
+        </div>
+        <div class="tc-foot">
+          <span class="tc-cta">LAUNCH →</span>
+          <span class="tc-badge badge-live">● LIVE</span>
+        </div>
+      </a>
+
+      <a class="tool-card" href="course-finder.html" style="--tc-color:var(--b)">
+        <div class="tc-glow" style="--tc-color:var(--b)"></div>
+        <div class="tc-scan"></div>
+        <div class="tc-corner" style="--tc-color:var(--b)"></div>
+        <div class="tc-body">
+          <div class="tc-icon">📡</div>
+          <div class="tc-title">COURSE FINDER</div>
+          <div class="tc-desc">Browse 314 hand-curated courses across 82 skills — NPTEL, Naan Mudhalvan, Coursera, edX, and Government ITIs. Filter by cost, duration, and certification level.</div>
+          <div class="tc-tags">
+            <span class="tc-tag">314 Courses</span>
+            <span class="tc-tag">Free &amp; Paid</span>
+            <span class="tc-tag">NPTEL / IIT</span>
+            <span class="tc-tag">Govt. Programs</span>
+          </div>
+        </div>
+        <div class="tc-foot">
+          <span class="tc-cta" style="color:var(--b2)">BROWSE →</span>
+          <span class="tc-badge badge-beta">BETA</span>
+        </div>
+      </a>
+
+      <a class="tool-card" href="industry-analytics.html" style="--tc-color:var(--m)">
+        <div class="tc-glow" style="--tc-color:var(--m)"></div>
+        <div class="tc-scan"></div>
+        <div class="tc-corner" style="--tc-color:var(--m)"></div>
+        <div class="tc-body">
+          <div class="tc-icon">📊</div>
+          <div class="tc-title">INDUSTRY ANALYTICS</div>
+          <div class="tc-desc">Explore live skill demand data for TN's EV and automotive sector — top hiring roles, fastest-growing skills, company trends, and regional breakdowns.</div>
+          <div class="tc-tags">
+            <span class="tc-tag">Skill Demand</span>
+            <span class="tc-tag">Hiring Trends</span>
+            <span class="tc-tag">Role Outlook</span>
+            <span class="tc-tag">TN Focused</span>
+          </div>
+        </div>
+        <div class="tc-foot">
+          <span class="tc-cta" style="color:var(--m2)">EXPLORE →</span>
+          <span class="tc-badge badge-beta">BETA</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ════════ ANALYTICS ════════ -->
+  <section class="section" id="analytics">
+    <div class="holo-grid"></div>
+
+    <div class="section-label reveal">
+      <span class="sl-num">// 02</span>
+      <span class="sl-text">Live Demand Snapshot</span>
+      <div class="sl-line"></div>
+    </div>
+
+    <h2 class="section-title reveal">Skill Demand <span>Intelligence</span></h2>
+
+    <div class="analytics-layout">
+
+      <div class="chart-panel" style="--cp-color:var(--g)">
+        <div class="cp-head">
+          <div class="cp-dot" style="color:var(--g)"></div>
+          <div class="cp-title">SKILL DEMAND — TN AUTOMOTIVE 2025</div>
+          <div class="cp-meta" id="barHoverMeta">HOVER A BAR</div>
+        </div>
+        <div class="cp-body" style="padding:12px 16px;">
+          <canvas id="skillBarCanvas"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-panel" style="--cp-color:var(--m)">
+        <div class="cp-head">
+          <div class="cp-dot" style="color:var(--m)"></div>
+          <div class="cp-title">SKILL CLUSTER MAP</div>
+          <div class="cp-meta">DRAG TO ROTATE</div>
+        </div>
+        <div class="cp-body" style="display:flex;align-items:center;justify-content:center;padding:8px;">
+          <canvas id="radarCanvas" width="300" height="300"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-panel trend-panel" style="--cp-color:var(--b)">
+        <div class="cp-head">
+          <div class="cp-dot" style="color:var(--b)"></div>
+          <div class="cp-title">EV SKILL DEMAND INDEX — 2025 TREND</div>
+          <div class="cp-meta" id="trendHoverMeta">MOVE CURSOR OVER CHART</div>
+        </div>
+        <div class="cp-body" style="padding:12px 16px 16px;">
+          <canvas id="trendCanvas"></canvas>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════ JOB ROLES ════════ -->
+  <section class="section" id="roles">
+    <div class="holo-grid"></div>
+
+    <div class="section-label reveal">
+      <span class="sl-num">// 03</span>
+      <span class="sl-text">High-Demand Roles Right Now</span>
+      <div class="sl-line"></div>
+    </div>
+
+    <h2 class="section-title reveal">Live <span>Job Market</span></h2>
+
+    <div class="roles-grid" id="rolesGrid"></div>
+  </section>
+
+  <!-- ════════ HOW IT WORKS ════════ -->
+  <section class="section" id="how">
+    <div class="holo-grid"></div>
+
+    <div class="section-label reveal">
+      <span class="sl-num">// 04</span>
+      <span class="sl-text">Platform Guide</span>
+      <div class="sl-line"></div>
+    </div>
+
+    <div class="steps-layout">
+      <div class="steps-list" id="stepsList"></div>
+
+      <div>
+        <div class="about-card reveal">
+          <div class="about-title">About This Project</div>
+          <p class="about-text">
+            A final-year project addressing the <strong>skill gap crisis</strong> in Tamil Nadu's EV and automotive manufacturing sector. Built for the <strong>SkillTech &amp; Workforce Analytics Hackathon</strong>, combining resume parsing, AI-based gap analysis, and a curated course database — entirely <strong>offline-capable</strong>.
+          </p>
+          <div class="tech-grid">
+            <div class="tech-item">FASTAPI</div>
+            <div class="tech-item">MISTRAL 7B</div>
+            <div class="tech-item">PDFPLUMBER</div>
+            <div class="tech-item">EASYOCR</div>
+            <div class="tech-item">PYTHON</div>
+            <div class="tech-item">THREE.JS</div>
+          </div>
+          <div class="sources-row">
+            <div class="src-chip">NPTEL / IIT</div>
+            <div class="src-chip">NAAN MUDHALVAN</div>
+            <div class="src-chip">COURSERA</div>
+            <div class="src-chip">edX / MIT</div>
+            <div class="src-chip">NSDC</div>
+            <div class="src-chip">GOVT. ITI</div>
+          </div>
+        </div>
+
+        <div class="region-section reveal">
+          <div class="region-title">Regional Activity</div>
+          <div class="region-list" id="regionList"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-left">© 2025 SkillTech AI · Tamil Nadu Workforce Analytics</div>
+  <div class="footer-right">Final Year Project · EV &amp; Automotive Sector</div>
+</footer>
+
+<script>
+/* ─── 1. LOADER — first visit only ─── */
+(function(){
+  const loader = document.getElementById('loader');
+  if(localStorage.getItem('st_visited')){
+    // Already visited — hide immediately with no flash
+    loader.style.display = 'none';
+  } else {
+    // First visit — show loader then mark as visited
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        localStorage.setItem('st_visited', '1');
+      }, 2000);
+    });
+  }
+})();
+
+/* ─── 2. CUSTOM CURSOR ─── */
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursor-ring');
+let mx = -100, my = -100, rx = -100, ry = -100;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
+function animCursor() { rx += (mx-rx)*.12; ry += (my-ry)*.12; ring.style.transform = `translate(${rx-mx}px,${ry-my}px)`; requestAnimationFrame(animCursor); }
+animCursor();
+document.querySelectorAll('a,button,.tool-card,.role-card,.step,.tech-item').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('cursor-expand'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-expand'));
+});
+
+/* ─── 3. PARTICLE FIELD (adapted for light bg) ─── */
+(function() {
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  resize(); window.addEventListener('resize', resize);
+  const N = 70;
+  for (let i = 0; i < N; i++) {
+    particles.push({
+      x: Math.random()*W, y: Math.random()*H,
+      vx: (Math.random()-.5)*.35, vy: (Math.random()-.5)*.35,
+      r: Math.random()*1.4+.3,
+      color: Math.random()>.6 ? '#14b8a6' : Math.random()>.5 ? '#3b82f6' : '#f43f6e',
+      alpha: Math.random()*.25+.06,
+    });
+  }
+  let pmx=0, pmy=0;
+  document.addEventListener('mousemove', e => { pmx=e.clientX; pmy=e.clientY; });
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    for (let i=0;i<N;i++) {
+      for (let j=i+1;j<N;j++) {
+        const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if (dist<100) {
+          ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle=`rgba(20,184,166,${(1-dist/100)*.06})`; ctx.lineWidth=.5; ctx.stroke();
+        }
+      }
+      const mdx=particles[i].x-pmx, mdy=particles[i].y-pmy;
+      const md=Math.sqrt(mdx*mdx+mdy*mdy);
+      if (md<90) { particles[i].vx+=mdx/md*.3; particles[i].vy+=mdy/md*.3; }
+      particles[i].vx*=.99; particles[i].vy*=.99;
+      particles[i].x+=particles[i].vx; particles[i].y+=particles[i].vy;
+      if(particles[i].x<0)particles[i].x=W; if(particles[i].x>W)particles[i].x=0;
+      if(particles[i].y<0)particles[i].y=H; if(particles[i].y>H)particles[i].y=0;
+      ctx.beginPath(); ctx.arc(particles[i].x,particles[i].y,particles[i].r,0,Math.PI*2);
+      ctx.fillStyle=particles[i].color; ctx.globalAlpha=particles[i].alpha; ctx.fill(); ctx.globalAlpha=1;
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ─── 4. THREE.JS GLOBE (dark on white) ─── */
+(function() {
+  const canvas = document.getElementById('globe-canvas');
+  const scene = new THREE.Scene();
+  const W = canvas.parentElement.offsetWidth;
+  const H = canvas.parentElement.offsetHeight;
+  const camera = new THREE.PerspectiveCamera(50, W/H, 0.1, 1000);
+  camera.position.z = 3.2;
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
+  renderer.setSize(W,H); renderer.setPixelRatio(Math.min(window.devicePixelRatio,2)); renderer.setClearColor(0x000000,0);
+
+  // Globe wireframe — navy on white
+  const geo = new THREE.SphereGeometry(1.2,36,36);
+  const mat = new THREE.MeshBasicMaterial({ color:0x0f172a, wireframe:true, transparent:true, opacity:.08 });
+  const globe = new THREE.Mesh(geo,mat); scene.add(globe);
+
+  const outerGeo = new THREE.SphereGeometry(1.25,32,32);
+  const outerMat = new THREE.MeshBasicMaterial({ color:0x3b82f6, wireframe:true, transparent:true, opacity:.04 });
+  scene.add(new THREE.Mesh(outerGeo,outerMat));
+
+  const ringGeo = new THREE.TorusGeometry(1.22,0.004,8,100);
+  const ringMat = new THREE.MeshBasicMaterial({ color:0x14b8a6, transparent:true, opacity:.4 });
+  const ring = new THREE.Mesh(ringGeo,ringMat); ring.rotation.x=Math.PI/2; scene.add(ring);
+
+  const ring2Geo = new THREE.TorusGeometry(1.22,0.002,8,100);
+  const ring2Mat = new THREE.MeshBasicMaterial({ color:0xf43f6e, transparent:true, opacity:.2 });
+  const ring2 = new THREE.Mesh(ring2Geo,ring2Mat); ring2.rotation.x=Math.PI*.3; ring2.rotation.y=Math.PI*.1; scene.add(ring2);
+
+  const skills = [
+    { label:'EV Battery', lat:20,  lon:80,  color:0x14b8a6, size:0.06 },
+    { label:'PLC',        lat:35,  lon:130, color:0x14b8a6, size:0.05 },
+    { label:'Robotics',   lat:-10, lon:60,  color:0xf43f6e, size:0.055 },
+    { label:'Python',     lat:50,  lon:200, color:0x3b82f6, size:0.048 },
+    { label:'CAD/CATIA',  lat:-30, lon:290, color:0xf59e0b, size:0.048 },
+    { label:'CAN Bus',    lat:10,  lon:340, color:0xf97316, size:0.042 },
+    { label:'EV Charging',lat:-50, lon:150, color:0x14b8a6, size:0.05 },
+    { label:'IoT',        lat:60,  lon:240, color:0x3b82f6, size:0.042 },
+    { label:'Embedded',   lat:25,  lon:170, color:0xf43f6e, size:0.046 },
+    { label:'Welding',    lat:-40, lon:40,  color:0xf59e0b, size:0.038 },
+    { label:'MATLAB',     lat:45,  lon:10,  color:0x14b8a6, size:0.04  },
+    { label:'QC',         lat:-20, lon:220, color:0xf97316, size:0.038 },
+  ];
+
+  const nodeGroup = new THREE.Group(); scene.add(nodeGroup);
+  skills.forEach(s => {
+    const phi=(90-s.lat)*(Math.PI/180), theta=(s.lon+180)*(Math.PI/180), r=1.22;
+    const x=-(r*Math.sin(phi)*Math.cos(theta)), z=(r*Math.sin(phi)*Math.sin(theta)), y=(r*Math.cos(phi));
+    const dotGeo=new THREE.SphereGeometry(s.size,8,8);
+    const dotMat=new THREE.MeshBasicMaterial({color:s.color,transparent:true,opacity:.85});
+    const dot=new THREE.Mesh(dotGeo,dotMat); dot.position.set(x,y,z); nodeGroup.add(dot);
+    const pGeo=new THREE.TorusGeometry(s.size*2.5,0.003,6,24);
+    const pMat=new THREE.MeshBasicMaterial({color:s.color,transparent:true,opacity:.35});
+    const pulse=new THREE.Mesh(pGeo,pMat); pulse.position.set(x,y,z); pulse.lookAt(0,0,0);
+    pulse.userData={phase:Math.random()*Math.PI*2,baseOpacity:.35}; nodeGroup.add(pulse);
+    const lineGeo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(x,y,z)]);
+    const lineMat=new THREE.LineBasicMaterial({color:s.color,transparent:true,opacity:.06});
+    nodeGroup.add(new THREE.Line(lineGeo,lineMat));
+  });
+
+  const orbitCount=180;
+  const orbitGeo=new THREE.BufferGeometry();
+  const orbitPos=new Float32Array(orbitCount*3), orbitColors=new Float32Array(orbitCount*3);
+  for(let i=0;i<orbitCount;i++){
+    const phi=Math.random()*Math.PI*2, theta=Math.random()*Math.PI, r=1.4+Math.random()*.4;
+    orbitPos[i*3]=r*Math.sin(theta)*Math.cos(phi); orbitPos[i*3+1]=r*Math.cos(theta); orbitPos[i*3+2]=r*Math.sin(theta)*Math.sin(phi);
+    const c=Math.random();
+    if(c>.6){orbitColors[i*3]=0.08;orbitColors[i*3+1]=0.72;orbitColors[i*3+2]=0.65;}
+    else if(c>.3){orbitColors[i*3]=0.23;orbitColors[i*3+1]=0.51;orbitColors[i*3+2]=0.96;}
+    else{orbitColors[i*3]=0.96;orbitColors[i*3+1]=0.25;orbitColors[i*3+2]=0.43;}
+  }
+  orbitGeo.setAttribute('position',new THREE.BufferAttribute(orbitPos,3));
+  orbitGeo.setAttribute('color',new THREE.BufferAttribute(orbitColors,3));
+  const orbitMat=new THREE.PointsMaterial({size:0.012,vertexColors:true,transparent:true,opacity:.5});
+  const orbitPoints=new THREE.Points(orbitGeo,orbitMat); scene.add(orbitPoints);
+
+  // Very faint inner ambient
+  const ambGeo=new THREE.SphereGeometry(1.18,32,32);
+  const ambMat=new THREE.MeshBasicMaterial({color:0xf0f9ff,transparent:true,opacity:.15});
+  scene.add(new THREE.Mesh(ambGeo,ambMat));
+
+  let isDragging=false,prevMX=0,prevMY=0,rotX=0,rotY=0,velX=0.001,velY=0.0005;
+  canvas.addEventListener('mousedown',e=>{isDragging=true;prevMX=e.clientX;prevMY=e.clientY;});
+  window.addEventListener('mouseup',()=>{isDragging=false;});
+  window.addEventListener('mousemove',e=>{
+    if(!isDragging)return;
+    velY=(e.clientX-prevMX)*.005; velX=(e.clientY-prevMY)*.005;
+    prevMX=e.clientX; prevMY=e.clientY;
+  });
+
+  let t=0;
+  function animate() {
+    requestAnimationFrame(animate); t+=.016;
+    if(!isDragging){rotY+=velY;rotX+=velX;velY*=.97;velX*=.97;velY+=.0003;}
+    else{rotY+=velY;rotX+=velX;}
+    globe.rotation.y=rotY; globe.rotation.x=rotX*.3;
+    nodeGroup.rotation.y=rotY; nodeGroup.rotation.x=rotX*.3;
+    orbitPoints.rotation.y=-rotY*.3; orbitPoints.rotation.x=t*.04;
+    ring.rotation.y=t*.2; ring2.rotation.y=-t*.15;
+    nodeGroup.children.forEach(child=>{
+      if(child.userData&&child.userData.phase!==undefined){
+        child.userData.phase+=.04;
+        child.material.opacity=(Math.sin(child.userData.phase)*.5+.5)*.55;
+        child.scale.setScalar(1+Math.sin(child.userData.phase)*.3);
+      }
+    });
+    renderer.render(scene,camera);
+  }
+  animate();
+
+  // Tooltip
+  const raycaster=new THREE.Raycaster(), mouse2=new THREE.Vector2();
+  const tooltip=document.createElement('div');
+  tooltip.style.cssText='position:fixed;background:rgba(255,255,255,.97);border:1px solid rgba(20,184,166,.25);border-radius:6px;padding:5px 12px;font-family:"JetBrains Mono",monospace;font-size:10px;color:#0d9488;letter-spacing:.1em;pointer-events:none;opacity:0;transition:opacity .2s;z-index:600;text-transform:uppercase;box-shadow:0 4px 16px rgba(0,0,0,.08);';
+  document.body.appendChild(tooltip);
+  canvas.addEventListener('mousemove',e=>{
+    const rect=canvas.getBoundingClientRect();
+    mouse2.x=((e.clientX-rect.left)/rect.width)*2-1;
+    mouse2.y=-((e.clientY-rect.top)/rect.height)*2+1;
+    raycaster.setFromCamera(mouse2,camera);
+    const dots=nodeGroup.children.filter(c=>c.geometry&&c.geometry.type==='SphereGeometry');
+    const hits=raycaster.intersectObjects(dots);
+    if(hits.length){
+      const idx=dots.indexOf(hits[0].object);
+      if(idx!==-1&&skills[idx]){tooltip.style.opacity='1';tooltip.style.left=(e.clientX+14)+'px';tooltip.style.top=(e.clientY-10)+'px';tooltip.textContent=skills[idx].label;}
+    } else { tooltip.style.opacity='0'; }
+  });
+})();
+
+/* ─── 5. TOOL CARDS 3D TILT ─── */
+document.querySelectorAll('.tool-card').forEach(card => {
+  card.addEventListener('mousemove',e=>{
+    const rect=card.getBoundingClientRect(), cx=rect.left+rect.width/2, cy=rect.top+rect.height/2;
+    const dx=(e.clientX-cx)/(rect.width/2), dy=(e.clientY-cy)/(rect.height/2);
+    card.style.transform=`perspective(700px) rotateY(${dx*8}deg) rotateX(${-dy*6}deg) translateZ(4px)`;
+  });
+  card.addEventListener('mouseleave',()=>{ card.style.transform='perspective(700px) rotateY(0deg) rotateX(0deg) translateZ(0)'; });
+});
+
+/* ─── 6. SKILL BAR CANVAS (light theme) ─── */
+(function(){
+  const canvas=document.getElementById('skillBarCanvas');
+  const parent=canvas.parentElement;
+
+  const SKILLS=[
+    {label:'EV Battery Technology',val:92,c1:'#0d9488',c2:'#3b82f6'},
+    {label:'PLC / Automation',     val:87,c1:'#2563eb',c2:'#14b8a6'},
+    {label:'Vehicle Diagnostics',  val:82,c1:'#f43f6e',c2:'#f97316'},
+    {label:'Robotics',             val:79,c1:'#3b82f6',c2:'#14b8a6'},
+    {label:'Python / Data',        val:75,c1:'#f59e0b',c2:'#f97316'},
+    {label:'CAD / CATIA',          val:71,c1:'#7c3aed',c2:'#f43f6e'},
+    {label:'CAN Bus / Embedded',   val:68,c1:'#3b82f6',c2:'#7c3aed'},
+    {label:'Quality Control',      val:64,c1:'#14b8a6',c2:'#3b82f6'},
+    {label:'Welding & Assembly',   val:58,c1:'#f97316',c2:'#f59e0b'},
+    {label:'IoT / Industry 4.0',   val:53,c1:'#f43f6e',c2:'#f59e0b'},
+  ];
+
+  let W,H,barH=18,gap=36,marginL=170,marginR=52,marginT=10;
+  let animVals=SKILLS.map(()=>0), targets=SKILLS.map(()=>0);
+  let hovered=-1, particles=[], startTime=null, triggered=false;
+
+  function resize(){ W=canvas.width=parent.offsetWidth; H=canvas.height=SKILLS.length*36+20; }
+  resize(); window.addEventListener('resize',resize);
+  const ctx=canvas.getContext('2d');
+
+  function burst(x,y,color){
+    for(let i=0;i<12;i++){
+      const angle=Math.random()*Math.PI*2, speed=1+Math.random()*2.5;
+      particles.push({x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,alpha:1,color,r:1.2+Math.random()*1.8,life:0});
+    }
+  }
+
+  function draw(ts){
+    if(!startTime)startTime=ts;
+    const elapsed=ts-startTime;
+    ctx.clearRect(0,0,W,H);
+    const maxW=W-marginL-marginR;
+
+    SKILLS.forEach((s,i)=>{
+      const y=marginT+i*gap, targetPx=(s.val/100)*maxW;
+      const ease=triggered?Math.min(elapsed/(900+i*80),1):0;
+      const eased=ease<1?1-Math.pow(1-ease,4):1;
+      animVals[i]=eased*targetPx;
+      const isHov=hovered===i;
+
+      // label
+      ctx.font=`${isHov?'600':'500'} 11px "JetBrains Mono"`;
+      ctx.fillStyle=isHov?'#0f172a':'#64748b';
+      ctx.textAlign='right'; ctx.fillText(s.label,marginL-10,y+barH/2+4);
+
+      // track
+      ctx.fillStyle='rgba(15,23,42,.05)'; ctx.beginPath(); roundRect(ctx,marginL,y,maxW,barH,4); ctx.fill();
+
+      if(animVals[i]>2){
+        const grad=ctx.createLinearGradient(marginL,0,marginL+animVals[i],0);
+        grad.addColorStop(0,s.c1+(isHov?'ff':'cc')); grad.addColorStop(1,s.c2+(isHov?'ff':'cc'));
+        ctx.fillStyle=grad; ctx.beginPath(); roundRect(ctx,marginL,y,animVals[i],barH,4); ctx.fill();
+
+        // shimmer
+        const shimX=marginL+(animVals[i]*((ts%2000)/2000));
+        const shimGrad=ctx.createLinearGradient(shimX-30,0,shimX+30,0);
+        shimGrad.addColorStop(0,'rgba(255,255,255,0)'); shimGrad.addColorStop(.5,'rgba(255,255,255,.35)'); shimGrad.addColorStop(1,'rgba(255,255,255,0)');
+        ctx.fillStyle=shimGrad; ctx.beginPath(); roundRect(ctx,marginL,y,animVals[i],barH,4); ctx.fill();
+
+        if(isHov){ ctx.shadowColor=s.c2; ctx.shadowBlur=10; ctx.fillStyle='rgba(0,0,0,0)'; ctx.beginPath(); roundRect(ctx,marginL,y,animVals[i],barH,4); ctx.fill(); ctx.shadowBlur=0; }
+
+        // end cap
+        ctx.beginPath(); ctx.arc(marginL+animVals[i],y+barH/2,isHov?5:3,0,Math.PI*2);
+        ctx.fillStyle=s.c2; if(isHov){ctx.shadowColor=s.c2;ctx.shadowBlur=10;} ctx.fill(); ctx.shadowBlur=0;
+
+        // value label
+        ctx.font='700 10px "JetBrains Mono"';
+        ctx.fillStyle=isHov?s.c2:'#94a3b8'; ctx.textAlign='left';
+        ctx.fillText(s.val,marginL+animVals[i]+9,y+barH/2+4); ctx.textAlign='right';
+
+        if(ease>=1&&targets[i]===0){ burst(marginL+targetPx,y+barH/2,s.c2); targets[i]=1; }
+      }
+    });
+
+    // grid lines
+    ctx.strokeStyle='rgba(15,23,42,.06)'; ctx.lineWidth=.5;
+    [25,50,75,100].forEach(pct=>{
+      const x=marginL+(pct/100)*maxW;
+      ctx.beginPath(); ctx.moveTo(x,marginT); ctx.lineTo(x,H-8); ctx.stroke();
+      ctx.font='9px "JetBrains Mono"'; ctx.fillStyle='rgba(100,116,139,.5)'; ctx.textAlign='center';
+      ctx.fillText(pct,x,H-2);
+    });
+
+    particles=particles.filter(p=>p.alpha>.02);
+    particles.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy; p.vy+=.08; p.vx*=.97; p.alpha-=.025; p.life++;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.color+Math.floor(p.alpha*255).toString(16).padStart(2,'0'); ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+
+  canvas.addEventListener('mousemove',e=>{
+    const rect=canvas.getBoundingClientRect(), my=e.clientY-rect.top;
+    const idx=Math.floor((my-10)/gap);
+    hovered=(idx>=0&&idx<SKILLS.length)?idx:-1;
+    document.getElementById('barHoverMeta').textContent=hovered>=0?`${SKILLS[hovered].label}: ${SKILLS[hovered].val}/100`:'HOVER A BAR';
+  });
+  canvas.addEventListener('mouseleave',()=>{ hovered=-1; document.getElementById('barHoverMeta').textContent='HOVER A BAR'; });
+
+  const obs=new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting){triggered=true;startTime=null;obs.disconnect();}
+  },{threshold:.25}); obs.observe(canvas);
+
+  function roundRect(ctx,x,y,w,h,r){
+    ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+    ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+    ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+    ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y); ctx.closePath();
+  }
+}());
+
+/* ─── 7. RADAR (light theme) ─── */
+(function(){
+  const canvas=document.getElementById('radarCanvas'), ctx=canvas.getContext('2d');
+  const S=300; canvas.width=canvas.height=S;
+  const cx=S/2, cy=S/2;
+
+  const AXES=[
+    {label:'EV &\nPowertrain',val:.95,color:'#14b8a6'},
+    {label:'Automation',     val:.82,color:'#3b82f6'},
+    {label:'Diagnostics',    val:.74,color:'#f43f6e'},
+    {label:'Manufacturing',  val:.68,color:'#f59e0b'},
+    {label:'Software',       val:.60,color:'#7c3aed'},
+    {label:'Safety\n& QC',   val:.72,color:'#f97316'},
+  ];
+  const N=AXES.length, R=108;
+  let rotAngle=0, dragStart=null, dragVal=0, fillProgress=0, triggered=false, hoveredAxis=-1, sparkles=[];
+
+  canvas.addEventListener('mousedown',e=>{dragStart=e.clientX;dragVal=rotAngle;});
+  window.addEventListener('mouseup',()=>{dragStart=null;});
+  window.addEventListener('mousemove',e=>{
+    if(dragStart!==null) rotAngle=dragVal+(e.clientX-dragStart)*.012;
+    const rect=canvas.getBoundingClientRect(), mx=e.clientX-rect.left, my=e.clientY-rect.top;
+    let found=-1;
+    AXES.forEach((a,i)=>{
+      const angle=(i/N)*Math.PI*2-Math.PI/2+rotAngle;
+      const px=cx+Math.cos(angle)*R*a.val, py=cy+Math.sin(angle)*R*a.val;
+      if(Math.abs(mx-px)<18&&Math.abs(my-py)<18)found=i;
+    });
+    if(found!==hoveredAxis&&found>=0){
+      const angle=(found/N)*Math.PI*2-Math.PI/2+rotAngle;
+      const px=cx+Math.cos(angle)*R*AXES[found].val, py=cy+Math.sin(angle)*R*AXES[found].val;
+      for(let s=0;s<16;s++){const a2=Math.random()*Math.PI*2,sp=.5+Math.random()*2;sparkles.push({x:px,y:py,vx:Math.cos(a2)*sp,vy:Math.sin(a2)*sp,alpha:1,color:AXES[found].color,r:1+Math.random()*2});}
+    }
+    hoveredAxis=found;
+  });
+
+  function getPoint(i,frac,offset){ const angle=(i/N)*Math.PI*2-Math.PI/2+(offset||0); return{x:cx+Math.cos(angle)*R*frac,y:cy+Math.sin(angle)*R*frac}; }
+
+  function drawFrame(){
+    ctx.clearRect(0,0,S,S);
+    if(dragStart===null)rotAngle+=.005;
+    if(triggered&&fillProgress<1)fillProgress=Math.min(fillProgress+.018,1);
+    const fillEased=1-Math.pow(1-fillProgress,3);
+
+    // grid rings
+    [.25,.5,.75,1].forEach(f=>{
+      ctx.beginPath();
+      for(let i=0;i<N;i++){const p=getPoint(i,f,rotAngle);i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y);}
+      ctx.closePath();
+      ctx.strokeStyle=`rgba(15,23,42,${f===1?.1:.04})`; ctx.lineWidth=f===1?1:.5; ctx.stroke();
+      if(f<1){ctx.font='8px "JetBrains Mono"';ctx.fillStyle=`rgba(100,116,139,.4)`;ctx.textAlign='center';ctx.fillText(Math.round(f*100),cx,cy-R*f-3);}
+    });
+
+    // spokes
+    AXES.forEach((_,i)=>{const p=getPoint(i,1,rotAngle);ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(p.x,p.y);ctx.strokeStyle='rgba(15,23,42,.06)';ctx.lineWidth=.6;ctx.stroke();});
+
+    // ghost overlay
+    ctx.beginPath();
+    AXES.forEach((a,i)=>{const p=getPoint(i,a.val*.55*fillEased,rotAngle+Math.PI/N);i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y);});
+    ctx.closePath(); ctx.strokeStyle='rgba(244,63,110,.12)'; ctx.lineWidth=1; ctx.stroke();
+
+    // filled polygon
+    const fillGrad=ctx.createRadialGradient(cx,cy,0,cx,cy,R);
+    fillGrad.addColorStop(0,'rgba(20,184,166,.18)'); fillGrad.addColorStop(.5,'rgba(59,130,246,.1)'); fillGrad.addColorStop(1,'rgba(124,58,237,.04)');
+    ctx.beginPath();
+    AXES.forEach((a,i)=>{const p=getPoint(i,a.val*fillEased,rotAngle);i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y);});
+    ctx.closePath(); ctx.fillStyle=fillGrad; ctx.fill();
+
+    ctx.beginPath();
+    AXES.forEach((a,i)=>{const p=getPoint(i,a.val*fillEased,rotAngle);i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y);});
+    ctx.closePath(); ctx.shadowColor='rgba(20,184,166,.4)'; ctx.shadowBlur=8;
+    ctx.strokeStyle='rgba(20,184,166,.75)'; ctx.lineWidth=1.8; ctx.stroke(); ctx.shadowBlur=0;
+
+    // axis dots
+    AXES.forEach((a,i)=>{
+      const p=getPoint(i,a.val*fillEased,rotAngle), isH=hoveredAxis===i;
+      ctx.beginPath(); ctx.arc(p.x,p.y,isH?12:7,0,Math.PI*2); ctx.fillStyle=a.color+(isH?'22':'14'); ctx.fill();
+      ctx.beginPath(); ctx.arc(p.x,p.y,isH?6:4,0,Math.PI*2); ctx.fillStyle=a.color;
+      if(isH){ctx.shadowColor=a.color;ctx.shadowBlur=12;} ctx.fill(); ctx.shadowBlur=0;
+    });
+
+    // labels
+    AXES.forEach((a,i)=>{
+      const p=getPoint(i,1.28,rotAngle), isH=hoveredAxis===i;
+      ctx.font=`${isH?'700':'500'} 9px "JetBrains Mono"`;
+      ctx.fillStyle=isH?a.color:'#64748b'; ctx.textAlign='center';
+      ctx.shadowColor=isH?a.color:'transparent'; ctx.shadowBlur=isH?8:0;
+      const lines=a.label.split('\n');
+      lines.forEach((ln,li)=>ctx.fillText(ln,p.x,p.y+li*13-(lines.length-1)*6)); ctx.shadowBlur=0;
+      if(isH){ctx.font='800 11px "JetBrains Mono"';ctx.fillStyle=a.color;ctx.fillText(Math.round(a.val*100)+'%',p.x,p.y+lines.length*13+2);}
+    });
+
+    // sparkles
+    sparkles=sparkles.filter(s=>s.alpha>.02);
+    sparkles.forEach(s=>{s.x+=s.vx;s.y+=s.vy;s.vy+=.04;s.vx*=.97;s.alpha-=.03;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=s.color+Math.floor(s.alpha*255).toString(16).padStart(2,'0');ctx.fill();});
+    requestAnimationFrame(drawFrame);
+  }
+  requestAnimationFrame(drawFrame);
+  const obs=new IntersectionObserver(e=>{if(e[0].isIntersecting){triggered=true;obs.disconnect();}},{threshold:.3});
+  obs.observe(canvas);
+}());
+
+/* ─── 8. TREND LINE (light theme) ─── */
+(function(){
+  const canvas=document.getElementById('trendCanvas'), parent=canvas.parentElement;
+  const metaEl=document.getElementById('trendHoverMeta'), ctx=canvas.getContext('2d');
+  const MONTHS=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  const EV=[47,49,51,53,57,63,70,74,78,80,83,86];
+  const BENCH=[40,41,43,45,47,50,53,56,59,61,63,65];
+  const PROJ=[null,null,null,null,null,null,null,null,null,80,85,91];
+  let W,H; const ML=44,MR=20,MT=18,MB=32;
+  let drawProgress=0, triggered=false, hoveredIdx=-1, lineParticles=[];
+
+  function resize(){ W=canvas.width=parent.offsetWidth; H=canvas.height=200; }
+  resize(); window.addEventListener('resize',resize);
+  function px(i){return ML+(i/(MONTHS.length-1))*(W-ML-MR);}
+  function py(v){return MT+(1-(v-30)/70)*(H-MT-MB);}
+
+  function drawFrame(ts){
+    ctx.clearRect(0,0,W,H);
+    if(triggered&&drawProgress<1)drawProgress=Math.min(drawProgress+.014,1);
+    const dp=1-Math.pow(1-drawProgress,3);
+
+    // grid
+    ctx.strokeStyle='rgba(15,23,42,.06)'; ctx.lineWidth=.5;
+    [40,55,70,85,100].forEach(v=>{
+      const y=py(v); ctx.beginPath();ctx.moveTo(ML,y);ctx.lineTo(W-MR,y);ctx.stroke();
+      ctx.font='8px "JetBrains Mono"';ctx.fillStyle='rgba(100,116,139,.6)';ctx.textAlign='right';ctx.fillText(v,ML-6,y+3);
+    });
+    MONTHS.forEach((m,i)=>{
+      const x=px(i); ctx.beginPath();ctx.moveTo(x,MT);ctx.lineTo(x,H-MB);ctx.stroke();
+      ctx.font='8px "JetBrains Mono"';ctx.fillStyle='rgba(100,116,139,.6)';ctx.textAlign='center';ctx.fillText(m,x,H-MB+12);
+    });
+
+    const clampI=dp*(MONTHS.length-1);
+    function drawLine(data,color,dashed,width){
+      ctx.save(); ctx.strokeStyle=color; ctx.lineWidth=width||2; ctx.lineCap='round'; ctx.lineJoin='round';
+      if(dashed)ctx.setLineDash([5,5]); ctx.beginPath();
+      let started=false;
+      data.forEach((v,i)=>{
+        if(v==null||i>clampI)return;
+        const x=px(i),y=py(v);
+        if(!started){ctx.moveTo(x,y);started=true;} else {
+          const prev=data.slice(0,i).reverse().find(d=>d!=null);
+          const pi=data.slice(0,i).reverse().findIndex(d=>d!=null);
+          if(prev==null){ctx.lineTo(x,y);}
+          else{const px0=px(i-pi-1),py0=py(prev),cpx=(px0+x)/2;ctx.bezierCurveTo(cpx,py0,cpx,y,x,y);}
+        }
+      });
+      ctx.stroke(); ctx.restore();
+    }
+
+    // fills
+    const benchGrad=ctx.createLinearGradient(0,MT,0,H-MB);
+    benchGrad.addColorStop(0,'rgba(244,63,110,.06)'); benchGrad.addColorStop(1,'rgba(244,63,110,.0)');
+    ctx.save(); ctx.beginPath();
+    BENCH.forEach((v,i)=>{if(i>clampI)return;const x=px(i),y=py(v);i===0?ctx.moveTo(x,y):ctx.bezierCurveTo((px(i-1)+px(i))/2,py(BENCH[i-1]),(px(i-1)+px(i))/2,y,x,y);});
+    ctx.lineTo(px(Math.min(Math.floor(clampI),MONTHS.length-1)),H-MB); ctx.lineTo(ML,H-MB); ctx.closePath(); ctx.fillStyle=benchGrad; ctx.fill(); ctx.restore();
+
+    const evGrad=ctx.createLinearGradient(0,MT,0,H-MB);
+    evGrad.addColorStop(0,'rgba(59,130,246,.12)'); evGrad.addColorStop(1,'rgba(59,130,246,.0)');
+    ctx.save(); ctx.beginPath();
+    EV.forEach((v,i)=>{if(i>clampI)return;const x=px(i),y=py(v);i===0?ctx.moveTo(x,y):ctx.bezierCurveTo((px(i-1)+px(i))/2,py(EV[i-1]),(px(i-1)+px(i))/2,y,x,y);});
+    ctx.lineTo(px(Math.min(Math.floor(clampI),MONTHS.length-1)),H-MB); ctx.lineTo(ML,H-MB); ctx.closePath(); ctx.fillStyle=evGrad; ctx.fill(); ctx.restore();
+
+    const projStart=PROJ.findIndex(v=>v!=null);
+    if(dp>projStart/(MONTHS.length-1)){
+      const projGrad=ctx.createLinearGradient(0,MT,0,H-MB);
+      projGrad.addColorStop(0,'rgba(20,184,166,.06)'); projGrad.addColorStop(1,'rgba(20,184,166,.0)');
+      ctx.save(); ctx.beginPath(); let s2=false;
+      PROJ.forEach((v,i)=>{if(v==null||i>clampI)return;const x=px(i),y=py(v);if(!s2){ctx.moveTo(x,y);s2=true;}else{ctx.bezierCurveTo((px(i-1)+px(i))/2,py(PROJ[i-1]||v),(px(i-1)+px(i))/2,y,x,y);}});
+      ctx.lineTo(px(Math.min(Math.floor(clampI),MONTHS.length-1)),H-MB); ctx.lineTo(px(projStart),H-MB); ctx.closePath(); ctx.fillStyle=projGrad; ctx.fill(); ctx.restore();
+    }
+
+    drawLine(BENCH,'rgba(244,63,110,.5)',true,1.5);
+    drawLine(EV,'#3b82f6',false,2.5);
+    drawLine(PROJ,'#14b8a6',true,2);
+
+    // draw head
+    const headI=Math.min(clampI,MONTHS.length-1), headIfloor=Math.floor(headI), headFrac=headI-headIfloor;
+    if(headIfloor<MONTHS.length-1){
+      const hx=px(headIfloor)+headFrac*(px(headIfloor+1)-px(headIfloor));
+      const hy=py(EV[headIfloor])+headFrac*(py(EV[headIfloor+1])-py(EV[headIfloor]));
+      ctx.beginPath();ctx.arc(hx,hy,5,0,Math.PI*2);ctx.fillStyle='#3b82f6';
+      ctx.shadowColor='#3b82f6';ctx.shadowBlur=14;ctx.fill();ctx.shadowBlur=0;
+    }
+
+    // data dots
+    EV.forEach((v,i)=>{
+      if(i>clampI)return;
+      const x=px(i),y=py(v),isH=hoveredIdx===i;
+      ctx.beginPath();ctx.arc(x,y,isH?7:4,0,Math.PI*2);
+      ctx.fillStyle=isH?'#2563eb':'rgba(59,130,246,.8)';
+      if(isH){ctx.shadowColor='#3b82f6';ctx.shadowBlur=12;} ctx.fill();ctx.shadowBlur=0;
+    });
+
+    // crosshair + tooltip
+    if(hoveredIdx>=0&&hoveredIdx<MONTHS.length){
+      const hx=px(hoveredIdx);
+      ctx.save(); ctx.strokeStyle='rgba(59,130,246,.25)'; ctx.lineWidth=1; ctx.setLineDash([3,3]);
+      ctx.beginPath();ctx.moveTo(hx,MT);ctx.lineTo(hx,H-MB);ctx.stroke(); ctx.restore();
+      const evV=EV[hoveredIdx],bV=BENCH[hoveredIdx],pV=PROJ[hoveredIdx];
+      const tw=130,th=pV?72:54,tx=Math.min(hx+8,W-MR-tw),ty=MT+4;
+      ctx.fillStyle='rgba(255,255,255,.97)'; ctx.strokeStyle='rgba(59,130,246,.2)'; ctx.lineWidth=1;
+      ctx.shadowColor='rgba(0,0,0,.08)'; ctx.shadowBlur=12;
+      ctx.beginPath();roundRect2(ctx,tx,ty,tw,th,6);ctx.fill();ctx.stroke();ctx.shadowBlur=0;
+      ctx.font='700 9px "JetBrains Mono"';ctx.fillStyle='#64748b';ctx.textAlign='left';
+      ctx.fillText(MONTHS[hoveredIdx]+' 2025',tx+10,ty+14);
+      ctx.fillStyle='#2563eb';ctx.fillText('EV INDEX: '+evV,tx+10,ty+28);
+      ctx.fillStyle='rgba(244,63,110,.9)';ctx.fillText('BENCHMARK: '+bV,tx+10,ty+42);
+      if(pV){ctx.fillStyle='#0d9488';ctx.fillText('PROJECTED: '+pV,tx+10,ty+56);}
+    }
+
+    // floating particles
+    if(drawProgress>=1&&Math.random()<.08){
+      const ri=Math.floor(Math.random()*MONTHS.length);
+      lineParticles.push({x:px(ri),y:py(EV[ri]),vx:(Math.random()-.5)*.5,vy:-1-Math.random(),alpha:.6,r:1+Math.random()*1.5});
+    }
+    lineParticles=lineParticles.filter(p=>p.alpha>.02);
+    lineParticles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.015;p.alpha-=.015;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(59,130,246,'+p.alpha+')';ctx.fill();});
+
+    // legend
+    ctx.font='9px "JetBrains Mono"';ctx.textAlign='left';
+    [['━ EV SKILL INDEX','#3b82f6'],['━ BENCHMARK','rgba(244,63,110,.8)'],['━ PROJECTED','#14b8a6']].forEach(([lbl,col],i)=>{ctx.fillStyle=col;ctx.fillText(lbl,ML+i*120,MT-4);});
+    requestAnimationFrame(drawFrame);
+  }
+  requestAnimationFrame(drawFrame);
+
+  canvas.addEventListener('mousemove',e=>{
+    const rect=canvas.getBoundingClientRect(), mx=e.clientX-rect.left;
+    let best=-1,bestD=9999;
+    MONTHS.forEach((_,i)=>{const d=Math.abs(px(i)-mx);if(d<bestD){bestD=d;best=i;}});
+    hoveredIdx=bestD<24?best:-1;
+    if(hoveredIdx>=0)metaEl.textContent=`${MONTHS[hoveredIdx]}: EV=${EV[hoveredIdx]} · BENCH=${BENCH[hoveredIdx]}`;
+    else metaEl.textContent='MOVE CURSOR OVER CHART';
+  });
+  canvas.addEventListener('mouseleave',()=>{hoveredIdx=-1;metaEl.textContent='MOVE CURSOR OVER CHART';});
+
+  function roundRect2(ctx,x,y,w,h,r){
+    ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+    ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+    ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+    ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
+  }
+  const obs=new IntersectionObserver(e=>{if(e[0].isIntersecting){triggered=true;obs.disconnect();}},{threshold:.25});
+  obs.observe(canvas);
+}());
+
+/* ─── 9. ROLE CARDS ─── */
+const roles = [
+  {num:'01',title:'EV Battery Engineer',          co:'Ather Energy · Tata EV',         badge:'Hot',     cls:'rb-hot',  color:'var(--m)'},
+  {num:'02',title:'Robotics & Automation Tech.',  co:'TVS Motor · Hyundai Chennai',    badge:'Growing', cls:'rb-grow', color:'var(--g)'},
+  {num:'03',title:'EV Charging Infra Engineer',   co:'Tata Power · EESL',              badge:'Hot',     cls:'rb-hot',  color:'var(--m)'},
+  {num:'04',title:'Embedded Systems Engineer',    co:'KPIT Technologies · Bosch',       badge:'Open',    cls:'rb-open', color:'var(--b)'},
+  {num:'05',title:'PLC / SCADA Engineer',         co:'ABB India · Siemens',            badge:'Open',    cls:'rb-open', color:'var(--b)'},
+  {num:'06',title:'Production Supervisor (EV)',   co:'Ola Electric · Ashok Leyland',   badge:'Growing', cls:'rb-grow', color:'var(--g)'},
+];
+document.getElementById('rolesGrid').innerHTML = roles.map(r => `
+  <div class="role-card reveal" style="--rc-color:${r.color}">
+    <div class="role-num">// ROLE_${r.num}</div>
+    <div class="role-title">${r.title}</div>
+    <div class="role-co">${r.co}</div>
+    <div class="role-badges"><span class="role-badge ${r.cls}">${r.badge}</span></div>
+  </div>
+`).join('');
+
+document.querySelectorAll('.role-card').forEach(card => {
+  card.addEventListener('mousemove',e=>{
+    const rect=card.getBoundingClientRect();
+    const dx=(e.clientX-rect.left-rect.width/2)/(rect.width/2);
+    const dy=(e.clientY-rect.top-rect.height/2)/(rect.height/2);
+    card.style.transform=`perspective(600px) rotateY(${dx*7}deg) rotateX(${-dy*5}deg) translateY(-3px)`;
+  });
+  card.addEventListener('mouseleave',()=>{card.style.transform='perspective(600px) rotateY(0) rotateX(0) translateY(0)';});
+});
+
+/* ─── 10. STEPS ─── */
+const steps = [
+  {st:'done',n:'01',title:'Upload Resume or Describe Background',desc:'PDF, scanned image, or plain text — skills extracted automatically via pdfplumber and easyOCR.'},
+  {st:'curr',n:'02',title:'Select Your Target Job Role',         desc:'Choose from 20+ real EV & automotive roles — EV Technician, PLC Engineer, Battery Engineer and more.'},
+  {st:'curr',n:'03',title:'Receive Gap Report & Match Score',    desc:'A 0–100% match score with prioritised breakdown of critical, important, and minor skill gaps.'},
+  {st:'next',n:'04',title:'Get Course Recommendations',          desc:'Free & paid links from NPTEL, Naan Mudhalvan, Coursera, and YouTube matched to your exact gaps.'},
+  {st:'next',n:'05',title:'Ask the AI Anything',                 desc:'Chat with SkillTech AI (Mistral 7B) for career advice, interview prep, and salary benchmarks.'},
+];
+document.getElementById('stepsList').innerHTML = steps.map(s => `
+  <div class="step ${s.st} reveal">
+    <div class="step-num">${s.n}</div>
+    <div class="step-body">
+      <div class="step-title">${s.title}</div>
+      <div class="step-desc">${s.desc}</div>
+    </div>
+  </div>
+`).join('');
+
+/* ─── 11. REGION BARS ─── */
+const regions = [
+  {city:'Chennai',    meta:'~1.8L jobs · OEM & Tier-1',    pct:92, grad:'linear-gradient(90deg,var(--g),var(--b))'},
+  {city:'Hosur',      meta:'~1.1L jobs · Ather, Tata, TVS', pct:78, grad:'linear-gradient(90deg,var(--b),var(--g))'},
+  {city:'Coimbatore', meta:'~0.8L jobs · Tier-2 suppliers', pct:61, grad:'linear-gradient(90deg,var(--m),var(--b))'},
+  {city:'Madurai',    meta:'~0.3L jobs · Emerging cluster', pct:38, grad:'linear-gradient(90deg,var(--y),var(--o))'},
+];
+document.getElementById('regionList').innerHTML = regions.map(r => `
+  <div class="rg-row">
+    <div class="rg-top">
+      <span class="rg-city">${r.city}</span>
+      <span class="rg-meta">${r.meta} · <span style="color:var(--g2)">${r.pct}%</span></span>
+    </div>
+    <div class="rg-track"><div class="rg-fill" data-w="${r.pct}" style="background:${r.grad};"></div></div>
+  </div>
+`).join('');
+
+/* ─── 12. INTERSECTION OBSERVER ─── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      e.target.querySelectorAll('.sbar-fill,.rg-fill').forEach((b,i) => {
+        setTimeout(()=>{ b.style.width = b.dataset.w+'%'; }, i*80);
+      });
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+const regionObs = new IntersectionObserver(entries => {
+  if(entries[0].isIntersecting){
+    document.querySelectorAll('.rg-fill').forEach((b,i) => { setTimeout(()=>{b.style.width=b.dataset.w+'%';},i*150); });
+    regionObs.disconnect();
+  }
+},{threshold:.3});
+const howSection=document.getElementById('how');
+if(howSection)regionObs.observe(howSection);
+
+/* ─── 13. COUNTER ANIMATION ─── */
+function animCount(el, target, duration=2000){
+  let start=null;
+  const suffix=el.dataset.suffix||'';
+  const step=ts=>{
+    if(!start)start=ts;
+    const p=Math.min((ts-start)/duration,1);
+    const ease=1-Math.pow(1-p,4);
+    const val=Math.floor(ease*target);
+    if(target>=1000){el.textContent=(val/100000).toFixed(1)+'L+';}
+    else{el.textContent=val+suffix;}
+    if(p<1)requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+const heroObs=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting){
+    document.querySelectorAll('[data-count]').forEach(el=>animCount(el,+el.dataset.count,2000));
+    heroObs.disconnect();
+  }
+},{threshold:.5});
+heroObs.observe(document.getElementById('hero'));
+</script>
+<script src="chat-widget.js"></script>
+</body>
+</html>

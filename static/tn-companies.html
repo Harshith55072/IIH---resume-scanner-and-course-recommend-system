@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TN Companies — SkillTech AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600;700;800;900&family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=JetBrains+Mono:wght@100;300;400;700&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── CURSOR ── */
+* { cursor: none !important; }
+#cursor { position: fixed; z-index: 9999; pointer-events: none; }
+#cursor-ring { width: 32px; height: 32px; border: 1.5px solid rgba(20,184,166,.6); border-radius: 50%; position: absolute; top: -16px; left: -16px; transition: width .25s, height .25s, border-color .25s; }
+#cursor-dot { width: 4px; height: 4px; background: #14b8a6; border-radius: 50%; position: absolute; top: -2px; left: -2px; }
+.cursor-expand #cursor-ring { width: 52px; height: 52px; top: -26px; left: -26px; border-color: rgba(244,63,110,.5); }
+
+/* ── TOKENS ── */
+:root {
+  --bg:    #f8fafc;
+  --bg2:   #ffffff;
+  --bg3:   #f1f5f9;
+  --panel: #ffffff;
+
+  --g:  #14b8a6;  --g2: #0d9488;
+  --b:  #3b82f6;  --b2: #2563eb;
+  --m:  #f43f6e;  --m2: #e11d48;
+  --y:  #f59e0b;  --o:  #f97316;
+  --v:  #7c3aed;  --v2: #6d28d9;
+
+  --rim:  rgba(15,23,42,.07);
+  --rim2: rgba(20,184,166,.3);
+
+  --ink:  #0f172a;
+  --ink2: #475569;
+  --ink3: #94a3b8;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 8px rgba(0,0,0,.04);
+  --shadow:    0 4px 16px rgba(0,0,0,.08), 0 1px 4px rgba(0,0,0,.04);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,.1), 0 4px 12px rgba(0,0,0,.05);
+
+  --f-disp: 'Unbounded', monospace;
+  --f-ui:   'Figtree', sans-serif;
+  --f-code: 'JetBrains Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-ui); font-size: 15px; min-height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg3); }
+::-webkit-scrollbar-thumb { background: rgba(20,184,166,.25); border-radius: 10px; }
+
+/* ── PARTICLES ── */
+#particle-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .4; }
+
+/* ── NAV ── */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 500; height: 64px; display: flex; align-items: center; padding: 0 48px; background: rgba(255,255,255,.92); border-bottom: 1px solid var(--rim); backdrop-filter: blur(24px) saturate(1.8); box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 4px 24px rgba(0,0,0,.04); }
+.nav::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--g), var(--b), var(--m)); opacity: .6; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; flex-shrink: 0; }
+.brand-hex { width: 36px; height: 36px; position: relative; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(20,184,166,.1), rgba(59,130,246,.1)); border-radius: 8px; border: 1px solid rgba(20,184,166,.2); }
+.brand-hex svg { position: absolute; inset: 0; animation: hex-spin 10s linear infinite; }
+@keyframes hex-spin { to { transform: rotate(360deg); } }
+.brand-inner { font-size: 16px; z-index: 1; position: relative; }
+.brand-name { font-family: var(--f-disp); font-size: 12px; font-weight: 700; letter-spacing: .06em; color: var(--ink); }
+.brand-name span { color: var(--g); }
+.brand-tag { font-family: var(--f-code); font-size: 9px; color: var(--ink3); letter-spacing: .12em; text-transform: uppercase; margin-top: 2px; }
+.nav-sep { width: 1px; height: 20px; background: var(--rim); margin: 0 28px; }
+.nav-links { display: flex; gap: 2px; }
+.nl { padding: 6px 14px; font-family: var(--f-ui); font-size: 13px; font-weight: 600; letter-spacing: .02em; color: var(--ink2); text-decoration: none; border-radius: 6px; border: 1px solid transparent; transition: all .18s; }
+.nl:hover { color: var(--ink); background: rgba(0,0,0,.04); }
+.nl.active { color: var(--g2); border-color: rgba(20,184,166,.2); background: rgba(20,184,166,.06); }
+.nl-live { display: flex; align-items: center; gap: 6px; }
+.nl-live::after { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--g); box-shadow: 0 0 6px var(--g); animation: blink 1.6s ease infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
+.nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.status-pill { display: flex; align-items: center; gap: 6px; padding: 5px 14px; border: 1px solid rgba(20,184,166,.2); border-radius: 20px; background: rgba(20,184,166,.06); font-family: var(--f-code); font-size: 10px; color: var(--g2); letter-spacing: .05em; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--g); box-shadow: 0 0 6px var(--g); animation: blink 2s ease infinite; flex-shrink: 0; }
+.ver-badge { font-family: var(--f-code); font-size: 9px; color: var(--ink3); padding: 3px 8px; border: 1px solid var(--rim); border-radius: 4px; background: var(--bg); letter-spacing: .08em; }
+
+/* ── LAYOUT ── */
+main { position: relative; z-index: 2; padding-top: 64px; }
+.holo-grid { position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(rgba(15,23,42,.018) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,.018) 1px, transparent 1px); background-size: 56px 56px; }
+.page { max-width: 1100px; margin: 0 auto; padding: 40px 48px 100px; }
+
+/* ── PAGE HEADER ── */
+.page-header { margin-bottom: 32px; animation: slideUp .5s ease both; }
+@keyframes slideUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+.page-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-code); font-size: 9px; color: var(--g2); letter-spacing: .14em; text-transform: uppercase; border: 1px solid rgba(20,184,166,.22); border-radius: 20px; padding: 4px 14px; background: rgba(20,184,166,.06); margin-bottom: 16px; }
+.page-eyebrow::before { content: '◈'; }
+.page-title { font-family: var(--f-disp); font-size: clamp(24px,3.2vw,42px); font-weight: 800; color: var(--ink); letter-spacing: -.03em; line-height: 1.05; margin-bottom: 12px; }
+.page-title .hl { background: linear-gradient(90deg, var(--g), var(--b)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.page-sub { font-family: var(--f-ui); font-size: 15px; color: var(--ink2); line-height: 1.85; max-width: 560px; }
+
+/* ── CONTROLS ── */
+.controls { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; animation: slideUp .5s .05s ease both; }
+.search-wrap { position: relative; flex: 1; min-width: 200px; max-width: 300px; }
+.search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 13px; pointer-events: none; }
+.search-input { width: 100%; padding: 9px 12px 9px 34px; border: 1px solid var(--rim); border-radius: 8px; background: var(--bg2); font-family: var(--f-ui); font-size: 13px; color: var(--ink); outline: none; transition: border-color .18s, box-shadow .18s; }
+.search-input:focus { border-color: rgba(20,184,166,.35); box-shadow: 0 0 0 3px rgba(20,184,166,.07); }
+.search-input::placeholder { color: var(--ink3); font-size: 13px; }
+.filter-label { font-family: var(--f-code); font-size: 8.5px; color: var(--ink3); letter-spacing: .1em; text-transform: uppercase; }
+.filter-btn { padding: 7px 16px; border-radius: 20px; border: 1px solid var(--rim); background: var(--bg3); font-family: var(--f-code); font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink3); cursor: pointer; transition: all .15s; }
+.filter-btn:hover { border-color: rgba(20,184,166,.25); color: var(--ink2); }
+.filter-btn.active { background: rgba(20,184,166,.08); border-color: rgba(20,184,166,.28); color: var(--g2); }
+
+/* ── STAT STRIP ── */
+.stat-strip { display: flex; gap: 10px; margin-bottom: 24px; animation: slideUp .5s .08s ease both; flex-wrap: wrap; }
+.stat-chip { font-family: var(--f-code); font-size: 9px; color: var(--ink3); letter-spacing: .06em; padding: 5px 14px; border: 1px solid var(--rim); border-radius: 20px; background: var(--bg2); box-shadow: var(--shadow-sm); }
+.stat-chip span { color: var(--g2); font-weight: 700; margin-right: 4px; }
+
+/* ── COMPANY LIST ── */
+.company-list { display: flex; flex-direction: column; gap: 10px; animation: slideUp .5s .1s ease both; }
+
+.company-row {
+  background: var(--panel); border: 1px solid var(--rim);
+  border-radius: 12px; box-shadow: var(--shadow-sm);
+  display: grid; grid-template-columns: 56px 1fr auto;
+  align-items: center; gap: 0;
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+  position: relative; overflow: hidden;
+}
+.company-row:hover { transform: translateX(4px); box-shadow: var(--shadow); border-color: rgba(20,184,166,.2); }
+.company-row::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--g); opacity: 0; transition: opacity .2s; }
+.company-row:hover::before { opacity: .6; }
+
+.co-emoji-wrap { display: flex; align-items: center; justify-content: center; padding: 18px 0 18px 20px; }
+.co-emoji { font-size: 26px; line-height: 1; }
+
+.co-main { padding: 16px 20px; min-width: 0; }
+.co-name-row { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+.co-name { font-family: var(--f-disp); font-size: 12px; font-weight: 700; color: var(--ink); letter-spacing: -.01em; }
+.co-type-badge { font-family: var(--f-code); font-size: 8px; font-weight: 700; padding: 2px 9px; border-radius: 20px; letter-spacing: .05em; text-transform: uppercase; flex-shrink: 0; }
+.badge-ev       { background: rgba(20,184,166,.07);  border: 1px solid rgba(20,184,166,.2);  color: var(--g2); }
+.badge-auto     { background: rgba(59,130,246,.07);  border: 1px solid rgba(59,130,246,.2);  color: var(--b2); }
+.badge-software { background: rgba(124,58,237,.07);  border: 1px solid rgba(124,58,237,.2);  color: var(--v2); }
+.co-meta { display: flex; align-items: center; gap: 8px; font-family: var(--f-ui); font-size: 12px; color: var(--ink3); flex-wrap: wrap; }
+.co-meta-dot { color: var(--rim); }
+
+.co-right { padding: 16px 24px 16px 0; text-align: right; min-width: 220px; }
+.co-open-label { font-family: var(--f-code); font-size: 8px; font-weight: 700; color: var(--ink3); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 5px; }
+.co-open-roles { font-family: var(--f-ui); font-size: 12.5px; font-weight: 600; color: var(--ink); line-height: 1.5; }
+.co-cta { display: inline-flex; align-items: center; gap: 5px; margin-top: 8px; padding: 5px 12px; border-radius: 20px; background: var(--ink); color: #fff; font-family: var(--f-code); font-size: 8px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; border: none; cursor: pointer; transition: all .15s; }
+.co-cta:hover { background: #1e293b; }
+
+/* ── NO RESULTS ── */
+.no-results { text-align: center; padding: 64px 20px; background: var(--panel); border: 1px solid var(--rim); border-radius: 12px; box-shadow: var(--shadow-sm); }
+.no-results-icon { font-size: 36px; display: block; margin-bottom: 14px; }
+.no-results-title { font-family: var(--f-disp); font-size: 14px; font-weight: 700; color: var(--ink); letter-spacing: -.01em; margin-bottom: 8px; }
+.no-results-sub { font-family: var(--f-ui); font-size: 13px; color: var(--ink3); }
+</style>
+<link rel="stylesheet" href="chat-widget.css"/>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor"><div id="cursor-ring"></div><div id="cursor-dot"></div></div>
+
+<!-- PARTICLES -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="brand" href="overview.html">
+    <div class="brand-hex">
+      <svg viewBox="0 0 36 36" fill="none">
+        <polygon points="18,2 33,10 33,26 18,34 3,26 3,10" stroke="rgba(20,184,166,.5)" stroke-width="1" fill="none"/>
+        <polygon points="18,6 29,12.5 29,23.5 18,30 7,23.5 7,12.5" stroke="rgba(20,184,166,.25)" stroke-width=".5" fill="none"/>
+      </svg>
+      <div class="brand-inner">⚡</div>
+    </div>
+    <div>
+      <div class="brand-name">Skill<span>Tech</span></div>
+      <div class="brand-tag">TN · EV · Automotive</div>
+    </div>
+  </a>
+  <div class="nav-sep"></div>
+  <nav class="nav-links">
+    <a class="nl" href="overview.html">Overview</a>
+    <a class="nl" href="industry-analytics.html">Analytics</a>
+    <a class="nl nl-live" href="index.html">Skill Analyser</a>
+    <a class="nl" href="course-finder.html">Courses</a>
+    <a class="nl" href="job-roles.html">Job Roles</a>
+    <a class="nl active" href="tn-companies.html">Companies</a>
+  </nav>
+  <div class="nav-right">
+    <div class="status-pill"><div class="status-dot"></div><span>Online</span></div>
+    <div class="ver-badge">v2.0</div>
+  </div>
+</nav>
+
+<main>
+<div class="holo-grid"></div>
+<div class="page">
+
+  <div class="page-header">
+    <div class="page-eyebrow">Tamil Nadu · 12 Active EV Manufacturers</div>
+    <div class="page-title">TN <span class="hl">Companies</span></div>
+    <div class="page-sub">Major EV and automotive employers actively hiring in Tamil Nadu and nearby regions — with open role categories.</div>
+  </div>
+
+  <div class="controls">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" type="text" id="searchInput" placeholder="Search companies…" oninput="applyFilters()"/>
+    </div>
+    <span class="filter-label">Type</span>
+    <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setFilter('ev',this)">EV Focused</button>
+    <button class="filter-btn" onclick="setFilter('auto',this)">Traditional Auto</button>
+    <button class="filter-btn" onclick="setFilter('software',this)">Software / Tech</button>
+  </div>
+
+  <div class="stat-strip" id="statStrip"></div>
+  <div class="company-list" id="companyList"></div>
+
+</div>
+</main>
+
+<script>
+'use strict';
+
+const companies = [
+  { e:'🛵', n:'Ather Energy',       loc:'Hosur, TN',       type:'EV Two-Wheeler',        open:'Battery Eng., Embedded, Mech Design',   cat:'ev',       roles:340 },
+  { e:'⚡', n:'Ola Electric',       loc:'Krishnagiri, TN', type:'EV Scooters & Cars',    open:'Manufacturing, Automation, Software',   cat:'ev',       roles:520 },
+  { e:'🚗', n:'Tata Motors EV',     loc:'Chennai / Pune',  type:'EV Cars & Buses',       open:'Powertrain, Safety, Production',        cat:'ev',       roles:280 },
+  { e:'🏍', n:'TVS Motor Co.',      loc:'Hosur, TN',       type:'Auto & EV Two-Wheeler', open:'Quality, Automation, Design',           cat:'ev',       roles:190 },
+  { e:'🚗', n:'Hyundai India',      loc:'Sriperumbudur',   type:'Passenger Cars & EVs',  open:'Robotics, Production, IT',              cat:'auto',     roles:150 },
+  { e:'💻', n:'KPIT Technologies',  loc:'Chennai',         type:'Automotive Software',   open:'Embedded, AUTOSAR, ADAS',               cat:'software', roles:410 },
+  { e:'🔧', n:'Bosch India',        loc:'Coimbatore, TN',  type:'Auto Components',       open:'Embedded, PLC, Power Electronics',      cat:'auto',     roles:220 },
+  { e:'🚌', n:'Ashok Leyland',      loc:'Chennai',         type:'Commercial EVs & Trucks',open:'Powertrain, Safety, Production',        cat:'ev',       roles:170 },
+  { e:'🔋', n:'Amara Raja Energy',  loc:'Tirupati area',   type:'Battery Manufacturing', open:'BMS, Cell Tech, Quality',               cat:'ev',       roles:140 },
+  { e:'🔌', n:'Tata Power EV',      loc:'PAN India',       type:'EV Charging Infra',     open:'Power Systems, Field Tech, Software',   cat:'ev',       roles:95  },
+  { e:'🚜', n:'TAFE',               loc:'Chennai',         type:'Agri & Auto Equipment', open:'Mech, Production, R&D',                 cat:'auto',     roles:65  },
+  { e:'⚙️', n:'Sundram Fasteners',  loc:'Chennai',         type:'Auto Components',       open:'CNC, Quality, Supply Chain',            cat:'auto',     roles:80  },
+];
+
+const BADGE = { ev:'badge-ev', auto:'badge-auto', software:'badge-software' };
+const BADGE_LABEL = { ev:'EV', auto:'Auto', software:'Software' };
+
+let activeFilter = 'all';
+
+function setFilter(f, btn){
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+
+function applyFilters(){
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = companies.filter(c=>{
+    const matchFilter = activeFilter==='all' || c.cat===activeFilter;
+    const matchSearch = !q || c.n.toLowerCase().includes(q) || c.type.toLowerCase().includes(q) || c.loc.toLowerCase().includes(q) || c.open.toLowerCase().includes(q);
+    return matchFilter && matchSearch;
+  });
+
+  // Stats
+  const totalRoles = filtered.reduce((a,c)=>a+c.roles,0);
+  document.getElementById('statStrip').innerHTML = `
+    <div class="stat-chip"><span>${filtered.length}</span>Companies shown</div>
+    <div class="stat-chip"><span>${totalRoles.toLocaleString()}+</span>Open roles</div>
+    <div class="stat-chip"><span>${filtered.filter(c=>c.cat==='ev').length}</span>EV focused</div>
+    <div class="stat-chip"><span>${filtered.filter(c=>c.cat==='software').length}</span>Software / tech</div>`;
+
+  if(!filtered.length){
+    document.getElementById('companyList').innerHTML = `
+      <div class="no-results">
+        <span class="no-results-icon">🔍</span>
+        <div class="no-results-title">No companies match</div>
+        <div class="no-results-sub">Try a different search term or remove the filter.</div>
+      </div>`;
+    return;
+  }
+
+  document.getElementById('companyList').innerHTML = filtered.map((c,i)=>`
+    <div class="company-row" style="animation:slideUp .4s ease ${i*.04}s both">
+      <div class="co-emoji-wrap"><div class="co-emoji">${c.e}</div></div>
+      <div class="co-main">
+        <div class="co-name-row">
+          <div class="co-name">${c.n}</div>
+          <span class="co-type-badge ${BADGE[c.cat]}">${BADGE_LABEL[c.cat]}</span>
+        </div>
+        <div class="co-meta">
+          <span>${c.type}</span>
+          <span class="co-meta-dot">·</span>
+          <span>📍 ${c.loc}</span>
+        </div>
+      </div>
+      <div class="co-right">
+        <div class="co-open-label">Open roles include</div>
+        <div class="co-open-roles">${c.open}</div>
+        <button class="co-cta" onclick="goAnalyse('${c.n.replace(/'/g,"\\'")}')">Analyse fit →</button>
+      </div>
+    </div>`).join('');
+
+  // cursor events for new elements
+  document.querySelectorAll('.company-row, .co-cta, .filter-btn').forEach(el=>{
+    el.addEventListener('mouseenter',()=>document.getElementById('cursor').classList.add('cursor-expand'));
+    el.addEventListener('mouseleave',()=>document.getElementById('cursor').classList.remove('cursor-expand'));
+  });
+}
+
+function goAnalyse(name){
+  window.location.href = 'index.html';
+}
+
+/* ── CURSOR ── */
+const cursor=document.getElementById('cursor'), ring=document.getElementById('cursor-ring');
+let mx=-100,my=-100,rx=-100,ry=-100;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+(function ac(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.transform=`translate(${rx-mx}px,${ry-my}px)`;requestAnimationFrame(ac);})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cursor.classList.add('cursor-expand'));
+  el.addEventListener('mouseleave',()=>cursor.classList.remove('cursor-expand'));
+});
+
+/* ── PARTICLES ── */
+(function(){
+  const c=document.getElementById('particle-canvas'),ctx=c.getContext('2d');
+  let W,H,pts=[];
+  const r=()=>{W=c.width=innerWidth;H=c.height=innerHeight;};
+  r();window.addEventListener('resize',r);
+  for(let i=0;i<60;i++)pts.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,radius:Math.random()*1.3+.3,col:['#14b8a6','#3b82f6','#f43f6e','#f59e0b'][Math.floor(Math.random()*4)],alpha:Math.random()*.1+.04});
+  let pmx=0,pmy=0;
+  document.addEventListener('mousemove',e=>{pmx=e.clientX;pmy=e.clientY;});
+  (function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(let i=0;i<pts.length;i++){
+      for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.hypot(dx,dy);if(d<100){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(20,184,166,${(1-d/100)*.04})`;ctx.lineWidth=.4;ctx.stroke();}}
+      const mdx=pts[i].x-pmx,mdy=pts[i].y-pmy,md=Math.hypot(mdx,mdy);
+      if(md<80){pts[i].vx+=mdx/md*.3;pts[i].vy+=mdy/md*.3;}
+      pts[i].vx*=.99;pts[i].vy*=.99;pts[i].x+=pts[i].vx;pts[i].y+=pts[i].vy;
+      if(pts[i].x<0)pts[i].x=W;if(pts[i].x>W)pts[i].x=0;if(pts[i].y<0)pts[i].y=H;if(pts[i].y>H)pts[i].y=0;
+      ctx.beginPath();ctx.arc(pts[i].x,pts[i].y,pts[i].radius,0,Math.PI*2);ctx.fillStyle=pts[i].col;ctx.globalAlpha=pts[i].alpha;ctx.fill();ctx.globalAlpha=1;
+    }
+    requestAnimationFrame(draw);
+  })();
+})();
+
+window.addEventListener('load', ()=>applyFilters());
+</script>
+<script src="chat-widget.js"></script>
+</body>
+</html>

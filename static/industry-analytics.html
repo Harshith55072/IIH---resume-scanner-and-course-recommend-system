@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Industry Analytics — SkillTech AI</title>
+<link rel="stylesheet" href="industry-analytics-styles.css"/>
+<link rel="stylesheet" href="chat-widget.css"/>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor"><div id="cursor-ring"></div><div id="cursor-dot"></div></div>
+
+<!-- PARTICLE CANVAS -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="brand" href="overview.html">
+    <div class="brand-hex">
+      <svg viewBox="0 0 36 36" fill="none">
+        <polygon points="18,2 33,10 33,26 18,34 3,26 3,10" stroke="rgba(20,184,166,.5)" stroke-width="1" fill="none"/>
+        <polygon points="18,6 29,12.5 29,23.5 18,30 7,23.5 7,12.5" stroke="rgba(20,184,166,.25)" stroke-width=".5" fill="none"/>
+      </svg>
+      <div class="brand-inner">⚡</div>
+    </div>
+    <div>
+      <div class="brand-name">Skill<span>Tech</span></div>
+      <div class="brand-tag">TN · EV · Automotive</div>
+    </div>
+  </a>
+  <div class="nav-sep"></div>
+  <nav class="nav-links">
+    <a class="nl" href="overview.html">Overview</a>
+    <a class="nl active" href="#">Analytics</a>
+    <a class="nl nl-live" href="index.html">Skill Analyser</a>
+    <a class="nl" href="course-finder.html">Courses</a>
+    <a class="nl" href="job-roles.html">Job Roles</a>
+    <a class="nl" href="tn-companies.html">Companies</a>
+  </nav>
+  <div class="nav-right">
+    <div class="status-pill">
+      <div style="width:5px;height:5px;border-radius:50%;background:var(--g);box-shadow:0 0 6px var(--g);animation:blink 1.6s ease infinite;"></div>
+      LIVE DATA
+    </div>
+    <div class="ver-badge">v2.0</div>
+  </div>
+</nav>
+
+<main>
+
+<!-- TICKER TAPE -->
+<div class="ticker-wrap" style="margin-top:64px;">
+  <div class="ticker-label">◈ MARKET FEED</div>
+  <div class="ticker-track">
+    <div class="ticker-inner" id="tickerInner"></div>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="holo-grid"></div>
+  <div class="hero-eyebrow">
+    <div class="eyebrow-line"></div>
+    <div class="eyebrow-text">Tamil Nadu · EV &amp; Automotive · 2025 Live Intelligence</div>
+  </div>
+  <div class="page-title-wrap">
+    <h1 class="page-title">
+      <span class="pt-line1">Industry</span>
+      <span class="pt-line2">Analytics</span>
+    </h1>
+  </div>
+  <p class="page-sub">Real-time skill demand mapping, hiring trends, salary benchmarks and market intelligence for Tamil Nadu's EV and automotive manufacturing sector.</p>
+  <div class="kpi-strip" id="kpiStrip"></div>
+</section>
+
+<!-- SECTION 01: SKILL DEMAND -->
+<section class="section section-alt" id="skillSection">
+  <div class="holo-grid"></div>
+  <div class="section-label reveal">
+    <span class="sl-num">// 01</span>
+    <span class="sl-text">Skill Demand Index</span>
+    <div class="sl-line"></div>
+  </div>
+  <h2 class="section-title reveal">Skill <span>Demand</span> Matrix</h2>
+  <div class="skill-layout">
+    <div class="chart-panel reveal" style="--cp-color:var(--g)">
+      <div class="cp-head">
+        <div class="cp-dot" style="color:var(--g)"></div>
+        <div class="cp-title">TOP IN-DEMAND SKILLS — TN EV SECTOR 2025</div>
+        <div class="cp-meta" id="skillMeta">HOVER TO INSPECT</div>
+      </div>
+      <div class="cp-body" style="padding:14px 16px">
+        <canvas id="skillBarCanvas"></canvas>
+      </div>
+    </div>
+    <div class="chart-panel reveal" style="--cp-color:var(--m)">
+      <div class="cp-head">
+        <div class="cp-dot" style="color:var(--m)"></div>
+        <div class="cp-title">SKILL CATEGORY SHARE</div>
+        <div class="cp-meta" id="donutMeta">HOVER SEGMENT</div>
+      </div>
+      <div class="cp-body" style="display:flex;flex-direction:column;align-items:center;padding:16px">
+        <canvas id="donutCanvas" width="260" height="260"></canvas>
+        <div id="donutLegend" style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:center;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 02: MARKET TRENDS -->
+<section class="section" id="trendSection">
+  <div class="holo-grid"></div>
+  <div class="section-label reveal">
+    <span class="sl-num">// 02</span>
+    <span class="sl-text">Market Trends</span>
+    <div class="sl-line"></div>
+  </div>
+  <h2 class="section-title reveal">Salary &amp; Hiring <span>Trends</span></h2>
+
+  <div class="salary-layout" style="margin-bottom:20px">
+    <div class="chart-panel reveal" style="--cp-color:var(--b)">
+      <div class="cp-head">
+        <div class="cp-dot" style="color:var(--b)"></div>
+        <div class="cp-title">SALARY GROWTH TREND — EV ROLES</div>
+        <div class="cp-meta" id="salaryMeta">HOVER CHART</div>
+      </div>
+      <div class="cp-body" style="padding:12px 16px 16px">
+        <canvas id="salaryCanvas"></canvas>
+      </div>
+    </div>
+    <div class="chart-panel reveal" style="--cp-color:var(--y)">
+      <div class="cp-head">
+        <div class="cp-dot" style="color:var(--y)"></div>
+        <div class="cp-title">HIRING VELOCITY — MONTHLY JOB POSTINGS</div>
+        <div class="cp-meta" id="hiringMeta">HOVER CHART</div>
+      </div>
+      <div class="cp-body" style="padding:12px 16px 16px">
+        <canvas id="hiringCanvas"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label reveal" style="margin-top:40px;margin-bottom:20px">
+    <span class="sl-num">// 02.B</span>
+    <span class="sl-text">Fastest Growing Roles</span>
+    <div class="sl-line"></div>
+  </div>
+  <div class="growth-grid" id="growthGrid"></div>
+</section>
+
+<!-- SECTION 03: REGIONAL -->
+<section class="section section-alt" id="regionSection">
+  <div class="holo-grid"></div>
+  <div class="section-label reveal">
+    <span class="sl-num">// 03</span>
+    <span class="sl-text">Regional Intelligence</span>
+    <div class="sl-line"></div>
+  </div>
+  <h2 class="section-title reveal">Regional <span>Activity</span> Map</h2>
+
+  <div class="salary-layout" style="align-items:start">
+    <div class="chart-panel reveal" style="--cp-color:var(--g)">
+      <div class="cp-head">
+        <div class="cp-dot" style="color:var(--g)"></div>
+        <div class="cp-title">EV INDUSTRY CONCENTRATION BY REGION</div>
+      </div>
+      <div class="cp-body">
+        <div class="region-grid" id="regionGrid"></div>
+      </div>
+    </div>
+    <div class="chart-panel reveal" style="--cp-color:var(--b)">
+      <div class="cp-head">
+        <div class="cp-dot" style="color:var(--b)"></div>
+        <div class="cp-title">INDUSTRIAL CLUSTER ACTIVITY</div>
+        <div class="cp-meta" id="clusterMeta">HOVER NODE</div>
+      </div>
+      <div class="cp-body" style="display:flex;align-items:center;justify-content:center;padding:10px">
+        <canvas id="clusterCanvas" width="340" height="300"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 04: COMPANIES -->
+<section class="section" id="companySection">
+  <div class="holo-grid"></div>
+  <div class="section-label reveal">
+    <span class="sl-num">// 04</span>
+    <span class="sl-text">Top Hiring Entities</span>
+    <div class="sl-line"></div>
+  </div>
+  <h2 class="section-title reveal">Active <span>Hiring</span> Companies</h2>
+
+  <div class="company-section-layout">
+    <div><div class="company-hex-grid" id="companyGrid"></div></div>
+    <div class="company-sidebar" id="companySidebar"></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-left">© 2025 SkillTech AI · Tamil Nadu Workforce Analytics</div>
+  <div class="footer-right">Data: ACMA · NSDC · SIAM · NITI Aayog EV Reports</div>
+</footer>
+
+<script>
+'use strict';
+
+/* ─── CURSOR ─── */
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursor-ring');
+let mx=-100,my=-100,rx=-100,ry=-100;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+(function animC(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.transform=`translate(${rx-mx}px,${ry-my}px)`;requestAnimationFrame(animC);})();
+document.querySelectorAll('a,button,.company-hex,.growth-card,.chart-panel').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cursor.classList.add('cursor-expand'));
+  el.addEventListener('mouseleave',()=>cursor.classList.remove('cursor-expand'));
+});
+
+/* ─── PARTICLE FIELD (light) ─── */
+(function(){
+  const c=document.getElementById('particle-canvas');
+  const ctx=c.getContext('2d');
+  let W,H,pts=[];
+  const resize=()=>{W=c.width=innerWidth;H=c.height=innerHeight;};
+  resize();window.addEventListener('resize',resize);
+  for(let i=0;i<70;i++)pts.push({
+    x:Math.random()*W,y:Math.random()*H,
+    vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,
+    r:Math.random()*1.3+.3,
+    col:['#14b8a6','#3b82f6','#f43f6e','#f59e0b'][Math.floor(Math.random()*4)],
+    a:Math.random()*.18+.05,
+  });
+  let pmx=0,pmy=0;
+  document.addEventListener('mousemove',e=>{pmx=e.clientX;pmy=e.clientY;});
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(let i=0;i<pts.length;i++){
+      for(let j=i+1;j<pts.length;j++){
+        const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<100){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(20,184,166,${(1-d/100)*.05})`;ctx.lineWidth=.5;ctx.stroke();}
+      }
+      const mdx=pts[i].x-pmx,mdy=pts[i].y-pmy,md=Math.sqrt(mdx*mdx+mdy*mdy);
+      if(md<90){pts[i].vx+=mdx/md*.3;pts[i].vy+=mdy/md*.3;}
+      pts[i].vx*=.99;pts[i].vy*=.99;pts[i].x+=pts[i].vx;pts[i].y+=pts[i].vy;
+      if(pts[i].x<0)pts[i].x=W;if(pts[i].x>W)pts[i].x=0;
+      if(pts[i].y<0)pts[i].y=H;if(pts[i].y>H)pts[i].y=0;
+      ctx.beginPath();ctx.arc(pts[i].x,pts[i].y,pts[i].r,0,Math.PI*2);
+      ctx.fillStyle=pts[i].col;ctx.globalAlpha=pts[i].a;ctx.fill();ctx.globalAlpha=1;
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ─── TICKER ─── */
+(function(){
+  const ticks=[
+    {label:'EV BATTERY ENGR',val:'↑ 92%',up:true},
+    {label:'PLC/SCADA',val:'↑ 87%',up:true},
+    {label:'AVG SALARY',val:'₹4.2L',up:true},
+    {label:'SKILL GAP',val:'67%',up:false},
+    {label:'EV JOBS 2030',val:'4.2L',up:true},
+    {label:'ACTIVE OEMs',val:'12',up:true},
+    {label:'EMBEDDED SYS',val:'↑ 81%',up:true},
+    {label:'ROBOTICS',val:'↑ 74%',up:true},
+    {label:'NEW COURSES',val:'314',up:true},
+    {label:'HOSUR CLUSTER',val:'↑ 78%',up:true},
+    {label:'POWER ELECTRONICS',val:'↑ 78%',up:true},
+    {label:'PYTHON/MATLAB',val:'↑ 65%',up:true},
+  ];
+  const all=[...ticks,...ticks];
+  document.getElementById('tickerInner').innerHTML=all.map(t=>`<div class="ticker-item">${t.label}: <span class="${t.up?'up':'dn'}">${t.val}</span></div>`).join('');
+})();
+
+/* ─── KPI CARDS ─── */
+(function(){
+  const kpis=[
+    {cls:'kc-g',cat:'EV_JOBS_2030',val:'4.2L',lbl:'Projected EV jobs in Tamil Nadu by 2030',delta:'↑ 38% annually',dcls:'delta-up'},
+    {cls:'kc-b',cat:'EV_MANUFACTURERS',val:'12',lbl:'Active EV manufacturers in TN (2025)',delta:'↑ 4 new this year',dcls:'delta-up'},
+    {cls:'kc-m',cat:'SKILL_GAP_INDEX',val:'67%',lbl:'Average skill gap in fresh graduates',delta:'↓ from 72% in 2023',dcls:'delta-down'},
+    {cls:'kc-y',cat:'AVG_START_SALARY',val:'₹4.2L',lbl:'Average starting salary (EV roles)',delta:'↑ vs ₹3.6L last year',dcls:'delta-up'},
+  ];
+  document.getElementById('kpiStrip').innerHTML=kpis.map(k=>`
+    <div class="kpi-card ${k.cls}">
+      <div class="kpi-cat">${k.cat}</div>
+      <div class="kpi-val">${k.val}</div>
+      <div class="kpi-lbl">${k.lbl}</div>
+      <span class="kpi-delta ${k.dcls}">${k.delta}</span>
+    </div>`).join('');
+})();
+
+/* ─── SKILL BAR CANVAS (light) ─── */
+(function(){
+  const canvas=document.getElementById('skillBarCanvas');
+  const parent=canvas.parentElement;
+  const SKILLS=[
+    {label:'EV Battery & BMS',     val:92,c1:'#0d9488',c2:'#3b82f6'},
+    {label:'PLC / SCADA / HMI',    val:87,c1:'#2563eb',c2:'#7c3aed'},
+    {label:'Embedded Systems',      val:81,c1:'#f43f6e',c2:'#f97316'},
+    {label:'Power Electronics',     val:78,c1:'#f59e0b',c2:'#f97316'},
+    {label:'Robotics & Automation', val:74,c1:'#14b8a6',c2:'#7c3aed'},
+    {label:'Python / MATLAB',       val:65,c1:'#3b82f6',c2:'#14b8a6'},
+    {label:'CAD / SolidWorks',      val:61,c1:'#7c3aed',c2:'#f43f6e'},
+    {label:'Six Sigma / FMEA',      val:55,c1:'#f97316',c2:'#f59e0b'},
+    {label:'IoT / CAN Bus',         val:52,c1:'#f43f6e',c2:'#7c3aed'},
+    {label:'Vehicle Diagnostics',   val:48,c1:'#f59e0b',c2:'#14b8a6'},
+  ];
+  let W,H,triggered=false,startTime=null,hovered=-1,particles=[];
+  const barH=16,gap=32,ML=178,MR=50,MT=10;
+  const reached=new Array(SKILLS.length).fill(false);
+
+  function resize(){W=canvas.width=parent.offsetWidth;H=canvas.height=SKILLS.length*gap+MT+16;}
+  resize();window.addEventListener('resize',resize);
+  const ctx=canvas.getContext('2d');
+
+  function burst(x,y,col){for(let i=0;i<12;i++){const a=Math.random()*Math.PI*2,s=1+Math.random()*2.5;particles.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,a:1,col,r:1+Math.random()*2});}}
+  function rr(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();}
+
+  function draw(ts){
+    if(!startTime)startTime=ts;
+    const elapsed=ts-startTime;
+    ctx.clearRect(0,0,W,H);
+    const maxW=W-ML-MR;
+
+    // grid lines
+    ctx.strokeStyle='rgba(15,23,42,.06)';ctx.lineWidth=.5;
+    [25,50,75,100].forEach(p=>{const x=ML+(p/100)*maxW;ctx.beginPath();ctx.moveTo(x,MT);ctx.lineTo(x,H-8);ctx.stroke();ctx.font='8px "JetBrains Mono"';ctx.fillStyle='rgba(100,116,139,.5)';ctx.textAlign='center';ctx.fillText(p,x,H-2);});
+
+    SKILLS.forEach((s,i)=>{
+      const y=MT+i*gap;
+      const er=triggered?Math.min(elapsed/(800+i*60),1):0;
+      const eased=1-Math.pow(1-er,4);
+      const w=eased*(s.val/100)*maxW;
+      const isH=hovered===i;
+
+      ctx.font=`${isH?'600':'500'} 10.5px "JetBrains Mono"`;
+      ctx.fillStyle=isH?'#0f172a':'#64748b';
+      ctx.textAlign='right';ctx.fillText(s.label,ML-10,y+barH/2+4);
+
+      ctx.fillStyle='rgba(15,23,42,.05)';rr(ctx,ML,y,maxW,barH,3);ctx.fill();
+
+      if(w>2){
+        const g=ctx.createLinearGradient(ML,0,ML+w,0);
+        g.addColorStop(0,s.c1+(isH?'ff':'cc'));g.addColorStop(1,s.c2+(isH?'ff':'cc'));
+        ctx.fillStyle=g;rr(ctx,ML,y,w,barH,3);ctx.fill();
+
+        // shimmer
+        const shimX=ML+(w*((ts%1800)/1800));
+        const sg=ctx.createLinearGradient(shimX-20,0,shimX+20,0);
+        sg.addColorStop(0,'rgba(255,255,255,0)');sg.addColorStop(.5,'rgba(255,255,255,.3)');sg.addColorStop(1,'rgba(255,255,255,0)');
+        ctx.fillStyle=sg;rr(ctx,ML,y,w,barH,3);ctx.fill();
+
+        if(isH){ctx.shadowColor=s.c2;ctx.shadowBlur=12;rr(ctx,ML,y,w,barH,3);ctx.fillStyle='rgba(0,0,0,0)';ctx.fill();ctx.shadowBlur=0;}
+
+        ctx.beginPath();ctx.arc(ML+w,y+barH/2,isH?5:3,0,Math.PI*2);
+        ctx.fillStyle=s.c2;if(isH){ctx.shadowColor=s.c2;ctx.shadowBlur=14;}ctx.fill();ctx.shadowBlur=0;
+
+        ctx.font='700 9.5px "JetBrains Mono"';
+        ctx.fillStyle=isH?s.c2:'#94a3b8';ctx.textAlign='left';
+        ctx.fillText(s.val+'%',ML+w+8,y+barH/2+4);ctx.textAlign='right';
+
+        if(er>=1&&!reached[i]){burst(ML+(s.val/100)*maxW,y+barH/2,s.c2);reached[i]=true;}
+      }
+    });
+
+    particles=particles.filter(p=>p.a>.02);
+    particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.07;p.vx*=.97;p.a-=.022;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.col+Math.floor(p.a*255).toString(16).padStart(2,'0');ctx.fill();});
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+
+  canvas.addEventListener('mousemove',e=>{const rect=canvas.getBoundingClientRect();const my=(e.clientY-rect.top);const idx=Math.floor((my-MT)/gap);hovered=(idx>=0&&idx<SKILLS.length)?idx:-1;document.getElementById('skillMeta').textContent=hovered>=0?`${SKILLS[hovered].label}: ${SKILLS[hovered].val}/100 DEMAND SCORE`:'HOVER TO INSPECT';});
+  canvas.addEventListener('mouseleave',()=>{hovered=-1;document.getElementById('skillMeta').textContent='HOVER TO INSPECT';});
+  new IntersectionObserver(e=>{if(e[0].isIntersecting){triggered=true;startTime=null;}},{threshold:.2}).observe(canvas);
+})();
+
+/* ─── DONUT CANVAS (light) ─── */
+(function(){
+  const canvas=document.getElementById('donutCanvas');
+  const ctx=canvas.getContext('2d');
+  const S=260;canvas.width=canvas.height=S;
+  const cx=S/2,cy=S/2,R=100,r=62;
+  const SEGS=[
+    {label:'Electrical & EV',    val:35,c:'#14b8a6'},
+    {label:'Automation',         val:24,c:'#3b82f6'},
+    {label:'Software & Embedded',val:18,c:'#7c3aed'},
+    {label:'Manufacturing',      val:14,c:'#f59e0b'},
+    {label:'Safety & QC',        val:9, c:'#f43f6e'},
+  ];
+  const total=SEGS.reduce((a,b)=>a+b.val,0);
+  let fillProgress=0,triggered=false,hovered=-1,rotAngle=0,sparkles=[];
+
+  document.getElementById('donutLegend').innerHTML=SEGS.map(s=>`
+    <div style="display:flex;align-items:center;gap:5px;">
+      <span style="width:8px;height:8px;border-radius:2px;background:${s.c};display:block;flex-shrink:0;"></span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;color:#64748b;letter-spacing:.05em;">${s.label}: ${s.val}%</span>
+    </div>`).join('');
+
+  canvas.addEventListener('mousemove',e=>{
+    const rect=canvas.getBoundingClientRect();
+    const emx=e.clientX-rect.left-cx,emy=e.clientY-rect.top-cy;
+    const dist=Math.sqrt(emx*emx+emy*emy);
+    const prev=hovered;
+    if(dist>r&&dist<R+18){
+      let angle=Math.atan2(emy,emx)-rotAngle;
+      while(angle<0)angle+=Math.PI*2;
+      let start=0;hovered=-1;
+      SEGS.forEach((s,i)=>{const slice=(s.val/total)*Math.PI*2;if(angle>=start&&angle<start+slice)hovered=i;start+=slice;});
+    }else{hovered=-1;}
+    if(hovered!==prev&&hovered>=0){
+      for(let i=0;i<16;i++){const a=Math.random()*Math.PI*2,sp=1+Math.random()*2;sparkles.push({x:cx+Math.cos(a)*(r+20),y:cy+Math.sin(a)*(r+20),vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,a:1,col:SEGS[hovered].c,r:1+Math.random()*2});}
+      document.getElementById('donutMeta').textContent=`${SEGS[hovered].label}: ${SEGS[hovered].val}%`;
+    }else if(hovered<0){document.getElementById('donutMeta').textContent='HOVER SEGMENT';}
+  });
+  canvas.addEventListener('mouseleave',()=>{hovered=-1;document.getElementById('donutMeta').textContent='HOVER SEGMENT';});
+
+  function drawFrame(){
+    ctx.clearRect(0,0,S,S);
+    if(triggered&&fillProgress<1)fillProgress=Math.min(fillProgress+.016,1);
+    const fe=1-Math.pow(1-fillProgress,3);
+    rotAngle+=0.003;
+
+    // bg ring
+    ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.arc(cx,cy,r,0,Math.PI*2,true);
+    ctx.fillStyle='rgba(15,23,42,.04)';ctx.fill();
+
+    let start=rotAngle-Math.PI/2;
+    SEGS.forEach((s,i)=>{
+      const slice=(s.val/total)*Math.PI*2*fe;
+      const isH=hovered===i;
+      const outerR=isH?R+8:R,innerR=isH?r-4:r;
+      ctx.beginPath();ctx.arc(cx,cy,outerR,start,start+slice);ctx.arc(cx,cy,innerR,start+slice,start,true);ctx.closePath();
+      const g=ctx.createLinearGradient(cx+Math.cos(start)*r,cy+Math.sin(start)*r,cx+Math.cos(start+slice)*outerR,cy+Math.sin(start+slice)*outerR);
+      g.addColorStop(0,s.c+'bb');g.addColorStop(1,s.c+'ff');
+      ctx.fillStyle=g;
+      if(isH){ctx.shadowColor=s.c;ctx.shadowBlur=16;}ctx.fill();ctx.shadowBlur=0;
+      // gap line
+      ctx.save();ctx.strokeStyle='#f8fafc';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(cx+Math.cos(start)*r,cy+Math.sin(start)*r);ctx.lineTo(cx+Math.cos(start)*outerR,cy+Math.sin(start)*outerR);ctx.stroke();ctx.restore();
+      start+=slice;
+    });
+
+    // center text
+    ctx.font='700 20px "Unbounded"';ctx.fillStyle='#0f172a';ctx.textAlign='center';ctx.textBaseline='middle';
+    if(hovered>=0){ctx.fillText(SEGS[hovered].val+'%',cx,cy-8);ctx.font='600 8px "JetBrains Mono"';ctx.fillStyle=SEGS[hovered].c;ctx.fillText(SEGS[hovered].label.toUpperCase(),cx,cy+14);}
+    else{ctx.fillText('100%',cx,cy-8);ctx.font='600 8px "JetBrains Mono"';ctx.fillStyle='#94a3b8';ctx.fillText('SKILL MIX',cx,cy+14);}
+    ctx.textBaseline='alphabetic';
+
+    sparkles=sparkles.filter(p=>p.a>.02);
+    sparkles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.05;p.a-=.025;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.col+Math.floor(p.a*255).toString(16).padStart(2,'0');ctx.fill();});
+    requestAnimationFrame(drawFrame);
+  }
+  requestAnimationFrame(drawFrame);
+  new IntersectionObserver(e=>{if(e[0].isIntersecting)triggered=true;},{threshold:.3}).observe(canvas);
+})();
+
+/* ─── SALARY TREND CANVAS (light) ─── */
+(function(){
+  const canvas=document.getElementById('salaryCanvas');
+  const parent=canvas.parentElement;
+  const ctx=canvas.getContext('2d');
+  const YEARS=['2020','2021','2022','2023','2024','2025'];
+  const EV=[2.4,2.7,3.0,3.4,3.8,4.2];
+  const TRAD=[2.2,2.3,2.5,2.7,2.9,3.1];
+  let W,H,triggered=false,drawProgress=0,hovered=-1;
+  const ML=44,MR=20,MT=18,MB=28;
+  function resize(){W=canvas.width=parent.offsetWidth;H=canvas.height=200;}
+  resize();window.addEventListener('resize',resize);
+  function px(i){return ML+(i/(YEARS.length-1))*(W-ML-MR);}
+  function py(v){return MT+(1-(v-1.5)/3.5)*(H-MT-MB);}
+  function bezLine(data,col,w2,dashed){
+    ctx.save();ctx.strokeStyle=col;ctx.lineWidth=w2;ctx.lineCap='round';ctx.lineJoin='round';
+    if(dashed)ctx.setLineDash([4,4]);
+    const clampI=drawProgress*(YEARS.length-1);
+    ctx.beginPath();
+    data.forEach((v,i)=>{if(i>clampI)return;const x=px(i),y=py(v);i===0?ctx.moveTo(x,y):(ctx.bezierCurveTo((px(i-1)+px(i))/2,py(data[i-1]),(px(i-1)+px(i))/2,y,x,y));});
+    ctx.stroke();ctx.restore();
+  }
+  function drawFrame(){
+    ctx.clearRect(0,0,W,H);
+    if(triggered&&drawProgress<1)drawProgress=Math.min(drawProgress+.014,1);
+    const dp=1-Math.pow(1-drawProgress,3);
+    // grid
+    ctx.strokeStyle='rgba(15,23,42,.06)';ctx.lineWidth=.5;
+    [2.0,2.5,3.0,3.5,4.0,4.5].forEach(v=>{const y=py(v);ctx.beginPath();ctx.moveTo(ML,y);ctx.lineTo(W-MR,y);ctx.stroke();ctx.font='8px "JetBrains Mono"';ctx.fillStyle='rgba(100,116,139,.7)';ctx.textAlign='right';ctx.fillText('₹'+v+'L',ML-5,y+3);});
+    YEARS.forEach((yr,i)=>{ctx.font='8px "JetBrains Mono"';ctx.fillStyle='rgba(100,116,139,.7)';ctx.textAlign='center';ctx.fillText(yr,px(i),H-MB+14);});
+    // fill
+    const fillG=ctx.createLinearGradient(0,MT,0,H-MB);fillG.addColorStop(0,'rgba(59,130,246,.12)');fillG.addColorStop(1,'rgba(59,130,246,0)');
+    ctx.save();ctx.beginPath();
+    const clampI=dp*(YEARS.length-1);
+    EV.forEach((v,i)=>{if(i>clampI)return;const x=px(i),y=py(v);i===0?ctx.moveTo(x,y):(ctx.bezierCurveTo((px(i-1)+px(i))/2,py(EV[i-1]),(px(i-1)+px(i))/2,y,x,y));});
+    ctx.lineTo(px(Math.min(Math.floor(clampI),YEARS.length-1)),H-MB);ctx.lineTo(ML,H-MB);ctx.closePath();ctx.fillStyle=fillG;ctx.fill();ctx.restore();
+    bezLine(TRAD,'rgba(244,63,110,.5)',1.5,true);
+    bezLine(EV,'#3b82f6',2.5);
+    // dots
+    EV.forEach((v,i)=>{if(i>clampI)return;const x=px(i),y=py(v),isH=hovered===i;ctx.beginPath();ctx.arc(x,y,isH?7:4,0,Math.PI*2);ctx.fillStyle=isH?'#2563eb':'rgba(59,130,246,.9)';if(isH){ctx.shadowColor='#3b82f6';ctx.shadowBlur=12;}ctx.fill();ctx.shadowBlur=0;});
+    // crosshair + tooltip
+    if(hovered>=0){
+      const hx=px(hovered);ctx.save();ctx.strokeStyle='rgba(59,130,246,.25)';ctx.lineWidth=1;ctx.setLineDash([3,3]);ctx.beginPath();ctx.moveTo(hx,MT);ctx.lineTo(hx,H-MB);ctx.stroke();ctx.restore();
+      const tw=148,th=52,tx=Math.min(hx+8,W-MR-tw),ty=MT+4;
+      ctx.fillStyle='rgba(255,255,255,.97)';ctx.strokeStyle='rgba(59,130,246,.2)';ctx.lineWidth=1;
+      ctx.shadowColor='rgba(0,0,0,.08)';ctx.shadowBlur=12;
+      ctx.beginPath();ctx.roundRect(tx,ty,tw,th,5);ctx.fill();ctx.stroke();ctx.shadowBlur=0;
+      ctx.font='700 8px "JetBrains Mono"';ctx.fillStyle='#64748b';ctx.textAlign='left';ctx.fillText(YEARS[hovered],tx+10,ty+14);
+      ctx.fillStyle='#2563eb';ctx.fillText('EV ROLES: ₹'+EV[hovered]+'L',tx+10,ty+28);
+      ctx.fillStyle='rgba(244,63,110,.9)';ctx.fillText('TRAD MFGR: ₹'+TRAD[hovered]+'L',tx+10,ty+42);
+    }
+    // legend
+    ctx.font='8px "JetBrains Mono"';ctx.textAlign='left';
+    [['━ EV ROLES','#3b82f6'],['━ TRADITIONAL','rgba(244,63,110,.8)']].forEach(([l,c],i)=>{ctx.fillStyle=c;ctx.fillText(l,ML+i*130,MT-4);});
+    requestAnimationFrame(drawFrame);
+  }
+  requestAnimationFrame(drawFrame);
+  canvas.addEventListener('mousemove',e=>{const rect=canvas.getBoundingClientRect();const emx=e.clientX-rect.left;let best=-1,bestD=9999;YEARS.forEach((_,i)=>{const d=Math.abs(px(i)-emx);if(d<bestD){bestD=d;best=i;}});hovered=bestD<22?best:-1;document.getElementById('salaryMeta').textContent=hovered>=0?`${YEARS[hovered]}: EV ₹${EV[hovered]}L vs Traditional ₹${TRAD[hovered]}L`:'HOVER CHART';});
+  canvas.addEventListener('mouseleave',()=>{hovered=-1;document.getElementById('salaryMeta').textContent='HOVER CHART';});
+  new IntersectionObserver(e=>{if(e[0].isIntersecting)triggered=true;},{threshold:.3}).observe(canvas);
+})();
+
+/* ─── HIRING VELOCITY CANVAS (light) ─── */
+(function(){
+  const canvas=document.getElementById('hiringCanvas');
+  const parent=canvas.parentElement;
+  const ctx=canvas.getContext('2d');
+  const MONTHS=['J','F','M','A','M','J','J','A','S','O','N','D'];
+  const POSTS=[210,245,280,310,370,420,460,490,510,540,570,610];
+  let W,H,triggered=false,drawProgress=0,hovered=-1,barAnim=[];
+  const ML=40,MR=12,MT=16,MB=28;
+  function resize(){W=canvas.width=parent.offsetWidth;H=canvas.height=200;barAnim=new Array(MONTHS.length).fill(0);}
+  resize();window.addEventListener('resize',resize);
+  function bpx(i){return ML+i*((W-ML-MR)/11)+((W-ML-MR)/22);}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    if(triggered&&drawProgress<1)drawProgress=Math.min(drawProgress+.014,1);
+    const dp=1-Math.pow(1-drawProgress,3);
+    const maxP=Math.max(...POSTS),chartH=H-MT-MB;
+    const bw=(W-ML-MR)/(MONTHS.length*1.6);
+    // grid
+    ctx.strokeStyle='rgba(15,23,42,.06)';ctx.lineWidth=.5;
+    [200,300,400,500,600].forEach(v=>{const y=MT+(1-(v/maxP))*chartH;ctx.beginPath();ctx.moveTo(ML,y);ctx.lineTo(W-MR,y);ctx.stroke();ctx.font='7.5px "JetBrains Mono"';ctx.fillStyle='rgba(100,116,139,.6)';ctx.textAlign='right';ctx.fillText(v,ML-4,y+3);});
+    MONTHS.forEach((m,i)=>{ctx.font='8px "JetBrains Mono"';ctx.fillStyle='rgba(100,116,139,.6)';ctx.textAlign='center';ctx.fillText(m,bpx(i),H-MB+14);});
+    // bars
+    MONTHS.forEach((m,i)=>{
+      const targetH=(POSTS[i]/maxP)*chartH*dp;
+      barAnim[i]+=(targetH-barAnim[i])*.12;
+      const x=bpx(i)-bw/2,y=H-MB-barAnim[i];
+      const isH=hovered===i;
+      const g=ctx.createLinearGradient(0,y,0,H-MB);
+      g.addColorStop(0,isH?'#d97706':'rgba(245,158,11,.75)');
+      g.addColorStop(1,'rgba(245,158,11,.12)');
+      ctx.fillStyle=g;
+      if(isH){ctx.shadowColor='#f59e0b';ctx.shadowBlur=12;}
+      ctx.beginPath();ctx.roundRect(x,y,bw,barAnim[i],3);ctx.fill();ctx.shadowBlur=0;
+      if(isH){ctx.font='700 9px "JetBrains Mono"';ctx.fillStyle='#92400e';ctx.textAlign='center';ctx.fillText(POSTS[i],bpx(i),y-5);}
+    });
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+  canvas.addEventListener('mousemove',e=>{const rect=canvas.getBoundingClientRect();const emx=e.clientX-rect.left;let best=-1,bestD=9999;MONTHS.forEach((_,i)=>{const d=Math.abs(bpx(i)-emx);if(d<bestD){bestD=d;best=i;}});hovered=bestD<24?best:-1;document.getElementById('hiringMeta').textContent=hovered>=0?`${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][hovered]} 2025: ${POSTS[hovered]} job postings`:'HOVER CHART';});
+  canvas.addEventListener('mouseleave',()=>{hovered=-1;document.getElementById('hiringMeta').textContent='HOVER CHART';});
+  new IntersectionObserver(e=>{if(e[0].isIntersecting)triggered=true;},{threshold:.3}).observe(canvas);
+})();
+
+/* ─── GROWTH CARDS ─── */
+(function(){
+  const roles=[
+    {n:'01',title:'EV Charging Infrastructure Engr.',co:'Tata Power · EESL · ChargeZone',pct:96,badge:'HOT',bcls:'badge-hot',gc:'#f43f6e'},
+    {n:'02',title:'Battery Management Engineer',co:'Ather Energy · Tata EV · Ola',pct:91,badge:'HOT',bcls:'badge-hot',gc:'#f43f6e'},
+    {n:'03',title:'Automation Technician (EV)',co:'TVS Motor · Hyundai Chennai',pct:84,badge:'RISING',bcls:'badge-rise',gc:'#14b8a6'},
+    {n:'04',title:'Automotive Software Engineer',co:'KPIT Technologies · Bosch India',pct:79,badge:'RISING',bcls:'badge-rise',gc:'#14b8a6'},
+    {n:'05',title:'EV Motor Design Engineer',co:'Ola Electric · TVS · Tata Motors',pct:73,badge:'NEW',bcls:'badge-new',gc:'#f59e0b'},
+    {n:'06',title:'IoT / Connected Vehicle Engr.',co:'Mahindra · Tata Elxsi · Wipro',pct:68,badge:'NEW',bcls:'badge-new',gc:'#f59e0b'},
+  ];
+  document.getElementById('growthGrid').innerHTML=roles.map(r=>`
+    <div class="growth-card reveal" style="--gc:${r.gc}">
+      <div class="gc-role">// ROLE_${r.n}</div>
+      <div class="gc-title">${r.title}</div>
+      <div class="gc-company">${r.co}</div>
+      <div class="gc-bar-track"><div class="gc-bar-fill" data-w="${r.pct}" style="background:linear-gradient(90deg,${r.gc}88,${r.gc});"></div></div>
+      <div class="gc-stat">
+        <span class="gc-pct">${r.pct}% DEMAND</span>
+        <span class="gc-badge ${r.bcls}">${r.badge}</span>
+      </div>
+    </div>`).join('');
+})();
+
+/* ─── REGION BARS ─── */
+(function(){
+  const regions=[
+    {city:'Chennai',meta:'~1.8L projected jobs',pct:92,sub:'OEM hub · Hyundai · Ford · Tata',grad:'linear-gradient(90deg,var(--g),var(--b))'},
+    {city:'Hosur',meta:'~1.1L projected jobs',pct:78,sub:'EV capital · Ather · TVS · Tata',grad:'linear-gradient(90deg,var(--b),var(--v))'},
+    {city:'Coimbatore',meta:'~0.8L projected jobs',pct:61,sub:'Tier-2 component suppliers',grad:'linear-gradient(90deg,var(--m),var(--b))'},
+    {city:'Madurai',meta:'~0.3L projected jobs',pct:38,sub:'Emerging EV cluster',grad:'linear-gradient(90deg,var(--y),var(--o))'},
+    {city:'Salem',meta:'~0.2L projected jobs',pct:29,sub:'Auto parts & ancillaries',grad:'linear-gradient(90deg,var(--v),var(--m))'},
+    {city:'Tirunelveli',meta:'~0.1L projected jobs',pct:18,sub:'New entrant · SE TN',grad:'linear-gradient(90deg,var(--o),var(--y))'},
+  ];
+  document.getElementById('regionGrid').innerHTML=regions.map(r=>`
+    <div class="rg-row reveal">
+      <div class="rg-top">
+        <span class="rg-city">${r.city}</span>
+        <span class="rg-meta">${r.meta} · <span style="color:var(--g2);font-family:'JetBrains Mono',mono;font-size:9px;font-weight:700;">${r.pct}%</span></span>
+      </div>
+      <div class="rg-track"><div class="rg-fill" data-w="${r.pct}" style="background:${r.grad}"></div></div>
+      <div class="rg-sublabel">${r.sub}</div>
+    </div>`).join('');
+})();
+
+/* ─── CLUSTER MAP CANVAS (light) ─── */
+(function(){
+  const canvas=document.getElementById('clusterCanvas');
+  const ctx=canvas.getContext('2d');
+  const W=340,H=300;
+  const NODES=[
+    {label:'Chennai',x:230,y:220,r:28,c:'#14b8a6',jobs:'1.8L',type:'OEM Hub'},
+    {label:'Hosur',x:170,y:150,r:22,c:'#3b82f6',jobs:'1.1L',type:'EV Capital'},
+    {label:'Coimbatore',x:80,y:140,r:18,c:'#7c3aed',jobs:'0.8L',type:'Tier-2'},
+    {label:'Madurai',x:150,y:250,r:14,c:'#f59e0b',jobs:'0.3L',type:'Emerging'},
+    {label:'Salem',x:120,y:90,r:12,c:'#f43f6e',jobs:'0.2L',type:'Parts'},
+    {label:'Tirunelveli',x:200,y:285,r:10,c:'#f97316',jobs:'0.1L',type:'New'},
+  ];
+  const LINKS=[[0,1],[1,2],[1,3],[0,3],[2,4],[1,4],[0,5]];
+  let hovered=-1,t=0,sparkles=[];
+
+  canvas.addEventListener('mousemove',e=>{
+    const rect=canvas.getBoundingClientRect();
+    const emx=e.clientX-rect.left,emy=e.clientY-rect.top;
+    const prev=hovered;hovered=-1;
+    NODES.forEach((n,i)=>{const dx=emx-n.x,dy=emy-n.y;if(Math.sqrt(dx*dx+dy*dy)<n.r+8)hovered=i;});
+    if(hovered!==prev&&hovered>=0){
+      for(let i=0;i<14;i++){const a=Math.random()*Math.PI*2,sp=1+Math.random()*2;sparkles.push({x:NODES[hovered].x,y:NODES[hovered].y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,a:1,col:NODES[hovered].c,r:1.5+Math.random()*1.5});}
+      document.getElementById('clusterMeta').textContent=`${NODES[hovered].label}: ${NODES[hovered].jobs} jobs · ${NODES[hovered].type}`;
+    }
+    if(hovered<0)document.getElementById('clusterMeta').textContent='HOVER NODE';
+  });
+  canvas.addEventListener('mouseleave',()=>{hovered=-1;document.getElementById('clusterMeta').textContent='HOVER NODE';});
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);t+=.018;
+    LINKS.forEach(([a,b])=>{
+      const na=NODES[a],nb=NODES[b];
+      const g=ctx.createLinearGradient(na.x,na.y,nb.x,nb.y);
+      g.addColorStop(0,na.c+'33');g.addColorStop(1,nb.c+'33');
+      ctx.beginPath();ctx.moveTo(na.x,na.y);ctx.lineTo(nb.x,nb.y);ctx.strokeStyle=g;ctx.lineWidth=1;ctx.stroke();
+      const tp=(Math.sin(t+a*.8)*.5+.5);
+      const dx=nb.x-na.x,dy=nb.y-na.y;
+      ctx.beginPath();ctx.arc(na.x+dx*tp,na.y+dy*tp,2,0,Math.PI*2);ctx.fillStyle=na.c+'bb';ctx.fill();
+    });
+    NODES.forEach((n,i)=>{
+      const isH=hovered===i;
+      const pulse=1+Math.sin(t+i*.7)*.07;
+      // glow
+      const gr=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,(n.r+14)*pulse);
+      gr.addColorStop(0,n.c+'28');gr.addColorStop(1,n.c+'00');
+      ctx.beginPath();ctx.arc(n.x,n.y,(n.r+14)*pulse,0,Math.PI*2);ctx.fillStyle=gr;ctx.fill();
+      // main
+      const bg=ctx.createRadialGradient(n.x-n.r*.3,n.y-n.r*.3,0,n.x,n.y,n.r);
+      bg.addColorStop(0,n.c+'ee');bg.addColorStop(1,n.c+'88');
+      ctx.beginPath();ctx.arc(n.x,n.y,n.r*pulse*(isH?1.15:1),0,Math.PI*2);
+      ctx.fillStyle=bg;if(isH){ctx.shadowColor=n.c;ctx.shadowBlur=18;}ctx.fill();ctx.shadowBlur=0;
+      ctx.beginPath();ctx.arc(n.x,n.y,n.r*pulse*(isH?1.15:1),0,Math.PI*2);
+      ctx.strokeStyle=n.c;ctx.lineWidth=isH?2:1;ctx.stroke();
+      ctx.font=`700 ${Math.max(8,n.r*.38)}px "JetBrains Mono"`;
+      ctx.fillStyle=isH?'#fff':'rgba(255,255,255,.95)';ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(n.label.length>7?n.label.slice(0,6)+'…':n.label,n.x,n.y);
+      ctx.textBaseline='alphabetic';
+      if(isH){ctx.font='700 9px "JetBrains Mono"';ctx.fillStyle=n.c;ctx.textAlign='center';ctx.fillText(n.jobs,n.x,n.y+n.r+14);}
+    });
+    sparkles=sparkles.filter(p=>p.a>.02);
+    sparkles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.04;p.a-=.025;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.col+Math.floor(p.a*255).toString(16).padStart(2,'0');ctx.fill();});
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ─── COMPANY GRID ─── */
+(function(){
+  const companies=[
+    {e:'🛵',n:'Ather Energy',t:'EV Two-Wheeler',c:'Hosur, TN',open:'340+ roles',col:'#14b8a6'},
+    {e:'⚡',n:'Ola Electric',t:'EV Scooters & Cars',c:'Krishnagiri, TN',open:'520+ roles',col:'#3b82f6'},
+    {e:'🚗',n:'Tata Motors EV',t:'EV Cars & Buses',c:'Chennai / Pune',open:'280+ roles',col:'#7c3aed'},
+    {e:'🏍',n:'TVS Motor Co.',t:'Auto & EV',c:'Hosur, TN',open:'190+ roles',col:'#f43f6e'},
+    {e:'🚗',n:'Hyundai India',t:'Passenger Cars & EVs',c:'Sriperumbudur',open:'150+ roles',col:'#f59e0b'},
+    {e:'💻',n:'KPIT Technologies',t:'Embedded / EV SW',c:'Chennai',open:'410+ roles',col:'#14b8a6'},
+    {e:'🔧',n:'Bosch India',t:'Auto Components',c:'Coimbatore, TN',open:'220+ roles',col:'#f97316'},
+    {e:'🚌',n:'Ashok Leyland',t:'Commercial EVs',c:'Chennai',open:'170+ roles',col:'#3b82f6'},
+    {e:'🔌',n:'Tata Power EV',t:'Charging Infra',c:'PAN India',open:'95+ roles',col:'#14b8a6'},
+    {e:'🔋',n:'Amara Raja',t:'Battery Mfg.',c:'Tirupati area',open:'140+ roles',col:'#f59e0b'},
+    {e:'⚙️',n:'Sundram Fasteners',t:'Auto Parts',c:'Chennai',open:'80+ roles',col:'#7c3aed'},
+    {e:'🚜',n:'TAFE',t:'Agri & Auto',c:'Chennai',open:'65+ roles',col:'#f43f6e'},
+  ];
+  document.getElementById('companyGrid').innerHTML=companies.map(c=>`
+    <div class="company-hex reveal" style="--chc:${c.col}">
+      <div class="ch-emoji">${c.e}</div>
+      <div class="ch-name">${c.n}</div>
+      <div class="ch-type">${c.t}</div>
+      <div class="ch-loc">📍 ${c.c}</div>
+      <div class="ch-open" style="color:${c.col}">● ${c.open}</div>
+    </div>`).join('');
+
+  const sidebar_data=[
+    {title:'HIRING SNAPSHOT',items:[
+      {l:'Total Open Roles',v:'3,200+'},
+      {l:'EV-Specific',v:'1,850+'},
+      {l:'Avg. Time to Hire',v:'28 days'},
+      {l:'Entry Level Share',v:'44%'},
+      {l:'Remote Options',v:'12%'},
+    ]},
+    {title:'SALARY BENCHMARKS',items:[
+      {l:'Fresher EV Engr.',v:'₹4.2L'},
+      {l:'Senior EV Engr.',v:'₹12–18L'},
+      {l:'PLC Technician',v:'₹3.8L'},
+      {l:'SW Engr. (EV)',v:'₹8–14L'},
+      {l:'Battery Specialist',v:'₹10–16L'},
+    ]},
+  ];
+  document.getElementById('companySidebar').innerHTML=sidebar_data.map(s=>`
+    <div class="csb-card">
+      <div class="csb-title">${s.title}</div>
+      <div class="csb-list">${s.items.map(i=>`<div class="csb-item"><span class="csb-label">${i.l}</span><span class="csb-val">${i.v}</span></div>`).join('')}</div>
+    </div>`).join('');
+})();
+
+/* ─── SCROLL REVEAL + BAR FILLS ─── */
+const revealObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      e.target.querySelectorAll('.gc-bar-fill,.rg-fill').forEach((b,i)=>{
+        setTimeout(()=>{b.style.width=b.dataset.w+'%';},i*100+200);
+      });
+    }
+  });
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+
+new IntersectionObserver(e=>{
+  if(e[0].isIntersecting)document.querySelectorAll('.rg-fill').forEach((b,i)=>setTimeout(()=>b.style.width=b.dataset.w+'%',i*140+300));
+},{threshold:.2}).observe(document.getElementById('regionSection'));
+
+new IntersectionObserver(e=>{
+  if(e[0].isIntersecting)document.querySelectorAll('.gc-bar-fill').forEach((b,i)=>setTimeout(()=>b.style.width=b.dataset.w+'%',i*120+300));
+},{threshold:.2}).observe(document.getElementById('trendSection'));
+</script>
+<script src="chat-widget.js"></script>
+</body>
+</html>

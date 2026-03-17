@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SkillTech AI — Skill Gap Analyser</title>
+<link rel="stylesheet" href="indexstyle.css"/>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor"><div id="cursor-ring"></div><div id="cursor-dot"></div></div>
+
+<!-- PARTICLE CANVAS -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- LOADBAR -->
+<div class="loadbar" id="loadbar"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="brand" href="overview.html">
+    <div class="brand-hex">
+      <svg viewBox="0 0 36 36" fill="none">
+        <polygon points="18,2 33,10 33,26 18,34 3,26 3,10" stroke="rgba(20,184,166,.5)" stroke-width="1" fill="none"/>
+        <polygon points="18,6 29,12.5 29,23.5 18,30 7,23.5 7,12.5" stroke="rgba(20,184,166,.25)" stroke-width=".5" fill="none"/>
+      </svg>
+      <div class="brand-inner">⚡</div>
+    </div>
+    <div>
+      <div class="brand-name">Skill<span>Tech</span></div>
+      <div class="brand-tag">TN · EV · Automotive</div>
+    </div>
+  </a>
+  <div class="nav-sep"></div>
+  <nav class="nav-links">
+    <a class="nl" href="overview.html">Overview</a>
+    <a class="nl" href="industry-analytics.html">Analytics</a>
+    <a class="nl active nl-live" href="#">Skill Analyser</a>
+    <a class="nl" href="course-finder.html">Courses</a>
+    <a class="nl" href="job-roles.html">Job Roles</a>
+    <a class="nl" href="tn-companies.html">Companies</a>
+  </nav>
+  <div class="nav-right">
+    <div class="status-pill">
+      <div id="sdot"></div>
+      <span id="stext">Connecting…</span>
+    </div>
+    <div class="ver-badge">v2.0</div>
+  </div>
+</nav>
+
+<main style="position:relative;z-index:2;padding-top:64px;">
+<div style="position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(15,23,42,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(15,23,42,.018) 1px,transparent 1px);background-size:56px 56px;"></div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-badge">Tamil Nadu's Free Skill Gap Tool</div>
+      <h1>Find your <span class="hl">skill gaps</span><br/>get your learning path</h1>
+      <p>Upload your resume, choose a job you want, and we'll show you exactly what to learn — with free and paid courses from Tamil Nadu's top institutions.</p>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num">20+</div><div class="hero-stat-lbl">Job Roles</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">256</div><div class="hero-stat-lbl">Courses</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">Free</div><div class="hero-stat-lbl">Always</div></div>
+    </div>
+  </div>
+
+  <!-- STEP BAR -->
+  <div class="steps-bar" id="stepsBar">
+    <div class="step-btn active" data-step="1" onclick="goStep(1)">
+      <div class="step-circle"><span>1</span></div>
+      <span class="step-text">Your Skills</span>
+    </div>
+    <div class="step-divider"></div>
+    <div class="step-btn" data-step="2" onclick="goStep(2)">
+      <div class="step-circle"><span>2</span></div>
+      <span class="step-text">Target Job</span>
+    </div>
+    <div class="step-divider"></div>
+    <div class="step-btn" data-step="3" onclick="goStep(3)">
+      <div class="step-circle"><span>3</span></div>
+      <span class="step-text">Your Results</span>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 1 — YOUR SKILLS ═══ -->
+  <div class="step-panel active" id="step1">
+    <div class="panel-head">
+      <div class="panel-eyebrow">// STEP_01</div>
+      <div class="panel-title">Tell us about your skills</div>
+      <div class="panel-sub">Upload your resume to auto-extract skills, or add them manually. You can combine both approaches.</div>
+    </div>
+
+    <div class="holo-card" style="--hc:var(--g)">
+      <div class="skills-split">
+
+        <!-- Left: Upload -->
+        <div class="split-col">
+          <div class="split-col-head">
+            <div class="card-dot" style="color:var(--g);background:var(--g)"></div>
+            <div class="card-title">Upload your resume</div>
+            <span class="card-badge">Recommended</span>
+          </div>
+          <div class="split-col-body">
+
+            <!-- Drop zone -->
+            <div class="drop-zone" id="dropZone">
+              <input type="file" id="resumeFile" accept=".pdf,.jpg,.jpeg,.png,.txt"/>
+              <span class="drop-icon">📄</span>
+              <div class="drop-title">Drop your resume here</div>
+              <div class="drop-hint">Supports <b>PDF, JPG, PNG, TXT</b> — click to browse</div>
+            </div>
+
+            <!-- Resume loading animation -->
+            <div class="resume-loading" id="resumeLoading">
+              <div class="rl-spinner">
+                <div class="rl-spinner-ring"></div>
+                <div class="rl-spinner-ring"></div>
+                <div class="rl-spinner-dot">📄</div>
+              </div>
+              <div class="rl-title">Reading your resume…</div>
+              <div class="rl-steps" id="rlSteps">
+                <div class="rl-step" id="rlStep1">
+                  <div class="rl-step-icon">1</div>
+                  <span>Uploading file</span>
+                </div>
+                <div class="rl-step" id="rlStep2">
+                  <div class="rl-step-icon">2</div>
+                  <span>Extracting text</span>
+                </div>
+                <div class="rl-step" id="rlStep3">
+                  <div class="rl-step-icon">3</div>
+                  <span>Identifying skills</span>
+                </div>
+                <div class="rl-step" id="rlStep4">
+                  <div class="rl-step-icon">4</div>
+                  <span>Categorising results</span>
+                </div>
+              </div>
+              <div class="rl-bar-track">
+                <div class="rl-bar-fill" id="rlBar"></div>
+              </div>
+            </div>
+
+            <!-- Upload success bar -->
+            <div class="upload-bar" id="uploadBar">
+              <span class="upload-bar-icon">✅</span>
+              <div class="upload-bar-info">
+                <div class="upload-bar-name" id="uploadName">—</div>
+                <div class="upload-bar-count" id="uploadCount">—</div>
+              </div>
+              <button class="btn-remove" onclick="clearResume()">Remove</button>
+            </div>
+
+            <!-- Skills found card -->
+            <div class="skills-found-inline" id="skillsFoundCard">
+              <div class="sfi-header">
+                <span class="sfi-icon">🧠</span>
+                <div class="sfi-info">
+                  <div class="sfi-title">Skills extracted</div>
+                  <div class="sfi-sub">Used for your gap analysis</div>
+                </div>
+                <div class="sfi-count"><span class="sfi-count-num" id="sfcTotal">0</span><span class="sfi-count-lbl">SKILLS</span></div>
+              </div>
+              <div class="sfc-body" id="sfcBody"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="split-divider"></div>
+
+        <!-- Right: Manual -->
+        <div class="split-col">
+          <div class="split-col-head">
+            <div class="card-dot" style="color:var(--v);background:var(--v)"></div>
+            <div class="card-title">Add skills manually</div>
+          </div>
+          <div class="split-col-body">
+            <div class="field">
+              <label class="field-label">Describe your work experience</label>
+              <textarea class="ta" id="manualDesc" placeholder="e.g. Diploma in Electrical Engineering, 2 years at an auto parts company. Used Siemens PLCs, basic SCADA, some Python..."></textarea>
+              <button class="extract-btn" onclick="parseDesc()">◈ Extract skills from description automatically</button>
+            </div>
+            <div class="or-div">or add one by one</div>
+            <div class="field">
+              <label class="field-label">Type a skill and press Enter</label>
+              <div class="tag-row">
+                <input class="inp" id="skillInp" placeholder="e.g. BMS, Python, SolidWorks" autocomplete="off"/>
+                <button class="btn-add" onclick="addSkill()">+ ADD</button>
+              </div>
+              <div class="tag-cloud" id="tagCloud"></div>
+              <div class="tag-cloud-note" id="tagNote"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-primary" onclick="goStep(2)">
+        Continue — Choose a Job Role &nbsp;▶
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 2 — TARGET JOB ═══ -->
+  <div class="step-panel" id="step2">
+    <div class="panel-head">
+      <div class="panel-eyebrow">// STEP_02</div>
+      <div class="panel-title">Which job are you targeting?</div>
+      <div class="panel-sub">Select a role from the grid and we'll load its requirements, or paste your own job description below.</div>
+    </div>
+
+    <div class="holo-card" style="--hc:var(--y)">
+      <div class="card-head">
+        <div class="card-dot" style="color:var(--y);background:var(--y)"></div>
+        <div class="card-title">Pick a job role</div>
+      </div>
+      <div class="card-body">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input class="search-inp" id="jobSearch" placeholder="Search — e.g. battery, automation, CNC, robotics…" oninput="filterRoles(this.value)"/>
+        </div>
+        <div class="role-grid" id="roleGrid"></div>
+        <div class="jd-block">
+          <div class="jd-block-label">
+            Job description
+            <span class="jd-auto-badge" id="jdBadge">✓ AUTO-FILLED</span>
+          </div>
+          <textarea class="ta" id="jdInput" style="min-height:140px" placeholder="Paste or type a job description here, or pick a role above to auto-fill it."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-back" onclick="goStep(1)">◀ Back</button>
+      <button class="btn-primary" id="analyzeBtn" onclick="runAnalysis()">
+        <div class="spinner"></div>
+        <span id="analyzeLbl">⚡ &nbsp;Analyze My Skill Gap</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 3 — RESULTS ═══ -->
+  <div class="step-panel" id="step3">
+    <div class="panel-head">
+      <div class="panel-eyebrow">// STEP_03 · ANALYSIS COMPLETE</div>
+      <div class="panel-title">Your skill gap results</div>
+      <div class="panel-sub">Here's how your skills compare to the job — and a roadmap to close the gaps.</div>
+    </div>
+
+    <div class="score-card" id="scoreCard">
+      <div class="score-ring">
+        <svg viewBox="0 0 100 100" width="100" height="100">
+          <circle class="ring-bg" cx="50" cy="50" r="45"/>
+          <circle class="ring-fg" id="scoreRing" cx="50" cy="50" r="45"/>
+        </svg>
+        <div class="score-ring-num" id="scoreNum">0%</div>
+      </div>
+      <div class="score-info">
+        <div class="score-verdict" id="scoreVerdict">—</div>
+        <div class="score-desc" id="scoreDesc">—</div>
+        <div class="score-bar-track"><div class="score-bar-fill" id="scoreBar"></div></div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-pill" style="--sp-c:var(--g)">
+        <span class="stat-pill-icon">✅</span>
+        <div><div class="stat-pill-num" id="statM" style="color:var(--g2)">0</div><div class="stat-pill-lbl">Skills Matched</div></div>
+      </div>
+      <div class="stat-pill" style="--sp-c:var(--m)">
+        <span class="stat-pill-icon">❌</span>
+        <div><div class="stat-pill-num" id="statG" style="color:var(--m2)">0</div><div class="stat-pill-lbl">Skills Missing</div></div>
+      </div>
+      <div class="stat-pill" style="--sp-c:var(--b)">
+        <span class="stat-pill-icon">📋</span>
+        <div><div class="stat-pill-num" id="statT" style="color:var(--b2)">0</div><div class="stat-pill-lbl">Job Required</div></div>
+      </div>
+    </div>
+
+    <div class="section-label">Skill Breakdown</div>
+    <div class="skills-grid">
+      <div class="skills-box res-box">
+        <div class="sb-head"><div class="sb-dot"></div><span class="sb-title">Your Skills</span><span class="sb-count" id="cntR">0</span></div>
+        <div class="sb-body" id="tagsR"><div class="empty-box">Upload a resume or add skills manually</div></div>
+      </div>
+      <div class="skills-box job-box">
+        <div class="sb-head"><div class="sb-dot"></div><span class="sb-title">Job Requires</span><span class="sb-count" id="cntJ">0</span></div>
+        <div class="sb-body" id="tagsJ"><div class="empty-box">Skills from the job description</div></div>
+      </div>
+      <div class="skills-box gap-box">
+        <div class="sb-head"><div class="sb-dot"></div><span class="sb-title">You Need to Learn</span><span class="sb-count" id="cntG">0</span></div>
+        <div class="sb-body" id="tagsG"><div class="empty-box">Gaps will appear here</div></div>
+      </div>
+    </div>
+
+    <div class="courses-wrap">
+      <div class="courses-top">
+        <div>
+          <div class="courses-title">◈ Recommended Courses</div>
+          <div class="courses-sub">// CLICK ANY SKILL CARD TO EXPAND COURSE OPTIONS</div>
+        </div>
+        <div class="ftabs">
+          <button class="ftab active" onclick="filterCourses('all',this)">All</button>
+          <button class="ftab" onclick="filterCourses('critical',this)">🔴 Must Learn</button>
+          <button class="ftab" onclick="filterCourses('important',this)">🟡 Important</button>
+          <button class="ftab" onclick="filterCourses('free',this)">🆓 Free only</button>
+        </div>
+      </div>
+      <div id="courseBody"></div>
+    </div>
+
+    <div class="restart-row">
+      <button class="btn-back" style="padding:11px 28px" onclick="goStep(1)">◀ Start a New Analysis</button>
+    </div>
+  </div>
+
+</div><!-- /page -->
+</main>
+
+<!-- CHAT FAB -->
+<button id="chatFab" onclick="toggleChat()">
+  💬<div class="fab-dot" id="fabDot"></div>
+</button>
+
+<!-- CHAT PANEL -->
+<div id="chatPanel">
+  <div class="chat-head">
+    <div class="chat-av">AI</div>
+    <div>
+      <div class="chat-name">SKILLTECH ASSISTANT</div>
+      <div class="chat-status" id="chatStatus">● ONLINE AND READY</div>
+    </div>
+    <button class="chat-x" onclick="toggleChat()">×</button>
+  </div>
+  <div class="chat-msgs" id="chatMsgs">
+    <div class="cmsg ai">
+      <div class="c-av">AI</div>
+      <div class="c-bub">Hi! 👋 I'm your SkillTech career assistant.
+
+I can help with career advice, course recommendations, EV industry info, resume tips, and more.
+
+What would you like to know?</div>
+    </div>
+    <div class="chat-chips" id="chatChips">
+      <button class="chip" onclick="sendChip(this)">What jobs suit a Diploma in EV?</button>
+      <button class="chip" onclick="sendChip(this)">Best free courses for PLC?</button>
+      <button class="chip" onclick="sendChip(this)">How do I get into EV sector?</button>
+      <button class="chip" onclick="sendChip(this)">What salary can I expect?</button>
+    </div>
+  </div>
+  <div class="chat-row">
+    <textarea class="c-inp" id="chatInp" placeholder="Ask anything about careers, courses, skills…" rows="1"></textarea>
+    <button class="c-send" id="chatSend" onclick="sendChat()">↑</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+'use strict';
+
+const API = 'http://localhost:8000';
+
+const ROLES = [
+  {id:'ev-bat',   icon:'⚡', name:'EV Battery Engineer',        cat:'EV / Automotive'},
+  {id:'ev-pt',    icon:'🔋', name:'EV Powertrain Engineer',     cat:'EV / Automotive'},
+  {id:'bms',      icon:'🔌', name:'BMS Engineer',               cat:'EV / Automotive'},
+  {id:'motor',    icon:'⚙️', name:'Motor Control Engineer',     cat:'EV / Automotive'},
+  {id:'plc',      icon:'🤖', name:'PLC Automation Engineer',    cat:'Automation'},
+  {id:'scada',    icon:'📡', name:'SCADA / DCS Engineer',       cat:'Automation'},
+  {id:'robotics', icon:'🦾', name:'Robotics Engineer',          cat:'Automation'},
+  {id:'elec',     icon:'💡', name:'Electrical Design Engineer', cat:'Electrical'},
+  {id:'power',    icon:'⚡', name:'Power Electronics Engineer', cat:'Electrical'},
+  {id:'embed',    icon:'💻', name:'Embedded Systems Engineer',  cat:'Software'},
+  {id:'iot',      icon:'📶', name:'IoT Systems Engineer',       cat:'Software'},
+  {id:'cnc',      icon:'🔩', name:'CNC Manufacturing Engineer', cat:'Manufacturing'},
+  {id:'quality',  icon:'🎯', name:'Quality Engineer',           cat:'Manufacturing'},
+  {id:'cad',      icon:'📐', name:'CAD Design Engineer',        cat:'Manufacturing'},
+];
+
+const JD = {
+  'ev-bat':`EV Battery Engineer — Chennai\n\nKey requirements:\n- Lithium-ion battery systems and EV battery pack design\n- Battery Management Systems (BMS) and cell balancing\n- DC-DC converter and onboard charger design\n- Motor control and EV powertrain systems\n- Regenerative braking systems\n- Python or MATLAB for simulation\n- Safety standards and testing protocols\n\nBonus: BLDC motors, IoT integration, embedded systems`,
+  'ev-pt':`EV Powertrain Engineer — Tamil Nadu\n\n- Design and develop EV powertrain systems\n- Power electronics: inverter and converter design\n- Motor control: BLDC, PMSM motor drives\n- EV charging systems and infrastructure\n- DC-DC converter and onboard charger design\n- MATLAB / Simulink simulation\n- Regenerative braking and energy recovery\n- CAN Bus and embedded systems experience`,
+  'bms':`Battery Management Systems (BMS) Engineer\n\n- BMS design and implementation for EV applications\n- Li-ion battery chemistry and cell balancing algorithms\n- State-of-charge estimation\n- CAN Bus protocol for BMS-vehicle interface\n- Embedded C for BMS firmware development\n- MATLAB/Simulink for battery modelling\n- Battery pack testing and validation\n- EV charging standards knowledge`,
+  'motor':`Motor Control Engineer — EV Drive Systems\n\n- FOC and BLDC commutation motor control\n- Power electronics: gate drivers, IGBT/MOSFET\n- Inverter and three-phase drive system design\n- MATLAB/Simulink for motor simulation\n- Real-time embedded motor control\n- CAN Bus and automotive communication protocols\n- Regenerative braking control\n- EMC/EMI fundamentals`,
+  'plc':`PLC Automation Engineer — Coimbatore\n\n- PLC programming: Siemens, Allen Bradley, Mitsubishi\n- SCADA systems and HMI development\n- Ladder logic, function blocks, PID control\n- VFD, servo motor, and motion control\n- Industrial automation and DCS systems\n- Pneumatics and hydraulics maintenance\n- IoT integration basics\n- Documentation and reporting`,
+  'scada':`SCADA / DCS Engineer\n\n- SCADA design and maintenance: Wonderware, Ignition, WinCC\n- DCS programming: Honeywell, ABB, Siemens\n- PLC integration: Modbus, Profibus, EtherNet/IP\n- HMI screen design and alarm management\n- PID loop tuning and process optimisation\n- Industrial networking\n- SQL database and reporting`,
+  'robotics':`Robotics Engineer — Automotive\n\n- Industrial robot programming and integration\n- PLC and automation systems knowledge\n- Motion control and servo systems\n- Robot safety systems and fencing\n- CAD for fixture and jig design\n- Python or C++ for control algorithms\n- IoT and vision sensor integration`,
+  'elec':`Electrical Design Engineer\n\n- Power system design: transformer sizing and substation layout\n- HV/LV switchgear and circuit breaker selection\n- Protection relay and system design\n- Load flow analysis and power factor correction\n- AutoCAD Electrical for drawings\n- Distribution systems and earthing\n- Safety management and work permit system\n- ISO and IATF standards familiarity`,
+  'power':`Power Electronics Engineer\n\n- AC/DC and DC/DC converter topology design\n- Inverter and rectifier circuit design\n- Gate driver design for IGBT/MOSFET switches\n- Thermal management and heat sink sizing\n- MATLAB/Simulink, PSIM, LTspice simulation tools\n- EV onboard and off-board charger systems\n- Battery management and protection circuits`,
+  'embed':`Embedded Systems Engineer\n\n- C/C++ programming for microcontrollers (ARM, STM32)\n- RTOS and embedded systems design\n- Communication: CAN Bus, UART, SPI, I2C\n- IoT device development\n- Python scripting and test automation\n- Arduino and Raspberry Pi prototyping\n- MATLAB for algorithm development`,
+  'iot':`IoT Systems Engineer — Smart Manufacturing\n\n- IoT system architecture design\n- Embedded C/Python for IoT edge devices\n- Microcontrollers: ESP32, Raspberry Pi, Arduino\n- Cloud: MQTT, REST APIs, AWS IoT / Azure IoT\n- SCADA integration, Modbus, OPC-UA protocols\n- Data analysis and predictive maintenance\n- SQL database management`,
+  'cnc':`CNC Manufacturing Engineer\n\n- CNC machining operation and G-code programming\n- CAD/CAM software: SolidWorks, AutoCAD\n- Metrology and inspection tools\n- Quality control and GD&T interpretation\n- Lean manufacturing and kaizen implementation\n- 5S workplace organisation\n- FMEA and process improvement techniques`,
+  'quality':`Quality Engineer — Automotive Components\n\n- FMEA, control plans, and PPAP documentation\n- IATF 16949 and ISO 9001 quality management\n- Six Sigma Green Belt certification preferred\n- Statistical quality control and SPC charts\n- Metrology and measurement systems analysis\n- Lean manufacturing and kaizen\n- 5S implementation and audit processes\n- GD&T drawing interpretation`,
+  'cad':`CAD Design Engineer\n\n- SolidWorks and AutoCAD 3D/2D design proficiency\n- GD&T and engineering drawing interpretation\n- CAM programming basics\n- FEA simulation fundamentals\n- Knowledge of fabrication and machining processes\n- BOM management and documentation\n- Design for manufacture principles`,
+};
+
+const CAT_COLOUR = {
+  'EV & Electrical':'cat-ev','Automation & Controls':'cat-auto',
+  'Mechanical':'cat-mech','Power Systems':'cat-power',
+  'IT & Software':'cat-it','Safety & Standards':'cat-safety','Soft Skills':'cat-soft',
+};
+
+const SKILL_KEYWORDS = [
+  'EV battery','BMS','battery management','motor control','charging systems','electric vehicle','EV powertrain',
+  'inverter','converter','power electronics','BLDC','lithium ion','battery pack','cell balancing',
+  'regenerative braking','onboard charger','DC-DC converter',
+  'PLC','SCADA','HMI','robotics','automation','DCS','pneumatics','hydraulics','servo motor',
+  'VFD','variable frequency drive','motion control','industrial automation','relay logic','ladder logic','PID control',
+  'CNC','CAD','CAM','SolidWorks','AutoCAD','welding','fabrication','machining','lathe',
+  'GD&T','metrology','quality control','lean manufacturing','kaizen','six sigma','FMEA','production planning',
+  'transformer','switchgear','circuit breaker','substation','transmission','distribution',
+  'electrical maintenance','power distribution','relay','protection system','earthing','load flow','power factor',
+  'Python','MATLAB','LabVIEW','embedded systems','microcontroller','Arduino','Raspberry Pi',
+  'IoT','data analysis','machine learning','C programming','C++','Java','SQL',
+  'ISO','IATF','OHSAS','safety management','OSHA','fire safety','risk assessment',
+  'work permit','PPE','5S','audit','quality assurance','QA','QC','testing',
+  'teamwork','communication','leadership','problem solving','time management','project management',
+  'analytical','multitasking','documentation','reporting','supervision','training',
+];
+
+/* ── STATE ── */
+let resumeText='',resumeSkills=[],resumeSkillsByCategory={};
+let manualSkills=[],allGapItems=[],lastData=null;
+let chatHistory=[],chatOpen=false,currentStep=1,selectedRole=null;
+
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded',()=>{
+  checkHealth();buildRoleGrid();setupDrop();setupChat();
+  document.getElementById('skillInp').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addSkill();}});
+});
+
+/* ── CURSOR ── */
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=-100,my=-100,rx=-100,ry=-100;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+(function ac(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.transform=`translate(${rx-mx}px,${ry-my}px)`;requestAnimationFrame(ac);})();
+document.querySelectorAll('a,button,.role-card,.drop-zone,.holo-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cursor.classList.add('cursor-expand'));
+  el.addEventListener('mouseleave',()=>cursor.classList.remove('cursor-expand'));
+});
+
+/* ── PARTICLES ── */
+(function(){
+  const c=document.getElementById('particle-canvas'),ctx=c.getContext('2d');
+  let W,H,pts=[];
+  const r=()=>{W=c.width=innerWidth;H=c.height=innerHeight;};
+  r();window.addEventListener('resize',r);
+  for(let i=0;i<70;i++)pts.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.3+.3,col:['#14b8a6','#3b82f6','#f43f6e','#f59e0b'][Math.floor(Math.random()*4)],a:Math.random()*.14+.04});
+  let pmx=0,pmy=0;document.addEventListener('mousemove',e=>{pmx=e.clientX;pmy=e.clientY;});
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(let i=0;i<pts.length;i++){
+      for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<100){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(20,184,166,${(1-d/100)*.05})`;ctx.lineWidth=.5;ctx.stroke();}}
+      const mdx=pts[i].x-pmx,mdy=pts[i].y-pmy,md=Math.sqrt(mdx*mdx+mdy*mdy);
+      if(md<80){pts[i].vx+=mdx/md*.3;pts[i].vy+=mdy/md*.3;}
+      pts[i].vx*=.99;pts[i].vy*=.99;pts[i].x+=pts[i].vx;pts[i].y+=pts[i].vy;
+      if(pts[i].x<0)pts[i].x=W;if(pts[i].x>W)pts[i].x=0;if(pts[i].y<0)pts[i].y=H;if(pts[i].y>H)pts[i].y=0;
+      ctx.beginPath();ctx.arc(pts[i].x,pts[i].y,pts[i].r,0,Math.PI*2);ctx.fillStyle=pts[i].col;ctx.globalAlpha=pts[i].a;ctx.fill();ctx.globalAlpha=1;
+    }
+    requestAnimationFrame(draw);
+  }draw();
+})();
+
+/* ── HEALTH CHECK ── */
+async function checkHealth(){
+  try{
+    const d=await fetch(`${API}/api/health`).then(r=>r.json());
+    const dot=document.getElementById('sdot'),txt=document.getElementById('stext');
+    dot.style.cssText='width:6px;height:6px;border-radius:50%;background:var(--g);box-shadow:0 0 6px var(--g);animation:blink 2s ease infinite;';
+    txt.textContent=d.model_loaded?'MODEL READY':'SERVER READY';
+    document.getElementById('chatStatus').textContent='● ONLINE AND READY';
+  }catch{document.getElementById('stext').textContent='OFFLINE MODE';}
+}
+
+/* ── STEP NAVIGATION ── */
+function goStep(n){
+  currentStep=n;
+  document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('step'+n).classList.add('active');
+  document.querySelectorAll('.step-btn').forEach(b=>{
+    const sn=parseInt(b.dataset.step);b.classList.remove('active','done');
+    if(sn===n)b.classList.add('active');else if(sn<n)b.classList.add('done');
+  });
+  document.querySelectorAll('.step-btn.done .step-circle').forEach(c=>c.innerHTML='✓');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── ROLE GRID ── */
+function buildRoleGrid(q){
+  const grid=document.getElementById('roleGrid');grid.innerHTML='';
+  const f=(q||'').toLowerCase();let shown=0;
+  ROLES.forEach(r=>{
+    if(f&&!r.name.toLowerCase().includes(f)&&!r.cat.toLowerCase().includes(f))return;
+    const c=document.createElement('div');c.className='role-card'+(selectedRole===r.id?' selected':'');
+    c.innerHTML=`<div class="role-icon">${r.icon}</div><div class="role-name">${r.name}</div><div class="role-cat">${r.cat}</div>`;
+    c.onclick=()=>pickRole(r.id,c);grid.appendChild(c);shown++;
+  });
+  if(!shown)grid.innerHTML='<div style="font-family:var(--f-code);font-size:9px;color:var(--ink3);grid-column:1/-1;padding:8px 0;letter-spacing:.05em">No roles match — try different keywords</div>';
+}
+function filterRoles(q){buildRoleGrid(q);}
+function pickRole(id,el){
+  selectedRole=id;
+  document.querySelectorAll('.role-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');
+  const jd=JD[id];
+  if(jd){document.getElementById('jdInput').value=jd;document.getElementById('jdBadge').style.display='';const inp=document.getElementById('jdInput');inp.style.borderColor='var(--g)';setTimeout(()=>inp.style.borderColor='',900);}
+}
+
+/* ── FILE DROP ── */
+function setupDrop(){
+  const zone=document.getElementById('dropZone'),inp=document.getElementById('resumeFile');
+  zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('over');});
+  zone.addEventListener('dragleave',()=>zone.classList.remove('over'));
+  zone.addEventListener('drop',e=>{e.preventDefault();zone.classList.remove('over');if(e.dataTransfer.files[0])handleFile(e.dataTransfer.files[0]);});
+  inp.addEventListener('change',()=>{if(inp.files[0])handleFile(inp.files[0]);});
+}
+
+/* ── RESUME LOADING UI ── */
+function showResumeLoading(){
+  document.getElementById('dropZone').style.display='none';
+  document.getElementById('uploadBar').classList.remove('show');
+  document.getElementById('skillsFoundCard').classList.remove('show');
+  const rl=document.getElementById('resumeLoading');rl.classList.add('show');
+  // reset steps
+  ['rlStep1','rlStep2','rlStep3','rlStep4'].forEach(id=>{
+    const el=document.getElementById(id);el.classList.remove('active','done');
+  });
+  document.getElementById('rlBar').style.width='0%';
+}
+
+function advanceResumeStep(stepNum, progress){
+  ['rlStep1','rlStep2','rlStep3','rlStep4'].forEach((id,i)=>{
+    const el=document.getElementById(id);
+    el.classList.remove('active','done');
+    if(i+1<stepNum) el.classList.add('done');
+    else if(i+1===stepNum) el.classList.add('active');
+    // update icons
+    const icon=el.querySelector('.rl-step-icon');
+    if(i+1<stepNum) icon.textContent='✓';
+    else icon.textContent=(i+1).toString();
+  });
+  document.getElementById('rlBar').style.width=progress+'%';
+}
+
+function hideResumeLoading(){
+  document.getElementById('resumeLoading').classList.remove('show');
+}
+
+async function handleFile(file){
+  showResumeLoading();
+  setLoad(true);
+
+  // Simulate step progression during upload
+  advanceResumeStep(1, 15);
+  await delay(300);
+  advanceResumeStep(2, 35);
+
+  const form=new FormData();form.append('file',file);
+  try{
+    // Fire the actual request
+    const fetchPromise = fetch(`${API}/api/upload-resume`,{method:'POST',body:form});
+
+    // Advance UI while waiting
+    await delay(600);
+    advanceResumeStep(3, 65);
+    const resp = await fetchPromise;
+    if(!resp.ok)throw new Error(await safeErr(resp));
+
+    advanceResumeStep(4, 88);
+    await delay(300);
+
+    const d=await resp.json();
+    resumeText=d.text;resumeSkills=d.flat_skills;resumeSkillsByCategory=d.skills;
+
+    advanceResumeStep(4, 100);
+    await delay(280);
+
+    hideResumeLoading();
+    document.getElementById('dropZone').style.display='';
+    document.getElementById('uploadName').textContent=d.filename;
+    document.getElementById('uploadCount').textContent=`${d.total_skills} skills extracted across ${Object.keys(d.skills).length} categories`;
+    document.getElementById('uploadBar').classList.add('show');
+    renderSkillsFoundCard(d.skills,d.total_skills);
+    showToast(`✓ ${d.total_skills} skills found in resume`,'ok');
+  }catch(e){
+    hideResumeLoading();
+    document.getElementById('dropZone').style.display='';
+    showToast(`✗ ${e.message}`,'err');
+  }finally{setLoad(false);}
+}
+
+function delay(ms){return new Promise(r=>setTimeout(r,ms));}
+
+function clearResume(){
+  resumeText='';resumeSkills=[];resumeSkillsByCategory={};
+  document.getElementById('uploadBar').classList.remove('show');
+  document.getElementById('skillsFoundCard').classList.remove('show');
+  document.getElementById('resumeFile').value='';
+  showToast('Resume removed','');
+}
+
+function renderSkillsFoundCard(skillsByCategory,total){
+  const card=document.getElementById('skillsFoundCard'),body=document.getElementById('sfcBody');
+  document.getElementById('sfcTotal').textContent=total;body.innerHTML='';
+  Object.entries(skillsByCategory).forEach(([cat,skills],i)=>{
+    if(!skills.length)return;
+    const cls=CAT_COLOUR[cat]||'cat-it';
+    const sec=document.createElement('div');sec.className='sfc-cat';
+    sec.innerHTML=`<div class="sfc-cat-label">${catIcon(cat)} ${cat}<div class="sfc-cat-bar"></div><span style="font-size:9px;font-weight:700;color:var(--ink3)">${skills.length}</span></div><div class="sfc-tags">${skills.map((s,j)=>`<span class="sfc-tag ${cls}" style="animation-delay:${(i*skills.length+j)*.04}s">${esc(s)}</span>`).join('')}</div>`;
+    body.appendChild(sec);
+  });
+  card.classList.add('show');
+}
+function catIcon(cat){const m={'EV & Electrical':'⚡','Automation & Controls':'🤖','Mechanical':'🔩','Power Systems':'⚡','IT & Software':'💻','Safety & Standards':'🛡️','Soft Skills':'💬'};return m[cat]||'◈';}
+
+/* ── MANUAL SKILLS ── */
+function addSkill(){
+  const inp=document.getElementById('skillInp');const raw=inp.value.trim();if(!raw)return;
+  raw.split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>{if(!manualSkills.map(x=>x.toLowerCase()).includes(s.toLowerCase()))manualSkills.push(s);});
+  inp.value='';renderManualTags();
+}
+function removeSkill(i){manualSkills.splice(i,1);renderManualTags();}
+function renderManualTags(){
+  const pool=document.getElementById('tagCloud'),note=document.getElementById('tagNote');
+  pool.innerHTML='';
+  manualSkills.forEach((s,i)=>{const t=document.createElement('span');t.className='m-tag';t.style.animationDelay=(i*.03)+'s';t.innerHTML=`${esc(s)}<span class="m-tag-x" onclick="removeSkill(${i})">×</span>`;pool.appendChild(t);});
+  note.textContent=manualSkills.length?`${manualSkills.length} skill${manualSkills.length>1?'s':''} added manually`:'';
+}
+function parseDesc(){
+  const d=document.getElementById('manualDesc').value.trim();if(!d)return showToast('Write a description first','err');
+  const lower=d.toLowerCase();let n=0;
+  SKILL_KEYWORDS.forEach(k=>{if(lower.includes(k.toLowerCase())&&!manualSkills.map(x=>x.toLowerCase()).includes(k.toLowerCase())){manualSkills.push(k);n++;}});
+  renderManualTags();
+  showToast(n>0?`✓ ${n} skill${n>1?'s':''} extracted`:'No new skills detected','');
+}
+
+/* ── ANALYSIS ── */
+async function runAnalysis(){
+  manualSkills.forEach(s=>{if(!resumeSkills.map(r=>r.toLowerCase()).includes(s.toLowerCase()))resumeSkills.push(s);});
+  const jd=document.getElementById('jdInput').value.trim();
+  if(!jd)return showToast('Please select a job role or paste a description','err');
+  const btn=document.getElementById('analyzeBtn');
+  btn.disabled=true;btn.classList.add('loading');document.getElementById('analyzeLbl').textContent='Analyzing…';setLoad(true);
+  try{
+    const resp=await fetch(`${API}/api/skill-gap`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({candidate_skills:resumeSkills,job_description:jd})});
+    if(!resp.ok)throw new Error(await safeErr(resp));
+    const data=await resp.json();lastData=data;renderResults(data);goStep(3);
+  }catch(e){showToast(`✗ ${e.message}`,'err');}
+  finally{btn.disabled=false;btn.classList.remove('loading');document.getElementById('analyzeLbl').textContent='⚡ \u00a0Analyze My Skill Gap';setLoad(false);}
+}
+
+/* ── RESULTS ── */
+function renderResults(data){
+  const s=data.score,circ=2*Math.PI*45;
+  const ring=document.getElementById('scoreRing');
+  ring.style.strokeDasharray=circ;ring.style.strokeDashoffset=circ;
+  let color,verdict,desc;
+  if(s>=70){color='var(--g2)';verdict='◈ Strong Match';desc=`You already have ${s}% of the required skills. Focus on a few critical areas and you'll be interview-ready.`;}
+  else if(s>=40){color='#92400e';verdict='▲ Getting There';desc=`You have ${s}% of what's needed. The courses below will help you become competitive quickly.`;}
+  else{color='var(--m2)';verdict='◻ Room to Grow';desc=`You're at ${s}% right now — solid starting point! Work through the recommended courses and you'll get there.`;}
+  ring.style.stroke=color;
+  document.getElementById('scoreBar').style.background=color;
+  document.getElementById('scoreVerdict').textContent=verdict;document.getElementById('scoreVerdict').style.color=color;
+  document.getElementById('scoreDesc').textContent=desc;
+  document.getElementById('scoreNum').textContent=s+'%';document.getElementById('scoreNum').style.color=color;
+  setTimeout(()=>{ring.style.strokeDashoffset=circ-(s/100)*circ;document.getElementById('scoreBar').style.width=s+'%';},80);
+  const total=data.job_skills.length,gaps=data.gap.all.length;
+  animNum('statM',total-gaps);animNum('statG',gaps);animNum('statT',total);
+  renderTagBox('tagsR','cntR',resumeSkills,'res-tag');
+  renderTagBox('tagsJ','cntJ',data.job_skills,'job-tag');
+  renderTagBox('tagsG','cntG',data.gap.all.map(g=>g.skill),'gap-tag');
+  allGapItems=data.gap.all;renderCourses(allGapItems);
+  document.getElementById('fabDot').style.display='block';
+}
+
+function renderTagBox(cid,countId,skills,tagClass){
+  const c=document.getElementById(cid);c.innerHTML='';document.getElementById(countId).textContent=skills.length;
+  if(!skills.length){c.innerHTML='<div class="empty-box">None found</div>';return;}
+  skills.forEach((s,i)=>{const t=document.createElement('span');t.className=`rtag ${tagClass}`;t.textContent=s;t.style.animationDelay=(i*.04)+'s';c.appendChild(t);});
+}
+
+function renderCourses(items){
+  const body=document.getElementById('courseBody');body.innerHTML='';
+  if(!items.length){body.innerHTML='<div style="text-align:center;padding:40px;font-family:var(--f-code);font-size:10px;color:var(--g2);letter-spacing:.08em">◈ Perfect match — no skill gaps found!</div>';return;}
+  const G=[
+    {k:'critical',label:'Must Learn First',dot:'var(--m2)',ps:'background:rgba(244,63,110,.07);color:var(--m2);border:1px solid rgba(244,63,110,.15)'},
+    {k:'important',label:'Important to Learn',dot:'#92400e',ps:'background:rgba(245,158,11,.07);color:#92400e;border:1px solid rgba(245,158,11,.18)'},
+    {k:'minor',label:'Good to Have',dot:'var(--g2)',ps:'background:rgba(20,184,166,.06);color:var(--g2);border:1px solid rgba(20,184,166,.18)'},
+  ];
+  G.forEach(g=>{
+    const gi=items.filter(i=>i.priority===g.k);if(!gi.length)return;
+    const sec=document.createElement('div');sec.className='p-group';sec.dataset.k=g.k;
+    sec.innerHTML=`<div class="p-group-head"><div class="p-dot" style="color:${g.dot};background:${g.dot}"></div><div class="p-title">${g.label}</div><span class="p-count" style="${g.ps}">${gi.length} SKILL${gi.length>1?'S':''}</span></div>`;
+    body.appendChild(sec);
+    gi.forEach((item,idx)=>{
+      const card=document.createElement('div');card.className='sc-card';card.style.animationDelay=(idx*.05)+'s';card.dataset.p=item.priority;
+      const aCol={critical:'var(--m2)',important:'#92400e',minor:'var(--g2)'}[item.priority];
+      const bCls={critical:'scb-crit',important:'scb-imp',minor:'scb-min'}[item.priority];
+      const bTxt={critical:'Must learn',important:'Important',minor:'Good to have'}[item.priority];
+      let rowsHtml='';
+      if(item.courses&&item.courses.length){
+        rowsHtml=item.courses.map(c=>`
+          <a class="course-row" href="${esc(c.url||'#')}" target="_blank" rel="noopener">
+            <div class="cr-left">
+              <div class="cr-name">${esc(c.course_name)}</div>
+              <div class="cr-prov">${esc(c.provider)}</div>
+            </div>
+            <div class="cr-tags">
+              <span class="c-tag ${c.is_free?'ct-free':'ct-paid'}">${c.is_free?'🆓 Free':esc(c.cost)}</span>
+              ${c.duration?`<span class="c-tag ct-dur">⏱ ${esc(c.duration)}</span>`:''}
+              ${c.certification==='Yes'?'<span class="c-tag ct-cert">🎓 Cert</span>':''}
+            </div>
+            <span class="cr-arrow">↗</span>
+          </a>`).join('');
+      }else{
+        rowsHtml=`<div class="no-cr">◈ Not in database — <a href="https://naanmudhalvan.tn.gov.in" target="_blank">check Naan Mudhalvan ↗</a></div>`;
+      }
+      card.innerHTML=`
+        <div class="sc-card-head" onclick="this.parentElement.classList.toggle('open')">
+          <div class="sc-accent" style="background:${aCol};color:${aCol}"></div>
+          <div class="sc-name">${esc(item.skill)}</div>
+          <span class="sc-badge ${bCls}">${bTxt}</span>
+          <span class="sc-chevron">▾</span>
+        </div>
+        <div class="sc-rows">${rowsHtml}</div>`;
+      sec.appendChild(card);
+    });
+  });
+}
+
+function filterCourses(t,btn){
+  document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  let f=allGapItems;
+  if(t==='critical')f=allGapItems.filter(i=>i.priority==='critical');
+  if(t==='important')f=allGapItems.filter(i=>i.priority==='important');
+  if(t==='free')f=allGapItems.filter(i=>i.courses&&i.courses.some(c=>c.is_free));
+  renderCourses(f);
+}
+function animNum(id,v){const el=document.getElementById(id);let cur=0;const s=Math.ceil(v/20);const t=setInterval(()=>{cur=Math.min(cur+s,v);el.textContent=cur;if(cur>=v)clearInterval(t);},40);}
+
+/* ── CHAT ── */
+function toggleChat(){
+  chatOpen=!chatOpen;
+  document.getElementById('chatPanel').classList.toggle('open',chatOpen);
+  const fab=document.getElementById('chatFab');
+  if(chatOpen){document.getElementById('fabDot').style.display='none';document.getElementById('chatInp').focus();fab.innerHTML='×<div class="fab-dot" id="fabDot" style="display:none"></div>';fab.style.fontSize='22px';}
+  else{fab.innerHTML='💬<div class="fab-dot" id="fabDot" style="display:none"></div>';fab.style.fontSize='18px';}
+}
+function setupChat(){
+  const i=document.getElementById('chatInp');
+  i.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}});
+  i.addEventListener('input',()=>{i.style.height='auto';i.style.height=Math.min(i.scrollHeight,90)+'px';});
+}
+function sendChip(btn){document.getElementById('chatChips')?.remove();document.getElementById('chatInp').value=btn.textContent;sendChat();}
+
+function renderMd(text){
+  let h=text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>')
+    .replace(/`(.+?)`/g,'<code style="background:rgba(20,184,166,.08);padding:1px 5px;border-radius:3px;font-family:var(--f-code);font-size:10px;color:var(--g2)">$1</code>');
+  const lines=h.split('\n');let out='',inList=false;
+  for(const line of lines){const m=line.match(/^[\-\*•]\s+(.*)/);if(m){if(!inList){out+='<ul style="margin:6px 0 6px 14px;padding:0;list-style:disc">';inList=true;}out+=`<li style="margin:2px 0">${m[1]}</li>`;}else{if(inList){out+='</ul>';inList=false;}out+=line?`<span>${line}</span><br>`:'<br>';}}
+  if(inList)out+='</ul>';return out;
+}
+function addMsg(role,text){
+  const c=document.getElementById('chatMsgs'),d=document.createElement('div');d.className='cmsg '+role;
+  const av=role==='ai'?'AI':'YOU';const bub=document.createElement('div');bub.className='c-bub';
+  if(role==='ai')bub.innerHTML=renderMd(text);else bub.textContent=text;
+  d.innerHTML=`<div class="c-av">${av}</div>`;d.appendChild(bub);c.appendChild(d);c.scrollTop=c.scrollHeight;return d;
+}
+function addTyping(){
+  const c=document.getElementById('chatMsgs'),d=document.createElement('div');d.className='cmsg ai';d.id='typing';
+  d.innerHTML=`<div class="c-av">AI</div><div class="c-bub"><div class="t-dots"><div class="t-d"></div><div class="t-d"></div><div class="t-d"></div></div></div>`;
+  c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+function buildChatContext(){
+  const ctx={};
+  if(resumeSkills.length)ctx.candidate_skills=resumeSkills.slice(0,40);
+  if(selectedRole){const r=ROLES.find(x=>x.id===selectedRole);if(r)ctx.job_role=r.name;}
+  if(lastData){ctx.gap_score=lastData.score;ctx.gap_skills=lastData.gap.all.map(g=>({skill:g.skill,priority:g.priority}));}
+  return ctx;
+}
+async function sendChat(){
+  document.getElementById('chatChips')?.remove();
+  const inp=document.getElementById('chatInp'),text=inp.value.trim();if(!text)return;
+  inp.value='';inp.style.height='auto';document.getElementById('chatSend').disabled=true;
+  addMsg('user',text);addTyping();
+  const payload={message:text,history:chatHistory,...buildChatContext()};
+  try{
+    const resp=await fetch(`${API}/api/chat/stream`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    document.getElementById('typing')?.remove();
+    if(!resp.ok)throw new Error(await safeErr(resp));
+    const msgDiv=addMsg('ai',''),bub=msgDiv.querySelector('.c-bub');
+    const reader=resp.body.getReader(),dec=new TextDecoder();let full='';
+    while(true){
+      const{done,value}=await reader.read();if(done)break;
+      dec.decode(value).split('\n').forEach(line=>{
+        if(!line.startsWith('data: '))return;const d=line.slice(6);if(d==='[DONE]')return;
+        try{const p=JSON.parse(d);if(p.token){full+=p.token;bub.innerHTML=renderMd(full);document.getElementById('chatMsgs').scrollTop=99999;}}catch{}
+      });
+    }
+    chatHistory.push({role:'user',content:text},{role:'assistant',content:full});
+  }catch(e){document.getElementById('typing')?.remove();addMsg('ai','⚠ '+e.message);}
+  finally{document.getElementById('chatSend').disabled=false;}
+}
+
+/* ── UTILS ── */
+async function safeErr(r){try{const j=await r.json();return j.detail||JSON.stringify(j);}catch{try{return await r.text();}catch{return`HTTP ${r.status}`;}}}
+function setLoad(on){document.getElementById('loadbar').classList.toggle('on',on);}
+function showToast(msg,type){const t=document.getElementById('toast');t.textContent=msg;t.className='on '+(type||'');clearTimeout(t._t);t._t=setTimeout(()=>t.className='',3200);}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+</script>
+</body>
+</html>

@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SkillTech AI — Course Finder</title>
+<link rel="stylesheet" href="course-finder-styles.css"/>
+<link rel="stylesheet" href="chat-widget.css"/>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor"><div id="cursor-ring"></div><div id="cursor-dot"></div></div>
+
+<!-- PARTICLES -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- LOADBAR -->
+<div class="loadbar" id="loadbar"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="brand" href="overview.html">
+    <div class="brand-hex">
+      <svg viewBox="0 0 36 36" fill="none">
+        <polygon points="18,2 33,10 33,26 18,34 3,26 3,10" stroke="rgba(20,184,166,.5)" stroke-width="1" fill="none"/>
+        <polygon points="18,6 29,12.5 29,23.5 18,30 7,23.5 7,12.5" stroke="rgba(20,184,166,.25)" stroke-width=".5" fill="none"/>
+      </svg>
+      <div class="brand-inner">⚡</div>
+    </div>
+    <div>
+      <div class="brand-name">Skill<span>Tech</span></div>
+      <div class="brand-tag">TN · EV · Automotive</div>
+    </div>
+  </a>
+  <div class="nav-sep"></div>
+  <nav class="nav-links">
+    <a class="nl" href="overview.html">Overview</a>
+    <a class="nl" href="industry-analytics.html">Analytics</a>
+    <a class="nl nl-live" href="index.html">Skill Analyser</a>
+    <a class="nl active" href="course-finder.html">Courses</a>
+    <a class="nl" href="job-roles.html">Job Roles</a>
+    <a class="nl" href="tn-companies.html">Companies</a>
+  </nav>
+  <div class="nav-right">
+    <div class="status-pill"><div id="sdot"></div><span id="stext">Connecting…</span></div>
+    <div class="ver-badge">v2.0</div>
+  </div>
+</nav>
+
+<main>
+<div class="holo-grid"></div>
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="hero-badge">256+ Courses Listed</div>
+      <h1>Find the right <span class="hl">course</span> for<br/>your next skill</h1>
+      <p>Search by skill, filter by category, cost, or certification — browse courses from Tamil Nadu's top institutions and free online platforms.</p>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num" id="statTotal">—</div><div class="hero-stat-lbl">Courses</div></div>
+      <div class="hero-stat"><div class="hero-stat-num" id="statFree">—</div><div class="hero-stat-lbl">Free</div></div>
+      <div class="hero-stat"><div class="hero-stat-num" id="statCert">—</div><div class="hero-stat-lbl">Certified</div></div>
+    </div>
+  </div>
+
+  <!-- SEARCH CARD -->
+  <div class="search-card">
+    <div class="search-main">
+      <div class="search-box">
+        <span class="search-box-icon">🔍</span>
+        <input type="text" id="searchInp" placeholder="Search by skill — e.g. BMS, Python, PLC, SolidWorks…" autocomplete="off"/>
+      </div>
+      <button class="btn-search" id="searchBtn" onclick="doSearch()">
+        <div class="spinner"></div>
+        <span id="searchLbl">Search Courses</span>
+      </button>
+    </div>
+    <div class="filters-row">
+      <span class="filter-label">Category:</span>
+      <div class="filter-chips" id="catChips">
+        <button class="fchip active" data-cat="all" onclick="setCat(this)">All</button>
+        <button class="fchip" data-cat="EV & Electrical" onclick="setCat(this)">⚡ EV</button>
+        <button class="fchip" data-cat="Automation & Controls" onclick="setCat(this)">🤖 Automation</button>
+        <button class="fchip" data-cat="Mechanical" onclick="setCat(this)">🔩 Mechanical</button>
+        <button class="fchip" data-cat="IT & Software" onclick="setCat(this)">💻 IT</button>
+        <button class="fchip" data-cat="Power Systems" onclick="setCat(this)">⚡ Power</button>
+        <button class="fchip" data-cat="Safety & Standards" onclick="setCat(this)">🛡️ Safety</button>
+      </div>
+      <div class="toggle-row">
+        <button class="toggle-btn" id="freeBtn" onclick="toggleFree()">🆓 Free only</button>
+        <button class="toggle-btn" id="certBtn" onclick="toggleCert()">🎓 Certified</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK TAGS -->
+  <div class="quick-section" id="quickSection">
+    <div class="quick-label">Popular skill searches</div>
+    <div class="quick-tags" id="quickTags"></div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content-wrap">
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sb-section">
+        <div class="sb-head">
+          <div class="sb-head-dot" style="color:var(--g);background:var(--g)"></div>
+          <div class="sb-head-title">Provider</div>
+        </div>
+        <div class="sb-items" id="sideProviders">
+          <div style="padding:12px;font-family:var(--f-code);font-size:9px;color:var(--ink3);letter-spacing:.06em">Search to populate</div>
+        </div>
+      </div>
+      <div class="sb-section">
+        <div class="sb-head">
+          <div class="sb-head-dot" style="color:var(--b);background:var(--b)"></div>
+          <div class="sb-head-title">Mode</div>
+        </div>
+        <div class="sb-items" id="sideModes">
+          <div style="padding:12px;font-family:var(--f-code);font-size:9px;color:var(--ink3);letter-spacing:.06em">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div>
+      <div class="results-header" id="resultsHeader" style="display:none">
+        <div>
+          <div class="results-title" id="resultsTitle">Results</div>
+          <div class="results-count" id="resultsCount"></div>
+        </div>
+        <div class="sort-tabs">
+          <button class="stab active" onclick="setSort('relevance',this)">Relevance</button>
+          <button class="stab" onclick="setSort('free',this)">🆓 Free first</button>
+          <button class="stab" onclick="setSort('cert',this)">🎓 Certified</button>
+        </div>
+      </div>
+      <div id="resultsArea">
+        <div class="state-box">
+          <span class="state-icon">🎯</span>
+          <div class="state-title">Search for a skill to get started</div>
+          <div class="state-sub">Type a skill like "BMS", "Python", or "PLC" above, or click one of the popular tags below to browse courses instantly.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</main>
+
+<div id="toast"></div>
+
+<script>
+'use strict';
+
+const API = 'http://localhost:8000';
+
+/* ─────────────────────────────────────────────────────
+   SKILL DATABASE  (mirrors backend exactly)
+───────────────────────────────────────────────────── */
+const SKILL_DATABASE = {
+  "EV & Electrical": [
+    "EV battery","BMS","battery management","motor control","charging systems",
+    "electric vehicle","EV powertrain","inverter","converter","power electronics",
+    "BLDC","lithium ion","battery pack","cell balancing","regenerative braking",
+    "onboard charger","DC-DC converter",
+  ],
+  "Automation & Controls": [
+    "PLC","SCADA","HMI","robotics","automation","DCS","pneumatics","hydraulics",
+    "servo motor","VFD","variable frequency drive","motion control",
+    "industrial automation","relay logic","ladder logic","PID control",
+  ],
+  "Mechanical": [
+    "CNC","CAD","CAM","SolidWorks","AutoCAD","welding","fabrication","machining",
+    "lathe","GD&T","metrology","quality control","lean manufacturing",
+    "kaizen","six sigma","FMEA","production planning",
+  ],
+  "Power Systems": [
+    "transformer","switchgear","circuit breaker","substation","transmission",
+    "distribution","electrical maintenance","power distribution","relay",
+    "protection system","earthing","load flow","power factor",
+  ],
+  "IT & Software": [
+    "Python","MATLAB","LabVIEW","embedded systems","microcontroller",
+    "Arduino","Raspberry Pi","IoT","data analysis","machine learning",
+    "C programming","C++","Java","SQL",
+  ],
+  "Safety & Standards": [
+    "ISO","IATF","OHSAS","safety management","OSHA","fire safety",
+    "risk assessment","work permit","PPE","5S","audit",
+    "quality assurance","QA","QC","testing",
+  ],
+};
+
+/* All skills in a flat array — used for stats preload */
+const ALL_SKILLS = Object.values(SKILL_DATABASE).flat();
+
+const CAT_COLOUR = {
+  "EV & Electrical":      "qt-ev",
+  "Automation & Controls":"qt-auto",
+  "Mechanical":           "qt-mech",
+  "IT & Software":        "qt-it",
+  "Power Systems":        "qt-pwr",
+  "Safety & Standards":   "qt-safe",
+};
+
+const QUICK_PICKS = [
+  {skill:"BMS",           cat:"EV & Electrical"},
+  {skill:"EV battery",    cat:"EV & Electrical"},
+  {skill:"PLC",           cat:"Automation & Controls"},
+  {skill:"SCADA",         cat:"Automation & Controls"},
+  {skill:"Python",        cat:"IT & Software"},
+  {skill:"IoT",           cat:"IT & Software"},
+  {skill:"SolidWorks",    cat:"Mechanical"},
+  {skill:"six sigma",     cat:"Mechanical"},
+  {skill:"motor control", cat:"EV & Electrical"},
+  {skill:"MATLAB",        cat:"IT & Software"},
+  {skill:"robotics",      cat:"Automation & Controls"},
+  {skill:"transformer",   cat:"Power Systems"},
+];
+
+/* ─── STATE ─── */
+let allResults  = [];   // flat array of course objects (including no-course placeholders)
+let filterCat   = 'all';
+let filterFree  = false;
+let filterCert  = false;
+let filterProv  = null;
+let filterMode  = null;
+let sortMode    = 'relevance';
+let lastQuery   = '';
+
+/* ─────────────────────────────────────────────────────
+   INIT
+───────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  checkHealth();
+  buildQuickTags();
+  setupKeyboard();
+  loadAllCourses();   // pre-populate stats
+});
+
+/* ─────────────────────────────────────────────────────
+   CURSOR
+───────────────────────────────────────────────────── */
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursor-ring');
+let mx=-100,my=-100,rx=-100,ry=-100;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+(function ac(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.transform=`translate(${rx-mx}px,${ry-my}px)`;requestAnimationFrame(ac);})();
+document.querySelectorAll('a,button,.qtag,.sb-item,.cc,.fchip,.toggle-btn,.stab').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cursor.classList.add('cursor-expand'));
+  el.addEventListener('mouseleave',()=>cursor.classList.remove('cursor-expand'));
+});
+
+/* ─────────────────────────────────────────────────────
+   PARTICLES
+───────────────────────────────────────────────────── */
+(function(){
+  const c=document.getElementById('particle-canvas'),ctx=c.getContext('2d');
+  let W,H,pts=[];
+  const resize=()=>{W=c.width=innerWidth;H=c.height=innerHeight;};
+  resize();window.addEventListener('resize',resize);
+  for(let i=0;i<65;i++)pts.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.3+.3,col:['#14b8a6','#3b82f6','#f43f6e','#f59e0b'][Math.floor(Math.random()*4)],a:Math.random()*.12+.04});
+  let pmx=0,pmy=0;
+  document.addEventListener('mousemove',e=>{pmx=e.clientX;pmy=e.clientY;});
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(let i=0;i<pts.length;i++){
+      for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<100){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(20,184,166,${(1-d/100)*.04})`;ctx.lineWidth=.4;ctx.stroke();}}
+      const mdx=pts[i].x-pmx,mdy=pts[i].y-pmy,md=Math.sqrt(mdx*mdx+mdy*mdy);
+      if(md<80){pts[i].vx+=mdx/md*.3;pts[i].vy+=mdy/md*.3;}
+      pts[i].vx*=.99;pts[i].vy*=.99;pts[i].x+=pts[i].vx;pts[i].y+=pts[i].vy;
+      if(pts[i].x<0)pts[i].x=W;if(pts[i].x>W)pts[i].x=0;if(pts[i].y<0)pts[i].y=H;if(pts[i].y>H)pts[i].y=0;
+      ctx.beginPath();ctx.arc(pts[i].x,pts[i].y,pts[i].r,0,Math.PI*2);ctx.fillStyle=pts[i].col;ctx.globalAlpha=pts[i].a;ctx.fill();ctx.globalAlpha=1;
+    }
+    requestAnimationFrame(draw);
+  }draw();
+})();
+
+/* ─────────────────────────────────────────────────────
+   HEALTH CHECK
+───────────────────────────────────────────────────── */
+async function checkHealth(){
+  try{
+    const d=await fetch(`${API}/api/health`).then(r=>r.json());
+    const dot=document.getElementById('sdot');
+    dot.style.cssText='width:6px;height:6px;border-radius:50%;background:var(--g);box-shadow:0 0 6px var(--g);animation:blink 2s ease infinite;flex-shrink:0;';
+    document.getElementById('stext').textContent=d.model_loaded?'MODEL READY':'SERVER READY';
+  }catch{document.getElementById('stext').textContent='OFFLINE MODE';}
+}
+
+/* ─────────────────────────────────────────────────────
+   QUICK TAGS + KEYBOARD
+───────────────────────────────────────────────────── */
+function buildQuickTags(){
+  const wrap=document.getElementById('quickTags');
+  QUICK_PICKS.forEach(p=>{
+    const btn=document.createElement('button');
+    btn.className='qtag '+CAT_COLOUR[p.cat]; btn.textContent=p.skill;
+    btn.addEventListener('mouseenter',()=>cursor.classList.add('cursor-expand'));
+    btn.addEventListener('mouseleave',()=>cursor.classList.remove('cursor-expand'));
+    btn.onclick=()=>{document.getElementById('searchInp').value=p.skill; doSearch();};
+    wrap.appendChild(btn);
+  });
+}
+function setupKeyboard(){
+  document.getElementById('searchInp').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch();});
+}
+
+/* ─────────────────────────────────────────────────────
+   SKILL HELPERS
+───────────────────────────────────────────────────── */
+/**
+ * Given a user query string, return every skill keyword from SKILL_DATABASE
+ * that is a substring match (both directions). Falls back to [query] if
+ * nothing matches so the backend still gets something to try.
+ */
+function matchSkills(query){
+  const q = query.toLowerCase().trim();
+  const matched = [];
+  for(const skills of Object.values(SKILL_DATABASE)){
+    for(const s of skills){
+      const sl = s.toLowerCase();
+      if(sl.includes(q) || q.includes(sl)) matched.push(s);
+    }
+  }
+  // Deduplicate while preserving order
+  return matched.length ? [...new Set(matched)] : [query];
+}
+
+/** Return the category name a skill belongs to. */
+function skillCat(skill){
+  const sl = skill.toLowerCase();
+  for(const [cat,skills] of Object.entries(SKILL_DATABASE)){
+    if(skills.some(s=>s.toLowerCase()===sl)) return cat;
+  }
+  return 'Other';
+}
+
+/**
+ * Build a job description string that guarantees `extract_skills` on the
+ * backend can find every skill via its substring check (s.lower() in text_lower).
+ *
+ * We repeat each skill token twice: once naturally, once as a standalone word,
+ * to survive any surrounding punctuation. This is the key reliability fix.
+ */
+function buildJD(skills){
+  // "Required competencies: BMS, PLC, Python. The role involves BMS work, PLC expertise, Python scripting."
+  const list = skills.join(', ');
+  const detail = skills.map(s=>`${s} knowledge`).join(', ');
+  return `Required competencies: ${list}. The role involves ${detail}.`;
+}
+
+/* ─────────────────────────────────────────────────────
+   CORE BACKEND CALL
+   Uses /api/skill-gap with candidate_skills=[] so every
+   matched skill becomes a "gap" and we get its courses.
+   Returns a flat array of enriched course objects.
+   Gap items with no courses in the CSV are kept as
+   placeholder rows so the user sees the skill was found.
+───────────────────────────────────────────────────── */
+async function callBackend(skills){
+  const jd = buildJD(skills);
+
+  let resp;
+  try {
+    resp = await fetch(`${API}/api/skill-gap`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ candidate_skills: [], job_description: jd }),
+    });
+  } catch(networkErr) {
+    throw new Error('Cannot reach server. Is it running on port 8000?');
+  }
+
+  // 422 = backend found NO recognisable skills in the JD text.
+  // This is a "no match" result, not a crash — return empty gracefully.
+  if(resp.status === 422) return [];
+
+  if(!resp.ok){
+    const body = await resp.json().catch(()=>({}));
+    throw new Error(body.detail || `Server error ${resp.status}`);
+  }
+
+  const data = await resp.json();
+  const out  = [];
+
+  for(const item of data.gap.all){
+    const meta = {
+      _skill:    item.skill,
+      _cat:      skillCat(item.skill),
+      _priority: item.priority,
+    };
+
+    if(item.courses && item.courses.length > 0){
+      // ✅ Real courses found in CSV — add each one
+      for(const c of item.courses){
+        out.push({ ...c, ...meta });
+      }
+    } else {
+      // ⚠️ Skill recognised by backend but no courses in CSV yet.
+      // Add a single placeholder so the user knows the skill was found
+      // and can follow the Naan Mudhalvan fallback link.
+      out.push({
+        course_name:   `Search "${item.skill}" on Naan Mudhalvan`,
+        provider:      'Naan Mudhalvan',
+        duration:      '',
+        mode:          'Online',
+        cost:          'Free',
+        certification: 'No',
+        url:           'https://naanmudhalvan.tn.gov.in',
+        is_free:       true,
+        _placeholder:  true,
+        ...meta,
+      });
+    }
+  }
+
+  return out;
+}
+
+/* ─────────────────────────────────────────────────────
+   STATS PRE-LOAD  (runs silently on page load)
+───────────────────────────────────────────────────── */
+async function loadAllCourses(){
+  try{
+    // Split into two batches to avoid a very long JD string
+    const half  = Math.ceil(ALL_SKILLS.length / 2);
+    const [a,b] = await Promise.all([
+      callBackend(ALL_SKILLS.slice(0, half)),
+      callBackend(ALL_SKILLS.slice(half)),
+    ]);
+    updateStats([...a, ...b]);
+  } catch{ /* server offline — stats stay as — */ }
+}
+
+/* ─────────────────────────────────────────────────────
+   MAIN SEARCH
+───────────────────────────────────────────────────── */
+async function doSearch(){
+  const query = document.getElementById('searchInp').value.trim();
+  if(!query){ showToast('Enter a skill or course name','err'); return; }
+
+  lastQuery = query;
+  document.getElementById('quickSection').style.display = 'none';
+
+  const btn = document.getElementById('searchBtn');
+  btn.disabled = true; btn.classList.add('loading');
+  document.getElementById('searchLbl').textContent = 'Searching…';
+  setLoad(true); showSkeleton();
+
+  try{
+    const matched = matchSkills(query);
+    let results   = await callBackend(matched);
+
+    // If nothing came back (query didn't match any known skill at all),
+    // try once more passing the raw query text directly so the backend
+    // can attempt its own extract_skills on it.
+    if(!results.length && matched[0] !== query){
+      results = await callBackend([query]);
+    }
+
+    allResults = results;
+    updateStats(allResults);
+    buildSidebar(allResults);
+    renderResults();
+
+    if(!allResults.length){
+      showEmpty(
+        `No courses found for "${query}"`,
+        'This skill may not be in our database yet. Try a related term like "BMS", "PLC", or "Python", or visit naanmudhalvan.tn.gov.in directly.',
+        '🔍'
+      );
+    }
+  } catch(e){
+    const isConn = e.message.includes('Cannot reach');
+    showToast(isConn ? 'Server offline — start it with: uvicorn main:app --reload' : e.message, 'err');
+    showEmpty(
+      isConn ? 'Server not running' : 'Something went wrong',
+      isConn ? 'Start the backend: uvicorn main:app --reload --port 8000' : e.message
+    );
+  } finally{
+    btn.disabled = false; btn.classList.remove('loading');
+    document.getElementById('searchLbl').textContent = 'Search Courses';
+    setLoad(false);
+  }
+}
+
+/* ─────────────────────────────────────────────────────
+   FILTER + SORT PIPELINE
+───────────────────────────────────────────────────── */
+function getFiltered(){
+  let list = [...allResults];
+
+  if(filterCat !== 'all') list = list.filter(c => c._cat === filterCat);
+  if(filterProv)          list = list.filter(c => c.provider === filterProv);
+  if(filterMode)          list = list.filter(c => c.mode === filterMode);
+  if(filterFree)          list = list.filter(c => c.is_free);
+  if(filterCert)          list = list.filter(c => c.certification === 'Yes');
+
+  // Deduplicate by course_name (keep first occurrence)
+  const seen = new Set();
+  list = list.filter(c=>{
+    const key = c._placeholder ? `__ph__${c._skill}` : c.course_name;
+    if(seen.has(key)) return false;
+    seen.add(key); return true;
+  });
+
+  // Sort
+  if(sortMode === 'free') list.sort((a,b)=>(a.is_free?0:1)-(b.is_free?0:1));
+  if(sortMode === 'cert') list.sort((a,b)=>(b.certification==='Yes'?1:0)-(a.certification==='Yes'?1:0));
+
+  return list;
+}
+
+/* ─────────────────────────────────────────────────────
+   RENDER RESULTS
+───────────────────────────────────────────────────── */
+function renderResults(){
+  const list   = getFiltered();
+  const header = document.getElementById('resultsHeader');
+  const area   = document.getElementById('resultsArea');
+
+  if(!list.length){
+    header.style.display = 'none';
+    showEmpty('No courses match your filters','Try removing a filter or broadening your search.','🔍');
+    return;
+  }
+
+  header.style.display = 'flex';
+  document.getElementById('resultsTitle').textContent =
+    lastQuery ? `Courses for "${lastQuery}"` : 'All Courses';
+  document.getElementById('resultsCount').textContent =
+    `${list.length} RESULT${list.length!==1?'S':''}`;
+
+  area.innerHTML = '';
+  const wrap = document.createElement('div');
+  wrap.className = 'course-list';
+
+  list.forEach((c, i) => {
+    const isPlaceholder = !!c._placeholder;
+    const accentClass   = isPlaceholder ? 'paid' : (c.is_free ? 'free' : (c.certification === 'Yes' ? 'cert' : 'paid'));
+    const tagStyle      = catTagStyle(c._cat);
+
+    const card = document.createElement('div');
+    card.className = 'cc' + (isPlaceholder ? ' cc-placeholder' : '');
+    card.style.animationDelay = Math.min(i, 20) * 0.035 + 's';
+    card.addEventListener('mouseenter', ()=>cursor.classList.add('cursor-expand'));
+    card.addEventListener('mouseleave', ()=>cursor.classList.remove('cursor-expand'));
+
+    const costTag = isPlaceholder
+      ? `<span class="c-tag ct-free">🆓 Free</span><span class="c-tag ct-mode">Naan Mudhalvan</span>`
+      : `<span class="c-tag ${c.is_free?'ct-free':'ct-paid'}">${c.is_free?'🆓 Free':esc(c.cost)}</span>
+         ${c.duration?`<span class="c-tag ct-dur">⏱ ${esc(c.duration)}</span>`:''}
+         ${c.certification==='Yes'?'<span class="c-tag ct-cert">🎓 Certificate</span>':''}
+         ${c.mode?`<span class="c-tag ct-mode">${esc(c.mode)}</span>`:''}`;
+
+    const courseTitle = isPlaceholder
+      ? `<span style="color:var(--ink3);font-style:italic">${esc(c.course_name)}</span>`
+      : esc(c.course_name);
+
+    card.innerHTML = `
+      <div class="cc-accent ${accentClass}"></div>
+      <div class="cc-body">
+        <div class="cc-main">
+          <div class="cc-skill-tag" style="${tagStyle}">${esc(c._skill)}</div>
+          <div class="cc-name">${courseTitle}</div>
+          <div class="cc-provider">by ${esc(c.provider)}</div>
+          <div class="cc-meta">${costTag}</div>
+        </div>
+        <div class="cc-right">
+          <a class="cc-link" href="${esc(c.url||'#')}" target="_blank" rel="noopener">
+            ${isPlaceholder ? 'Search ↗' : 'View Course <span class="cc-link-icon">↗</span>'}
+          </a>
+        </div>
+      </div>`;
+    wrap.appendChild(card);
+  });
+
+  area.appendChild(wrap);
+}
+
+function catTagStyle(cat){
+  const s = {
+    "EV & Electrical":      "background:rgba(20,184,166,.07);color:var(--g2);border-color:rgba(20,184,166,.25)",
+    "Automation & Controls":"background:rgba(59,130,246,.07);color:var(--b2);border-color:rgba(59,130,246,.25)",
+    "Mechanical":           "background:rgba(249,115,22,.07);color:var(--o);border-color:rgba(249,115,22,.25)",
+    "IT & Software":        "background:rgba(124,58,237,.07);color:var(--v2);border-color:rgba(124,58,237,.25)",
+    "Power Systems":        "background:rgba(245,158,11,.07);color:#92400e;border-color:rgba(245,158,11,.25)",
+    "Safety & Standards":   "background:rgba(244,63,110,.07);color:var(--m2);border-color:rgba(244,63,110,.25)",
+  };
+  return s[cat] || "background:var(--bg3);color:var(--ink3);border-color:var(--rim)";
+}
+
+/* ─────────────────────────────────────────────────────
+   SIDEBAR
+───────────────────────────────────────────────────── */
+function buildSidebar(courses){
+  // Exclude placeholders from provider/mode sidebar counts
+  const real = courses.filter(c => !c._placeholder);
+  buildSideSection('sideProviders', real, 'provider', filterProv,
+    v=>{ filterProv=v; renderResults(); buildSidebar(allResults); });
+  buildSideSection('sideModes', real, 'mode', filterMode,
+    v=>{ filterMode=v; renderResults(); buildSidebar(allResults); });
+}
+
+function buildSideSection(elId, courses, key, current, onSelect){
+  const el = document.getElementById(elId);
+  const counts = {};
+  courses.forEach(c=>{ const v=c[key]; if(!v)return; counts[v]=(counts[v]||0)+1; });
+  const entries = Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,8);
+
+  el.innerHTML = '';
+  if(!entries.length){
+    el.innerHTML = '<div style="padding:12px;font-family:var(--f-code);font-size:9px;color:var(--ink3);letter-spacing:.05em">Search to populate</div>';
+    return;
+  }
+
+  const mkItem = (label, count, isActive, onClick) => {
+    const d = document.createElement('div');
+    d.className = 'sb-item' + (isActive ? ' active' : '');
+    d.innerHTML = `<span>${esc(label)}</span><span class="sb-item-count">${count}</span>`;
+    d.addEventListener('mouseenter', ()=>cursor.classList.add('cursor-expand'));
+    d.addEventListener('mouseleave', ()=>cursor.classList.remove('cursor-expand'));
+    d.onclick = onClick;
+    el.appendChild(d);
+  };
+
+  mkItem('All', courses.length, current===null, ()=>onSelect(null));
+  entries.forEach(([val,cnt]) => mkItem(val, cnt, current===val, ()=>onSelect(val)));
+}
+
+/* ─────────────────────────────────────────────────────
+   STATS
+───────────────────────────────────────────────────── */
+function updateStats(courses){
+  const real  = courses.filter(c => !c._placeholder);
+  const names = [...new Set(real.map(c => c.course_name))];
+  const free  = names.filter(n => real.find(c => c.course_name===n)?.is_free);
+  const cert  = names.filter(n => real.find(c => c.course_name===n)?.certification==='Yes');
+  document.getElementById('statTotal').textContent = names.length || '256+';
+  document.getElementById('statFree').textContent  = free.length  || '—';
+  document.getElementById('statCert').textContent  = cert.length  || '—';
+}
+
+/* ─────────────────────────────────────────────────────
+   FILTER CONTROLS
+───────────────────────────────────────────────────── */
+function setCat(btn){
+  filterCat = btn.dataset.cat;
+  document.querySelectorAll('.fchip').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(allResults.length) renderResults();
+}
+function toggleFree(){
+  filterFree = !filterFree;
+  document.getElementById('freeBtn').classList.toggle('on', filterFree);
+  if(allResults.length) renderResults();
+}
+function toggleCert(){
+  filterCert = !filterCert;
+  document.getElementById('certBtn').classList.toggle('cert-on', filterCert);
+  if(allResults.length) renderResults();
+}
+function setSort(mode, btn){
+  sortMode = mode;
+  document.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(allResults.length) renderResults();
+}
+
+/* ─────────────────────────────────────────────────────
+   UI HELPERS
+───────────────────────────────────────────────────── */
+function showEmpty(title, sub, icon='🔍'){
+  document.getElementById('resultsArea').innerHTML = `
+    <div class="state-box">
+      <span class="state-icon">${icon}</span>
+      <div class="state-title">${esc(title)}</div>
+      <div class="state-sub">${esc(sub)}</div>
+    </div>`;
+}
+
+function showSkeleton(){
+  const area = document.getElementById('resultsArea');
+  const wrap = document.createElement('div'); wrap.className = 'skeleton-list';
+  for(let i=0;i<5;i++){
+    wrap.innerHTML += `<div class="sk"><div class="sk-accent"></div><div class="sk-body">
+      <div class="sk-line w30" style="animation-delay:${i*.08}s"></div>
+      <div class="sk-line w80" style="animation-delay:${i*.08+.05}s"></div>
+      <div class="sk-line w45" style="animation-delay:${i*.08+.1}s"></div>
+      <div class="sk-line w60" style="animation-delay:${i*.08+.15}s"></div>
+    </div></div>`;
+  }
+  area.innerHTML = ''; area.appendChild(wrap);
+  document.getElementById('resultsHeader').style.display = 'none';
+}
+
+function setLoad(on){ document.getElementById('loadbar').classList.toggle('on', on); }
+function showToast(msg, type){ const t=document.getElementById('toast'); t.textContent=msg; t.className='on '+(type||''); clearTimeout(t._t); t._t=setTimeout(()=>t.className='',3800); }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+</script>
+<script src="chat-widget.js"></script>
+</body>
+</html>
