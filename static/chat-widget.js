@@ -15,11 +15,11 @@
       💬<div class="fab-dot" id="fabDot"></div>
     </button>
 
-    <div id="chatPanel" role="dialog" aria-label="SkillTech Assistant">
+    <div id="chatPanel" role="dialog" aria-label="Alar Assistant">
       <div class="chat-head">
         <div class="chat-av">AI</div>
         <div>
-          <div class="chat-name">SKILLTECH ASSISTANT</div>
+          <div class="chat-name">ALAR ASSISTANT</div>
           <div class="chat-status" id="widgetStatus">● ONLINE AND READY</div>
         </div>
         <button class="chat-x" id="chatClose" aria-label="Close chat">×</button>
@@ -27,7 +27,7 @@
       <div class="chat-msgs" id="chatMsgs">
         <div class="cmsg ai">
           <div class="c-av">AI</div>
-          <div class="c-bub">Hi! 👋 I'm your SkillTech career assistant.
+          <div class="c-bub">Hi! 👋 I'm your Alar career assistant.
 
 I can help with career advice, course recommendations, EV industry info, resume tips, and salary benchmarks for Tamil Nadu's automotive sector.
 

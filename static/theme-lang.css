@@ -1,0 +1,461 @@
+/* ═══════════════════════════════════════════════════════════════════
+   SKILLTECH AI — THEME & LANGUAGE EXTERNAL STYLESHEET
+   theme-lang.css  |  Link this in every page <head>
+   
+   Handles:  • Dark / Light mode via [data-theme="dark"] on <body>
+             • Tamil font support
+             • Toggle widget styles (injected by theme-lang.js)
+═══════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@300;400;500;600;700;800&display=swap');
+
+/* ──────────────────────────────────────────────
+   DARK THEME — CSS variable overrides
+   All pages already use var(--x) tokens, so
+   overriding these here covers everything.
+────────────────────────────────────────────── */
+
+body[data-theme="dark"] {
+  --bg:    #060c14;
+  --bg2:   #0a1220;
+  --bg3:   #0e1a2e;
+  --panel: #0e1a2e;
+
+  /* accent colours stay vivid */
+  --g:  #14b8a6;
+  --g2: #2dd4bf;
+  --b:  #60a5fa;
+  --b2: #93c5fd;
+  --m:  #f472b6;
+  --m2: #fb7185;
+  --y:  #fbbf24;
+  --o:  #fb923c;
+
+  --rim:  rgba(148,163,184,.08);
+  --rim2: rgba(20,184,166,.4);
+  --rim3: rgba(20,184,166,.6);
+
+  --ink:  #e2e8f0;
+  --ink2: #94a3b8;
+  --ink3: #475569;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.4),  0 1px 8px rgba(0,0,0,.3);
+  --shadow:    0 4px 16px rgba(0,0,0,.5),  0 1px 4px rgba(0,0,0,.3);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,.6), 0 4px 12px rgba(0,0,0,.4);
+  --shadow-xl: 0 24px 64px rgba(0,0,0,.7), 0 8px 24px rgba(0,0,0,.5);
+}
+
+/* Dark background on root */
+body[data-theme="dark"] { background: var(--bg); }
+
+/* ── NAV dark ── */
+body[data-theme="dark"] .nav {
+  background: rgba(6,12,20,.92);
+  border-bottom-color: rgba(148,163,184,.08);
+  box-shadow: 0 1px 0 rgba(0,0,0,.5), 0 4px 24px rgba(0,0,0,.4);
+}
+body[data-theme="dark"] .nl:hover {
+  background: rgba(255,255,255,.04);
+  color: var(--ink);
+}
+body[data-theme="dark"] .nl.active {
+  background: rgba(20,184,166,.08);
+  border-color: rgba(20,184,166,.25);
+}
+body[data-theme="dark"] .ver-badge {
+  background: rgba(255,255,255,.03);
+  border-color: rgba(148,163,184,.1);
+}
+
+/* ── Hero dark ── */
+body[data-theme="dark"] .hero {
+  background: var(--bg2);
+}
+body[data-theme="dark"] .hero::before {
+  background:
+    radial-gradient(ellipse 50% 70% at 80% 40%, rgba(59,130,246,.12) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 50% at 10% 60%, rgba(20,184,166,.08) 0%, transparent 60%);
+}
+
+/* ── Stat strip dark ── */
+body[data-theme="dark"] .stat-strip {
+  background: var(--bg3);
+  border-color: var(--rim);
+}
+
+/* ── Buttons dark ── */
+body[data-theme="dark"] .btn-primary {
+  background: #0e1a2e;
+  border: 1px solid rgba(20,184,166,.3);
+  color: var(--g2);
+  box-shadow: 0 0 0 1px rgba(20,184,166,.1), 0 4px 14px rgba(0,0,0,.5);
+}
+body[data-theme="dark"] .btn-primary:hover {
+  background: rgba(20,184,166,.06);
+  box-shadow: 0 0 0 1px rgba(20,184,166,.3), 0 8px 28px rgba(0,0,0,.6);
+}
+body[data-theme="dark"] .btn-ghost {
+  border-color: var(--rim);
+  color: var(--ink2);
+}
+body[data-theme="dark"] .btn-ghost:hover {
+  border-color: rgba(20,184,166,.4);
+  background: rgba(20,184,166,.06);
+}
+
+/* ── Tool cards dark ── */
+body[data-theme="dark"] .tool-card {
+  background: var(--panel);
+  border-color: var(--rim);
+}
+body[data-theme="dark"] .tool-card:hover {
+  border-color: var(--rim2);
+}
+body[data-theme="dark"] .tc-foot {
+  background: var(--bg3);
+  border-top-color: var(--rim);
+}
+body[data-theme="dark"] .tc-tag {
+  background: var(--bg3);
+  border-color: var(--rim);
+  color: var(--ink3);
+}
+
+/* ── Chart panels dark ── */
+body[data-theme="dark"] .chart-panel {
+  background: var(--panel);
+  border-color: var(--rim);
+}
+body[data-theme="dark"] .cp-head {
+  background: var(--bg3);
+  border-bottom-color: var(--rim);
+}
+
+/* ── Role cards dark ── */
+body[data-theme="dark"] .role-card {
+  background: var(--panel);
+  border-color: var(--rim);
+}
+body[data-theme="dark"] .role-card:hover {
+  border-color: rgba(20,184,166,.2);
+}
+body[data-theme="dark"] .rb-hot  { background: rgba(244,63,110,.1);  border-color: rgba(244,63,110,.2); }
+body[data-theme="dark"] .rb-grow { background: rgba(20,184,166,.1);  border-color: rgba(20,184,166,.2); }
+body[data-theme="dark"] .rb-open { background: rgba(59,130,246,.1);  border-color: rgba(59,130,246,.2); }
+
+/* ── Steps dark ── */
+body[data-theme="dark"] .step.done .step-num {
+  background: rgba(20,184,166,.1);
+  border-color: rgba(20,184,166,.35);
+}
+body[data-theme="dark"] .step.curr .step-num {
+  background: rgba(59,130,246,.1);
+  border-color: rgba(59,130,246,.4);
+}
+body[data-theme="dark"] .step.next .step-num {
+  background: var(--bg3);
+  border-color: var(--rim);
+}
+
+/* ── About card dark ── */
+body[data-theme="dark"] .about-card {
+  background: var(--bg3);
+  border-color: var(--rim);
+}
+body[data-theme="dark"] .tech-item {
+  background: var(--bg2);
+  border-color: var(--rim);
+  color: var(--ink2);
+}
+body[data-theme="dark"] .tech-item:hover {
+  background: rgba(20,184,166,.06);
+  border-color: rgba(20,184,166,.3);
+}
+body[data-theme="dark"] .src-chip {
+  background: var(--bg2);
+  border-color: var(--rim);
+}
+
+/* ── Region bars dark ── */
+body[data-theme="dark"] .rg-track {
+  background: var(--bg3);
+  border-color: var(--rim);
+}
+
+/* ── Sections alternation dark ── */
+body[data-theme="dark"] #tools    { background: var(--bg);  }
+body[data-theme="dark"] #analytics { background: var(--bg2); }
+body[data-theme="dark"] #roles    { background: var(--bg);  }
+body[data-theme="dark"] #how      { background: var(--bg2); }
+
+/* ── Loader dark ── */
+body[data-theme="dark"] #loader   { background: var(--bg2); }
+
+/* ── Footer dark ── */
+body[data-theme="dark"] .footer {
+  background: var(--bg2);
+  border-top-color: var(--rim);
+}
+
+/* ── Noise overlay tint dark ── */
+body[data-theme="dark"]::before { opacity: .25; }
+
+/* ── Holo grid dark ── */
+body[data-theme="dark"] .holo-grid {
+  background-image:
+    linear-gradient(rgba(148,163,184,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148,163,184,.025) 1px, transparent 1px);
+}
+
+/* ── Scrollbar dark ── */
+body[data-theme="dark"]::-webkit-scrollbar       { width: 6px; }
+body[data-theme="dark"]::-webkit-scrollbar-track  { background: var(--bg); }
+body[data-theme="dark"]::-webkit-scrollbar-thumb  {
+  background: rgba(20,184,166,.3);
+  border-radius: 3px;
+}
+body[data-theme="dark"]::-webkit-scrollbar-thumb:hover {
+  background: rgba(20,184,166,.5);
+}
+
+/* ── Globe wireframe tint dark ── */
+body[data-theme="dark"] #globe-canvas { filter: brightness(1.4) hue-rotate(0deg); }
+
+/* ── Notice bar dark ── */
+body[data-theme="dark"] .notice-bar {
+  background: rgba(245,158,11,.06);
+  border-color: rgba(245,158,11,.2);
+}
+
+/* ── Status pill dark ── */
+body[data-theme="dark"] .status-pill {
+  background: rgba(20,184,166,.08);
+  border-color: rgba(20,184,166,.25);
+}
+
+/* ──────────────────────────────────────────────
+   NAVBAR CONTROLS
+────────────────────────────────────────────── */
+.nav-control-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  border: 1px solid rgba(15,23,42,.1);
+  border-radius: 30px;
+  background: rgba(15,23,42,.04);
+  cursor: pointer;
+  transition: all .2s;
+  outline: none;
+  -webkit-user-select: none;
+  user-select: none;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+body[data-theme="dark"] .nav-control-btn {
+  border-color: rgba(148,163,184,.12);
+  background: rgba(255,255,255,.04);
+}
+
+.nav-control-btn:hover {
+  border-color: rgba(20,184,166,.25);
+  background: rgba(20,184,166,.08);
+}
+
+.st-theme-icon {
+  font-size: 14px;
+  line-height: 1;
+  transition: transform .4s cubic-bezier(0.34,1.56,0.64,1);
+}
+.nav-control-btn:hover .st-theme-icon { transform: rotate(20deg) scale(1.15); }
+
+.st-theme-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #475569;
+  transition: color .3s;
+}
+body[data-theme="dark"] .st-theme-label { color: #94a3b8; }
+
+.st-lang-option {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 24px;
+  transition: all .22s;
+  color: #94a3b8;
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+}
+.st-lang-option.active {
+  color: #0f172a;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(0,0,0,.12);
+}
+body[data-theme="dark"] .st-lang-option.active {
+  color: #ffffff;
+  background: rgba(20,184,166,.2);
+}
+
+/* ──────────────────────────────────────────────
+   TAMIL FONT — applied when [data-lang="ta"]
+   Noto Sans Tamil covers all Tamil glyphs cleanly
+────────────────────────────────────────────── */
+body[data-lang="ta"] {
+  font-family: 'Noto Sans Tamil', 'Figtree', sans-serif;
+  --f-ui: 'Noto Sans Tamil', 'Figtree', sans-serif;
+}
+
+/* Headings keep Unbounded for Latin chars;
+   Tamil glyphs fall back to Noto Sans Tamil */
+body[data-lang="ta"] .hero-title,
+body[data-lang="ta"] .section-title,
+body[data-lang="ta"] .tc-title,
+body[data-lang="ta"] .about-title,
+body[data-lang="ta"] .brand-name,
+body[data-lang="ta"] .role-title,
+body[data-lang="ta"] .step-title,
+body[data-lang="ta"] .region-title,
+body[data-lang="ta"] .panel-title,
+body[data-lang="ta"] .hero h1 {
+  font-family: 'Unbounded', 'Noto Sans Tamil', sans-serif;
+  letter-spacing: -0.01em;
+}
+
+/* Code-style labels stay mono + Tamil fallback */
+body[data-lang="ta"] .eyebrow-text,
+body[data-lang="ta"] .sl-num,
+body[data-lang="ta"] .sl-text,
+body[data-lang="ta"] .brand-tag,
+body[data-lang="ta"] .stat-lbl,
+body[data-lang="ta"] .stat-delta,
+body[data-lang="ta"] .tc-tag,
+body[data-lang="ta"] .role-num,
+body[data-lang="ta"] .role-badge,
+body[data-lang="ta"] .cp-title,
+body[data-lang="ta"] .cp-meta,
+body[data-lang="ta"] .ver-badge,
+body[data-lang="ta"] .footer-left,
+body[data-lang="ta"] .footer-right,
+body[data-lang="ta"] .status-pill,
+body[data-lang="ta"] .mode-pill {
+  font-family: 'JetBrains Mono', 'Noto Sans Tamil', monospace;
+}
+
+/* Slightly larger Tamil text for readability */
+body[data-lang="ta"] .hero-desc   { font-size: 15px; line-height: 2; }
+body[data-lang="ta"] .tc-desc     { font-size: 13px; line-height: 1.9; }
+body[data-lang="ta"] .step-desc   { font-size: 13px; line-height: 1.9; }
+body[data-lang="ta"] .about-text  { font-size: 13.5px; line-height: 2; }
+body[data-lang="ta"] .panel-sub   { font-size: 14px; line-height: 1.8; }
+body[data-lang="ta"] .hero p      { font-size: 15px; line-height: 1.8; }
+
+/* ── Tooltip on hover ── */
+#st-controls::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  background: rgba(15,23,42,.85);
+  color: #94a3b8;
+  font-size: 9px;
+  letter-spacing: .08em;
+  padding: 5px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
+}
+#st-controls:hover::after { opacity: 1; }
+
+/* ── Smooth theme transition ── */
+body, body * {
+  transition:
+    background-color .3s ease,
+    border-color .3s ease,
+    color .3s ease,
+    box-shadow .3s ease;
+}
+
+/* But don't transition transforms (breaks animations) */
+body *[style*="transform"],
+body canvas,
+body svg {
+  transition: none !important;
+}
+
+/* ── Analytics pages & other page specific dark tweaks ── */
+
+/* industry-analytics page */
+body[data-theme="dark"] .filter-bar,
+body[data-theme="dark"] .filter-btn,
+body[data-theme="dark"] .kpi-card,
+body[data-theme="dark"] .insight-card,
+body[data-theme="dark"] .table-wrap,
+body[data-theme="dark"] .data-table,
+body[data-theme="dark"] .data-table th,
+body[data-theme="dark"] .data-table td {
+  background: var(--panel);
+  border-color: var(--rim);
+}
+body[data-theme="dark"] .data-table tr:hover td {
+  background: rgba(20,184,166,.04);
+}
+
+/* course-finder page */
+body[data-theme="dark"] .course-card,
+body[data-theme="dark"] .search-bar,
+body[data-theme="dark"] .filter-chip,
+body[data-theme="dark"] .course-meta,
+body[data-theme="dark"] .sidebar-widget {
+  background: var(--panel);
+  border-color: var(--rim);
+}
+
+/* job-roles page */
+body[data-theme="dark"] .job-card,
+body[data-theme="dark"] .job-detail,
+body[data-theme="dark"] .skill-tag,
+body[data-theme="dark"] .salary-band {
+  background: var(--panel);
+  border-color: var(--rim);
+}
+
+/* tn-companies page */
+body[data-theme="dark"] .company-card,
+body[data-theme="dark"] .company-header,
+body[data-theme="dark"] .badge-tier {
+  background: var(--panel);
+  border-color: var(--rim);
+}
+
+/* skill analyser / index page */
+body[data-theme="dark"] .analyser-panel,
+body[data-theme="dark"] .upload-zone,
+body[data-theme="dark"] .chat-bubble,
+body[data-theme="dark"] .result-card,
+body[data-theme="dark"] .gap-row,
+body[data-theme="dark"] .course-rec {
+  background: var(--panel);
+  border-color: var(--rim);
+}
+body[data-theme="dark"] .upload-zone {
+  background: rgba(20,184,166,.03);
+}
+body[data-theme="dark"] input,
+body[data-theme="dark"] textarea,
+body[data-theme="dark"] select {
+  background: var(--bg3) !important;
+  border-color: var(--rim) !important;
+  color: var(--ink) !important;
+}
+body[data-theme="dark"] input::placeholder,
+body[data-theme="dark"] textarea::placeholder {
+  color: var(--ink3) !important;
+}

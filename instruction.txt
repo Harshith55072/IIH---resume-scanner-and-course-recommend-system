@@ -1,6 +1,6 @@
 go to this file address in terminal:
 
-cd "C:\Users\Lenovo\Documents\programing\IIH Hackaton - resume scanner and course recomend system"
+cd "C:\Users\Lenovo\Documents\programing\IIH-v6.1\"
 
 
 run this line:

@@ -3,17 +3,11 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SkillTech AI — Job Roles</title>
+<title>ALAR — Job Roles</title>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600;700;800;900&family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=JetBrains+Mono:wght@100;300;400;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="theme-lang.css"/>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-/* ── CURSOR ── */
-* { cursor: none !important; }
-#cursor { position: fixed; z-index: 9999; pointer-events: none; }
-#cursor-ring { width: 32px; height: 32px; border: 1.5px solid rgba(20,184,166,.6); border-radius: 50%; position: absolute; top: -16px; left: -16px; transition: width .25s, height .25s, border-color .25s; }
-#cursor-dot { width: 4px; height: 4px; background: #14b8a6; border-radius: 50%; position: absolute; top: -2px; left: -2px; }
-.cursor-expand #cursor-ring { width: 52px; height: 52px; top: -26px; left: -26px; border-color: rgba(244,63,110,.5); }
 
 /* ── TOKENS ── */
 :root {
@@ -185,9 +179,6 @@ main { position: relative; z-index: 2; padding-top: 64px; }
 </head>
 <body>
 
-<!-- CURSOR -->
-<div id="cursor"><div id="cursor-ring"></div><div id="cursor-dot"></div></div>
-
 <!-- PARTICLES -->
 <canvas id="particle-canvas"></canvas>
 
@@ -202,7 +193,7 @@ main { position: relative; z-index: 2; padding-top: 64px; }
       <div class="brand-inner">⚡</div>
     </div>
     <div>
-      <div class="brand-name">Skill<span>Tech</span></div>
+      <div class="brand-name">ALAR</div>
       <div class="brand-tag">TN · EV · Automotive</div>
     </div>
   </a>
@@ -216,8 +207,11 @@ main { position: relative; z-index: 2; padding-top: 64px; }
     <a class="nl" href="tn-companies.html">Companies</a>
   </nav>
   <div class="nav-right">
-    <div class="status-pill"><div class="sdot-inline"></div><span>Online</span></div>
-    <div class="ver-badge">v2.0</div>
+    <div id="st-theme-mount"></div>
+    <div id="st-lang-mount"></div>
+    <div class="status-pill"><div id="sdot"></div><span id="stext">Connecting…</span></div>
+    <button class="btn-reset" onclick="resetApp()" title="Reset all data and start over" style="margin-left: 10px; padding: 6px 12px; font-size: 10px; border-radius: 6px; background: var(--bg3); border: 1px solid var(--rim); color: var(--ink3); cursor: pointer; font-family: var(--f-code); font-weight: 700; text-transform: uppercase;">Reset</button>
+    <div class="ver-badge">v2.1</div>
   </div>
 </nav>
 
@@ -337,21 +331,20 @@ const ROLES = [
 
 let currentFilter = 'all';
 
+/* ── VERIFICATION GUARD REMOVED ── */
+
+function resetApp() {
+  if (confirm('Reset everything? This clears all skills and verification data.')) {
+    ['alar_verified_skills','alar_verified_timestamp','alar_industry_score','alar_temp_skills']
+      .forEach(k => localStorage.removeItem(k));
+    window.location.href = 'index.html';
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   renderRoles('all');
-  setupCursor();
   setupParticles();
 });
-
-/* ── CURSOR ── */
-function setupCursor(){
-  const cur=document.getElementById('cursor'), rng=document.getElementById('cursor-ring');
-  let mx=-100,my=-100,rx=-100,ry=-100;
-  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
-  (function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;rng.style.transform=`translate(${rx-mx}px,${ry-my}px)`;requestAnimationFrame(loop);})();
-}
-function hoverOn(){ document.getElementById('cursor').classList.add('cursor-expand'); }
-function hoverOff(){ document.getElementById('cursor').classList.remove('cursor-expand'); }
 
 /* ── PARTICLES ── */
 function setupParticles(){
@@ -422,8 +415,6 @@ function renderRoles(filter){
         <button class="card-cta-btn">Analyse my fit for this role →</button>
       </div>`;
 
-    card.addEventListener('mouseenter', hoverOn);
-    card.addEventListener('mouseleave', hoverOff);
     card.querySelector('.card-cta-btn').addEventListener('click', e => {
       e.stopPropagation();
       showToast(`Opening Skill Analyser for ${r.n}…`, 'ok');
@@ -450,5 +441,6 @@ function showToast(msg, type=''){
 }
 </script>
 <script src="chat-widget.js"></script>
+<script src="theme-lang.js"></script>
 </body>
 </html>

@@ -3,13 +3,11 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SkillTech AI — Skill Gap Analyser</title>
+<title>ALAR — Skill Gap Analyser</title>
 <link rel="stylesheet" href="indexstyle.css"/>
+<link rel="stylesheet" href="theme-lang.css"/>
 </head>
 <body>
-
-<!-- CURSOR -->
-<div id="cursor"><div id="cursor-ring"></div><div id="cursor-dot"></div></div>
 
 <!-- PARTICLE CANVAS -->
 <canvas id="particle-canvas"></canvas>
@@ -28,30 +26,34 @@
       <div class="brand-inner">⚡</div>
     </div>
     <div>
-      <div class="brand-name">Skill<span>Tech</span></div>
+      <div class="brand-name">ALAR</div>
       <div class="brand-tag">TN · EV · Automotive</div>
     </div>
   </a>
   <div class="nav-sep"></div>
-  <nav class="nav-links">
+  <div class="nav-links">
     <a class="nl" href="overview.html">Overview</a>
     <a class="nl" href="industry-analytics.html">Analytics</a>
-    <a class="nl active nl-live" href="#">Skill Analyser</a>
+    <a class="nl active nl-live" href="#" onclick="return false;">Skill Analyser</a>
     <a class="nl" href="course-finder.html">Courses</a>
     <a class="nl" href="job-roles.html">Job Roles</a>
     <a class="nl" href="tn-companies.html">Companies</a>
-  </nav>
+  </div>
   <div class="nav-right">
+    <div id="st-theme-mount"></div>
+    <div id="st-lang-mount"></div>
     <div class="status-pill">
       <div id="sdot"></div>
       <span id="stext">Connecting…</span>
     </div>
-    <div class="ver-badge">v2.0</div>
+    <div class="mode-pill" id="modePill" onclick="toggleMode()" title="Toggle Online/OFFLINE">OFFLINE</div>
+    <button class="btn-reset" onclick="resetApp()" title="Reset all data and start over" style="margin-left: 10px; padding: 6px 12px; font-size: 10px; border-radius: 6px; background: var(--bg3); border: 1px solid var(--rim); color: var(--ink3); cursor: pointer; font-family: var(--f-code); font-weight: 700; text-transform: uppercase;">Reset</button>
+    <div class="ver-badge">v2.1</div>
   </div>
 </nav>
 
-<main style="position:relative;z-index:2;padding-top:64px;">
-<div style="position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(15,23,42,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(15,23,42,.018) 1px,transparent 1px);background-size:56px 56px;"></div>
+<main>
+<div style="position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(15,23,42,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(15,23,42,.018) 1px,transparent 1px);background-size:56px 56px;z-index:1;"></div>
 
 <div class="page">
 
@@ -71,17 +73,17 @@
 
   <!-- STEP BAR -->
   <div class="steps-bar" id="stepsBar">
-    <div class="step-btn active" data-step="1" onclick="goStep(1)">
+    <div class="step-btn active" data-step="1" id="stepBtn1" onclick="goStep(1)">
       <div class="step-circle"><span>1</span></div>
       <span class="step-text">Your Skills</span>
     </div>
     <div class="step-divider"></div>
-    <div class="step-btn" data-step="2" onclick="goStep(2)">
+    <div class="step-btn disabled" data-step="2" id="stepBtn2" onclick="goStep(2)">
       <div class="step-circle"><span>2</span></div>
       <span class="step-text">Target Job</span>
     </div>
     <div class="step-divider"></div>
-    <div class="step-btn" data-step="3" onclick="goStep(3)">
+    <div class="step-btn disabled" data-step="3" id="stepBtn3" onclick="goStep(3)">
       <div class="step-circle"><span>3</span></div>
       <span class="step-text">Your Results</span>
     </div>
@@ -106,8 +108,6 @@
             <span class="card-badge">Recommended</span>
           </div>
           <div class="split-col-body">
-
-            <!-- Drop zone -->
             <div class="drop-zone" id="dropZone">
               <input type="file" id="resumeFile" accept=".pdf,.jpg,.jpeg,.png,.txt"/>
               <span class="drop-icon">📄</span>
@@ -115,7 +115,6 @@
               <div class="drop-hint">Supports <b>PDF, JPG, PNG, TXT</b> — click to browse</div>
             </div>
 
-            <!-- Resume loading animation -->
             <div class="resume-loading" id="resumeLoading">
               <div class="rl-spinner">
                 <div class="rl-spinner-ring"></div>
@@ -124,29 +123,14 @@
               </div>
               <div class="rl-title">Reading your resume…</div>
               <div class="rl-steps" id="rlSteps">
-                <div class="rl-step" id="rlStep1">
-                  <div class="rl-step-icon">1</div>
-                  <span>Uploading file</span>
-                </div>
-                <div class="rl-step" id="rlStep2">
-                  <div class="rl-step-icon">2</div>
-                  <span>Extracting text</span>
-                </div>
-                <div class="rl-step" id="rlStep3">
-                  <div class="rl-step-icon">3</div>
-                  <span>Identifying skills</span>
-                </div>
-                <div class="rl-step" id="rlStep4">
-                  <div class="rl-step-icon">4</div>
-                  <span>Categorising results</span>
-                </div>
+                <div class="rl-step" id="rlStep1"><div class="rl-step-icon">1</div><span>Uploading file</span></div>
+                <div class="rl-step" id="rlStep2"><div class="rl-step-icon">2</div><span>Extracting text</span></div>
+                <div class="rl-step" id="rlStep3"><div class="rl-step-icon">3</div><span>Identifying skills</span></div>
+                <div class="rl-step" id="rlStep4"><div class="rl-step-icon">4</div><span>Categorising results</span></div>
               </div>
-              <div class="rl-bar-track">
-                <div class="rl-bar-fill" id="rlBar"></div>
-              </div>
+              <div class="rl-bar-track"><div class="rl-bar-fill" id="rlBar"></div></div>
             </div>
 
-            <!-- Upload success bar -->
             <div class="upload-bar" id="uploadBar">
               <span class="upload-bar-icon">✅</span>
               <div class="upload-bar-info">
@@ -156,7 +140,6 @@
               <button class="btn-remove" onclick="clearResume()">Remove</button>
             </div>
 
-            <!-- Skills found card -->
             <div class="skills-found-inline" id="skillsFoundCard">
               <div class="sfi-header">
                 <span class="sfi-icon">🧠</span>
@@ -171,7 +154,6 @@
           </div>
         </div>
 
-        <!-- Divider -->
         <div class="split-divider"></div>
 
         <!-- Right: Manual -->
@@ -202,7 +184,7 @@
     </div>
 
     <div class="nav-row">
-      <button class="btn-primary" onclick="goStep(2)">
+      <button class="btn-primary" id="continueToJobBtn" onclick="goToStep2()">
         Continue — Choose a Job Role &nbsp;▶
       </button>
     </div>
@@ -324,6 +306,48 @@
 </div><!-- /page -->
 </main>
 
+<!-- ═══════════════════════════════════════
+  FIX: examOverlay was referenced in JS but
+  never existed in the HTML — added here.
+════════════════════════════════════════ -->
+<div id="examOverlay" style="
+  display:none; position:fixed; inset:0; z-index:2000;
+  background:rgba(248,250,252,.98); backdrop-filter:blur(12px);
+  align-items:center; justify-content:center; padding:20px;
+  animation: fadeIn .3s ease both;
+">
+  <div style="width:100%;max-width:600px;background:var(--panel);border:1px solid var(--rim);border-radius:16px;box-shadow:var(--shadow-xl);overflow:hidden;display:flex;flex-direction:column;max-height:90vh;">
+    <div style="padding:20px 24px;border-bottom:1px solid var(--rim);background:var(--bg);display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-family:var(--f-code);font-size:9px;color:var(--g2);letter-spacing:.15em;text-transform:uppercase;margin-bottom:4px;" id="examEyebrow">Assessment</div>
+        <div style="font-family:var(--f-disp);font-size:14px;font-weight:800;color:var(--ink);letter-spacing:.06em;text-transform:uppercase;" id="examTitle">Skill Verification</div>
+      </div>
+      <div style="font-family:var(--f-code);font-size:10px;color:var(--ink3);font-weight:700;" id="examProgress">Question 1</div>
+    </div>
+    <div style="padding:32px 24px;overflow-y:auto;flex:1;" id="examBody"><!-- dynamic --></div>
+    <div style="padding:16px 24px;border-top:1px solid var(--rim);display:flex;justify-content:flex-end;gap:12px;background:var(--bg);">
+      <button onclick="if(confirm('Quit? Progress will be lost.'))closeExamOverlay()" style="padding:10px 20px;border-radius:8px;border:1px solid var(--rim);background:var(--bg3);color:var(--ink3);font-family:var(--f-code);font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;">Quit</button>
+      <button id="examNextBtn" onclick="nextQuestion()" disabled style="padding:10px 24px;border-radius:8px;border:none;background:var(--ink);color:#fff;font-family:var(--f-disp);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;opacity:.4;">Next &nbsp;▶</button>
+    </div>
+  </div>
+</div>
+<style>
+#examOverlay.show { display: flex !important; }
+#examNextBtn:not(:disabled) { opacity: 1 !important; }
+.exam-opt {
+  width:100%; padding:14px 18px; text-align:left; background:var(--bg);
+  border:1.5px solid var(--rim); border-radius:10px; font-family:var(--f-ui);
+  font-size:14px; font-weight:500; color:var(--ink2); cursor:pointer;
+  transition:all .18s; display:flex; align-items:center; gap:12px; outline:none;
+}
+.exam-opt:hover { border-color:var(--g); background:rgba(20,184,166,.04); color:var(--ink); transform:translateX(4px); }
+.exam-opt.selected { border-color:var(--g); background:rgba(20,184,166,.08); color:var(--g2); box-shadow:0 0 0 3px rgba(20,184,166,.1); }
+.exam-opt-idx { width:22px;height:22px;border-radius:6px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-family:var(--f-code);font-size:10px;font-weight:700;color:var(--ink3);flex-shrink:0; }
+.exam-opt.selected .exam-opt-idx { background:var(--g2); color:#fff; }
+.step-btn.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+.step-btn.disabled .step-circle { background: var(--bg3); border-color: var(--rim); color: var(--ink3); }
+</style>
+
 <!-- CHAT FAB -->
 <button id="chatFab" onclick="toggleChat()">
   💬<div class="fab-dot" id="fabDot"></div>
@@ -334,7 +358,7 @@
   <div class="chat-head">
     <div class="chat-av">AI</div>
     <div>
-      <div class="chat-name">SKILLTECH ASSISTANT</div>
+      <div class="chat-name">ALAR ASSISTANT</div>
       <div class="chat-status" id="chatStatus">● ONLINE AND READY</div>
     </div>
     <button class="chat-x" onclick="toggleChat()">×</button>
@@ -342,7 +366,7 @@
   <div class="chat-msgs" id="chatMsgs">
     <div class="cmsg ai">
       <div class="c-av">AI</div>
-      <div class="c-bub">Hi! 👋 I'm your SkillTech career assistant.
+      <div class="c-bub">Hi! 👋 I'm your Alar career assistant.
 
 I can help with career advice, course recommendations, EV industry info, resume tips, and more.
 
@@ -367,6 +391,8 @@ What would you like to know?</div>
 'use strict';
 
 const API = 'http://localhost:8000';
+const MODE_KEY = 'st_mode';
+let onlineMode = localStorage.getItem(MODE_KEY) || 'offline';
 
 const ROLES = [
   {id:'ev-bat',   icon:'⚡', name:'EV Battery Engineer',        cat:'EV / Automotive'},
@@ -408,53 +434,258 @@ const CAT_COLOUR = {
   'IT & Software':'cat-it','Safety & Standards':'cat-safety','Soft Skills':'cat-soft',
 };
 
-const SKILL_KEYWORDS = [
-  'EV battery','BMS','battery management','motor control','charging systems','electric vehicle','EV powertrain',
-  'inverter','converter','power electronics','BLDC','lithium ion','battery pack','cell balancing',
-  'regenerative braking','onboard charger','DC-DC converter',
-  'PLC','SCADA','HMI','robotics','automation','DCS','pneumatics','hydraulics','servo motor',
-  'VFD','variable frequency drive','motion control','industrial automation','relay logic','ladder logic','PID control',
-  'CNC','CAD','CAM','SolidWorks','AutoCAD','welding','fabrication','machining','lathe',
-  'GD&T','metrology','quality control','lean manufacturing','kaizen','six sigma','FMEA','production planning',
-  'transformer','switchgear','circuit breaker','substation','transmission','distribution',
-  'electrical maintenance','power distribution','relay','protection system','earthing','load flow','power factor',
-  'Python','MATLAB','LabVIEW','embedded systems','microcontroller','Arduino','Raspberry Pi',
-  'IoT','data analysis','machine learning','C programming','C++','Java','SQL',
-  'ISO','IATF','OHSAS','safety management','OSHA','fire safety','risk assessment',
-  'work permit','PPE','5S','audit','quality assurance','QA','QC','testing',
-  'teamwork','communication','leadership','problem solving','time management','project management',
-  'analytical','multitasking','documentation','reporting','supervision','training',
-];
+const SKILL_DATABASE = {
+  "EV & Electrical": ["EV battery","BMS","battery management","motor control","charging systems","electric vehicle","EV powertrain","inverter","converter","power electronics","BLDC","lithium ion","battery pack","cell balancing","regenerative braking","onboard charger","DC-DC converter"],
+  "Automation & Controls": ["PLC","SCADA","HMI","robotics","automation","DCS","pneumatics","hydraulics","servo motor","VFD","variable frequency drive","motion control","industrial automation","relay logic","ladder logic","PID control"],
+  "Mechanical": ["CNC","CAD","CAM","SolidWorks","AutoCAD","welding","fabrication","machining","lathe","GD&T","metrology","quality control","lean manufacturing","kaizen","six sigma","FMEA","production planning"],
+  "Power Systems": ["transformer","switchgear","circuit breaker","substation","transmission","distribution","electrical maintenance","power distribution","relay","protection system","earthing","load flow","power factor"],
+  "IT & Software": ["Python","MATLAB","LabVIEW","embedded systems","microcontroller","Arduino","Raspberry Pi","IoT","data analysis","machine learning","C programming","C++","Java","SQL"],
+  "Safety & Standards": ["ISO","IATF","OHSAS","safety management","OSHA","fire safety","risk assessment","work permit","PPE","5S","audit","quality assurance","QA","QC","testing"],
+  "Soft Skills": ["teamwork","communication","leadership","problem solving","time management","project management","analytical","multitasking","documentation","reporting","supervision","training"],
+};
+
+const SKILL_KEYWORDS = Object.values(SKILL_DATABASE).flat();
 
 /* ── STATE ── */
-let resumeText='',resumeSkills=[],resumeSkillsByCategory={};
-let manualSkills=[],allGapItems=[],lastData=null;
-let chatHistory=[],chatOpen=false,currentStep=1,selectedRole=null;
+let resumeText='', resumeSkills=[], resumeSkillsByCategory={};
+let manualSkills=[], allGapItems=[], lastData=null;
+let chatHistory=[], chatOpen=false, currentStep=1, selectedRole=null;
+let industryScore=0;
+
+/* ── EXAM STATE ── */
+let examType='industry';
+let examQuestions=[];
+let currentQIdx=0;
+let examAnswers=[];
+let skillTests=[];
+let verifiedSkills=[];
 
 /* ── INIT ── */
-document.addEventListener('DOMContentLoaded',()=>{
-  checkHealth();buildRoleGrid();setupDrop();setupChat();
-  document.getElementById('skillInp').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addSkill();}});
+document.addEventListener('DOMContentLoaded', () => {
+  checkHealth(); buildRoleGrid(); setupDrop(); setupChat();
+  document.getElementById('skillInp').addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); addSkill(); }
+  });
+  updateModeUI();
+  checkVerification();
+
+  // Check for jump signal from test.html
+  const jumpTo = localStorage.getItem('alar_jump_to_step');
+  if (jumpTo === '2') {
+    localStorage.removeItem('alar_jump_to_step');
+    setTimeout(() => goStep(2), 100);
+  }
 });
 
-/* ── CURSOR ── */
-const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
-let mx=-100,my=-100,rx=-100,ry=-100;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
-(function ac(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.transform=`translate(${rx-mx}px,${ry-my}px)`;requestAnimationFrame(ac);})();
-document.querySelectorAll('a,button,.role-card,.drop-zone,.holo-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>cursor.classList.add('cursor-expand'));
-  el.addEventListener('mouseleave',()=>cursor.classList.remove('cursor-expand'));
-});
+/* ── NAV GUARD ── */
 
-/* ── PARTICLES ── */
+function checkVerification() {
+  const verified = JSON.parse(localStorage.getItem('alar_verified_skills') || '[]');
+  const timestamp = localStorage.getItem('alar_verified_timestamp');
+  const now = Date.now();
+  const isVerified = verified.length > 0 && timestamp && (now - parseInt(timestamp) < 3600000);
+
+  // Update step buttons
+  const s2 = document.getElementById('stepBtn2');
+  const s3 = document.getElementById('stepBtn3');
+  if (s2) s2.classList.toggle('disabled', !isVerified);
+  if (s3) s3.classList.toggle('disabled', !isVerified);
+
+  const btn = document.getElementById('continueToJobBtn');
+  if (!btn) return;
+
+  const hasSkills = (resumeSkills && resumeSkills.length > 0) || (manualSkills && manualSkills.length > 0);
+
+  if (isVerified) {
+    btn.innerHTML = 'Continue — Choose a Job Role &nbsp;▶';
+    btn.style.background = 'var(--g)';
+    btn.style.opacity = '1';
+    btn.classList.remove('verify-pulse');
+    btn.disabled = false;
+    industryScore = parseInt(localStorage.getItem('alar_industry_score') || '0');
+    
+    // Restore verified skills
+    resumeSkills = verified;
+    manualSkills = [];
+    
+    // Reconstruct a simple category for display if we don't have one
+    if (!resumeSkillsByCategory || Object.keys(resumeSkillsByCategory).length === 0) {
+      resumeSkillsByCategory = { "Verified Skills": verified };
+    }
+    
+    renderManualTags();
+    renderSkillsFoundCard(resumeSkillsByCategory, verified.length);
+  } else if (hasSkills) {
+    btn.innerHTML = '⚡ &nbsp;Start Skill Verification';
+    btn.style.background = '';
+    btn.style.opacity = '1';
+    btn.classList.add('verify-pulse');
+    btn.disabled = false;
+  } else {
+    btn.innerHTML = 'Add Skills to Continue';
+    btn.style.background = 'var(--ink)';
+    btn.style.opacity = '0.5';
+    btn.classList.remove('verify-pulse');
+    btn.disabled = true;
+  }
+}
+
+function goToStep2() {
+  const verified = JSON.parse(localStorage.getItem('alar_verified_skills') || '[]');
+  const timestamp = localStorage.getItem('alar_verified_timestamp');
+  const now = Date.now();
+  if (verified.length > 0 && timestamp && (now - parseInt(timestamp) < 3600000)) {
+    goStep(2);
+  } else {
+    startVerification();
+  }
+}
+
+function resetApp() {
+  if (confirm('Reset everything? This clears all skills and verification data.')) {
+    ['alar_verified_skills','alar_verified_timestamp','alar_industry_score','alar_temp_skills']
+      .forEach(k => localStorage.removeItem(k));
+    window.location.reload();
+  }
+}
+
+/* ── VERIFICATION ── redirects to test.html ── */
+async function startVerification() {
+  const allCurrentSkills = [...new Set([...resumeSkills, ...manualSkills])];
+  if (!allCurrentSkills.length) return showToast('Please add or extract some skills first', 'err');
+
+  const loader = document.createElement('div');
+  loader.className = 'loading-overlay';
+  loader.innerHTML = `<div class="loading-spinner"></div><div class="loading-text">Preparing Verification Portal…</div>`;
+  document.body.appendChild(loader);
+
+  localStorage.setItem('alar_temp_skills', JSON.stringify(allCurrentSkills));
+  setTimeout(() => { window.location.href = 'test.html'; }, 700);
+}
+
+/* ── EXAM OVERLAY (inline fallback, used only if test.html unavailable) ── */
+function showExamOverlay() {
+  const el = document.getElementById('examOverlay');
+  el.classList.add('show');
+  el.style.display = 'flex';
+}
+
+function closeExamOverlay() {
+  const el = document.getElementById('examOverlay');
+  el.classList.remove('show');
+  el.style.display = 'none';
+}
+
+function renderExamQuestion() {
+  const q = examQuestions[currentQIdx];
+  const isLast = currentQIdx === examQuestions.length - 1;
+  const nextBtn = document.getElementById('examNextBtn');
+  nextBtn.textContent = isLast ? 'Finish ✓' : 'Next ▶';
+  nextBtn.disabled = true;
+
+  const sectionLabel = examType === 'industry'
+    ? `Industry 4.0 Fundamentals`
+    : `Skill Test: ${examQuestions[0]?.skill_name || ''}`;
+  document.getElementById('examEyebrow').textContent = examType === 'industry' ? 'Part 1 of 2' : `Part 2 — Skill ${currentSkillTestIdx + 1}/${skillTests.length}`;
+  document.getElementById('examTitle').textContent = sectionLabel;
+  document.getElementById('examProgress').textContent = `Q ${currentQIdx + 1} / ${examQuestions.length}`;
+
+  document.getElementById('examBody').innerHTML = `
+    <div style="font-family:var(--f-disp);font-size:16px;font-weight:700;color:var(--ink);line-height:1.4;margin-bottom:24px;letter-spacing:-.01em">${esc(q.question)}</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      ${q.options.map((opt, i) => `
+        <button class="exam-opt" onclick="selectExamOption(${i})">
+          <div class="exam-opt-idx">${String.fromCharCode(65 + i)}</div>
+          <span>${esc(opt)}</span>
+        </button>`).join('')}
+    </div>`;
+}
+
+let currentSkillTestIdx = 0;
+
+function selectExamOption(idx) {
+  examAnswers[currentQIdx] = idx;
+  document.querySelectorAll('.exam-opt').forEach((b, i) => b.classList.toggle('selected', i === idx));
+  document.getElementById('examNextBtn').disabled = false;
+}
+
+function nextQuestion() {
+  if (examAnswers[currentQIdx] === undefined) return;
+
+  if (currentQIdx < examQuestions.length - 1) {
+    currentQIdx++;
+    renderExamQuestion();
+    return;
+  }
+
+  // End of section
+  if (examType === 'industry') {
+    industryScore = examAnswers.reduce((acc, ans, i) => acc + (ans === examQuestions[i].answer_idx ? 1 : 0), 0);
+    localStorage.setItem('alar_industry_score', industryScore);
+
+    if (skillTests.length > 0) {
+      currentSkillTestIdx = 0;
+      _loadSkillTest(0);
+    } else {
+      _finishAllExams();
+    }
+  } else {
+    const st = skillTests[currentSkillTestIdx];
+    st.score = examAnswers.reduce((acc, ans, i) => acc + (ans === examQuestions[i].answer_idx ? 1 : 0), 0);
+
+    if (currentSkillTestIdx < skillTests.length - 1) {
+      currentSkillTestIdx++;
+      _loadSkillTest(currentSkillTestIdx);
+    } else {
+      _finishAllExams();
+    }
+  }
+}
+
+function _loadSkillTest(idx) {
+  const test = skillTests[idx];
+  examType = 'skills';
+  examQuestions = test.questions.map(q => ({ ...q, skill_name: test.skill }));
+  currentQIdx = 0;
+  examAnswers = [];
+  renderExamQuestion();
+}
+
+function _finishAllExams() {
+  closeExamOverlay();
+  verifiedSkills = skillTests.filter(t => (t.score || 0) >= 2).map(t => t.skill);
+
+  /* FIX: properly save to localStorage so checkVerification() reads it */
+  localStorage.setItem('alar_verified_skills', JSON.stringify(verifiedSkills));
+  localStorage.setItem('alar_verified_timestamp', Date.now().toString());
+
+  resumeSkills = verifiedSkills;
+  manualSkills = [];
+  renderManualTags();
+
+  if (Object.keys(resumeSkillsByCategory).length) {
+    const filteredCat = {};
+    for (const [cat, skills] of Object.entries(resumeSkillsByCategory)) {
+      const matched = skills.filter(s => verifiedSkills.includes(s));
+      if (matched.length) filteredCat[cat] = matched;
+    }
+    resumeSkillsByCategory = filteredCat;
+    renderSkillsFoundCard(resumeSkillsByCategory, verifiedSkills.length);
+  }
+
+  checkVerification();
+  showToast(`✓ ${verifiedSkills.length} skills verified — ready for analysis!`, 'ok');
+  goStep(2);
+}
+
+/* ── PARTICLE CANVAS ── */
 (function(){
   const c=document.getElementById('particle-canvas'),ctx=c.getContext('2d');
   let W,H,pts=[];
   const r=()=>{W=c.width=innerWidth;H=c.height=innerHeight;};
-  r();window.addEventListener('resize',r);
-  for(let i=0;i<70;i++)pts.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.3+.3,col:['#14b8a6','#3b82f6','#f43f6e','#f59e0b'][Math.floor(Math.random()*4)],a:Math.random()*.14+.04});
-  let pmx=0,pmy=0;document.addEventListener('mousemove',e=>{pmx=e.clientX;pmy=e.clientY;});
+  r(); window.addEventListener('resize',r);
+  for(let i=0;i<70;i++) pts.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.3+.3,col:['#14b8a6','#3b82f6','#f43f6e','#f59e0b'][Math.floor(Math.random()*4)],a:Math.random()*.14+.04});
+  let pmx=0,pmy=0; document.addEventListener('mousemove',e=>{pmx=e.clientX;pmy=e.clientY;});
   function draw(){
     ctx.clearRect(0,0,W,H);
     for(let i=0;i<pts.length;i++){
@@ -466,28 +697,41 @@ document.querySelectorAll('a,button,.role-card,.drop-zone,.holo-card').forEach(e
       ctx.beginPath();ctx.arc(pts[i].x,pts[i].y,pts[i].r,0,Math.PI*2);ctx.fillStyle=pts[i].col;ctx.globalAlpha=pts[i].a;ctx.fill();ctx.globalAlpha=1;
     }
     requestAnimationFrame(draw);
-  }draw();
+  } draw();
 })();
 
-/* ── HEALTH CHECK ── */
+/* ── HEALTH ── */
 async function checkHealth(){
   try{
     const d=await fetch(`${API}/api/health`).then(r=>r.json());
     const dot=document.getElementById('sdot'),txt=document.getElementById('stext');
-    dot.style.cssText='width:6px;height:6px;border-radius:50%;background:var(--g);box-shadow:0 0 6px var(--g);animation:blink 2s ease infinite;';
+    dot.className='live';
     txt.textContent=d.model_loaded?'MODEL READY':'SERVER READY';
     document.getElementById('chatStatus').textContent='● ONLINE AND READY';
-  }catch{document.getElementById('stext').textContent='OFFLINE MODE';}
+  }catch{
+    document.getElementById('stext').textContent='OFFLINE MODE';
+  }
 }
 
-/* ── STEP NAVIGATION ── */
+/* ── STEP NAV ── */
 function goStep(n){
+  const verified = JSON.parse(localStorage.getItem('alar_verified_skills') || '[]');
+  const timestamp = localStorage.getItem('alar_verified_timestamp');
+  const now = Date.now();
+  const isVerified = verified.length > 0 && timestamp && (now - parseInt(timestamp) < 3600000);
+
+  if (n > 1 && !isVerified) {
+    showToast('Please complete skill verification first', 'err');
+    return;
+  }
+
   currentStep=n;
   document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('step'+n).classList.add('active');
   document.querySelectorAll('.step-btn').forEach(b=>{
-    const sn=parseInt(b.dataset.step);b.classList.remove('active','done');
-    if(sn===n)b.classList.add('active');else if(sn<n)b.classList.add('done');
+    const sn=parseInt(b.dataset.step); b.classList.remove('active','done');
+    if(sn===n) b.classList.add('active');
+    else if(sn<n) b.classList.add('done');
   });
   document.querySelectorAll('.step-btn.done .step-circle').forEach(c=>c.innerHTML='✓');
   window.scrollTo({top:0,behavior:'smooth'});
@@ -495,22 +739,27 @@ function goStep(n){
 
 /* ── ROLE GRID ── */
 function buildRoleGrid(q){
-  const grid=document.getElementById('roleGrid');grid.innerHTML='';
-  const f=(q||'').toLowerCase();let shown=0;
+  const grid=document.getElementById('roleGrid'); grid.innerHTML='';
+  const f=(q||'').toLowerCase(); let shown=0;
   ROLES.forEach(r=>{
-    if(f&&!r.name.toLowerCase().includes(f)&&!r.cat.toLowerCase().includes(f))return;
-    const c=document.createElement('div');c.className='role-card'+(selectedRole===r.id?' selected':'');
+    if(f&&!r.name.toLowerCase().includes(f)&&!r.cat.toLowerCase().includes(f)) return;
+    const c=document.createElement('div'); c.className='role-card'+(selectedRole===r.id?' selected':'');
     c.innerHTML=`<div class="role-icon">${r.icon}</div><div class="role-name">${r.name}</div><div class="role-cat">${r.cat}</div>`;
-    c.onclick=()=>pickRole(r.id,c);grid.appendChild(c);shown++;
+    c.onclick=()=>pickRole(r.id,c); grid.appendChild(c); shown++;
   });
-  if(!shown)grid.innerHTML='<div style="font-family:var(--f-code);font-size:9px;color:var(--ink3);grid-column:1/-1;padding:8px 0;letter-spacing:.05em">No roles match — try different keywords</div>';
+  if(!shown) grid.innerHTML='<div style="font-family:var(--f-code);font-size:9px;color:var(--ink3);grid-column:1/-1;padding:8px 0;letter-spacing:.05em">No roles match — try different keywords</div>';
 }
 function filterRoles(q){buildRoleGrid(q);}
 function pickRole(id,el){
   selectedRole=id;
-  document.querySelectorAll('.role-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');
+  document.querySelectorAll('.role-card').forEach(c=>c.classList.remove('selected')); el.classList.add('selected');
   const jd=JD[id];
-  if(jd){document.getElementById('jdInput').value=jd;document.getElementById('jdBadge').style.display='';const inp=document.getElementById('jdInput');inp.style.borderColor='var(--g)';setTimeout(()=>inp.style.borderColor='',900);}
+  if(jd){
+    document.getElementById('jdInput').value=jd;
+    document.getElementById('jdBadge').style.display='';
+    const inp=document.getElementById('jdInput'); inp.style.borderColor='var(--g)';
+    setTimeout(()=>inp.style.borderColor='',900);
+  }
 }
 
 /* ── FILE DROP ── */
@@ -522,28 +771,23 @@ function setupDrop(){
   inp.addEventListener('change',()=>{if(inp.files[0])handleFile(inp.files[0]);});
 }
 
-/* ── RESUME LOADING UI ── */
 function showResumeLoading(){
   document.getElementById('dropZone').style.display='none';
   document.getElementById('uploadBar').classList.remove('show');
   document.getElementById('skillsFoundCard').classList.remove('show');
-  const rl=document.getElementById('resumeLoading');rl.classList.add('show');
-  // reset steps
+  const rl=document.getElementById('resumeLoading'); rl.classList.add('show');
   ['rlStep1','rlStep2','rlStep3','rlStep4'].forEach(id=>{
-    const el=document.getElementById(id);el.classList.remove('active','done');
+    const el=document.getElementById(id); el.classList.remove('active','done');
   });
   document.getElementById('rlBar').style.width='0%';
 }
 
 function advanceResumeStep(stepNum, progress){
   ['rlStep1','rlStep2','rlStep3','rlStep4'].forEach((id,i)=>{
-    const el=document.getElementById(id);
-    el.classList.remove('active','done');
-    if(i+1<stepNum) el.classList.add('done');
-    else if(i+1===stepNum) el.classList.add('active');
-    // update icons
+    const el=document.getElementById(id); el.classList.remove('active','done');
     const icon=el.querySelector('.rl-step-icon');
-    if(i+1<stepNum) icon.textContent='✓';
+    if(i+1<stepNum){el.classList.add('done');icon.textContent='✓';}
+    else if(i+1===stepNum){el.classList.add('active');icon.textContent=(i+1).toString();}
     else icon.textContent=(i+1).toString();
   });
   document.getElementById('rlBar').style.width=progress+'%';
@@ -554,66 +798,152 @@ function hideResumeLoading(){
 }
 
 async function handleFile(file){
-  showResumeLoading();
-  setLoad(true);
-
-  // Simulate step progression during upload
-  advanceResumeStep(1, 15);
-  await delay(300);
-  advanceResumeStep(2, 35);
-
-  const form=new FormData();form.append('file',file);
+  showResumeLoading(); setLoad(true);
+  advanceResumeStep(1,15); await delay(250); advanceResumeStep(2,35);
   try{
-    // Fire the actual request
-    const fetchPromise = fetch(`${API}/api/upload-resume`,{method:'POST',body:form});
+    if(onlineMode==='online'){
+      const text=await ocrExtract(file);
+      advanceResumeStep(3,65);
+      if(!text.trim()) throw new Error('No text detected by OCR');
+      resumeText=text;
+      const found=extractSkillsLocal(text);
+      const flat=Object.values(found).flat();
+      resumeSkills=flat; resumeSkillsByCategory=found;
+      advanceResumeStep(4,100); await delay(240);
+      hideResumeLoading(); document.getElementById('dropZone').style.display='';
+      document.getElementById('uploadName').textContent=file.name;
+      document.getElementById('uploadCount').textContent=`${flat.length} skills extracted across ${Object.keys(found).length} categories`;
+      document.getElementById('uploadBar').classList.add('show');
+      renderSkillsFoundCard(found,flat.length);
+      
+      // Clear old verification to ensure user takes the test for new skills
+      localStorage.removeItem('alar_verified_skills');
+      localStorage.removeItem('alar_verified_timestamp');
+      
+      checkVerification();
+      try{ await fetch(`${API}/api/collect-skills`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({skills:flat})}); }catch{}
+      showToast(`✓ ${flat.length} skills found (online OCR)`,'ok');
+      
+      // Auto-take to test after short delay
+      if(flat.length > 0) {
+        setTimeout(() => {
+          showToast('Taking you to skill verification...', 'ok');
+          setTimeout(goToStep2, 1000);
+        }, 1500);
+      }
+    } else {
+      const form=new FormData(); form.append('file',file);
+      const fetchPromise=fetch(`${API}/api/upload-resume`,{method:'POST',body:form});
+      await delay(600); advanceResumeStep(3,65);
+      const resp=await fetchPromise; if(!resp.ok) throw new Error(await safeErr(resp));
+      advanceResumeStep(4,88); await delay(300);
+      const d=await resp.json();
+      resumeText=d.text; resumeSkills=d.flat_skills; resumeSkillsByCategory=d.skills;
+      advanceResumeStep(4,100); await delay(240);
+      hideResumeLoading(); document.getElementById('dropZone').style.display='';
+      document.getElementById('uploadName').textContent=d.filename;
+      document.getElementById('uploadCount').textContent=`${d.total_skills} skills extracted across ${Object.keys(d.skills).length} categories`;
+      document.getElementById('uploadBar').classList.add('show');
+      renderSkillsFoundCard(d.skills,d.total_skills);
 
-    // Advance UI while waiting
-    await delay(600);
-    advanceResumeStep(3, 65);
-    const resp = await fetchPromise;
-    if(!resp.ok)throw new Error(await safeErr(resp));
+      // Clear old verification to ensure user takes the test for new skills
+      localStorage.removeItem('alar_verified_skills');
+      localStorage.removeItem('alar_verified_timestamp');
 
-    advanceResumeStep(4, 88);
-    await delay(300);
+      checkVerification();
+      try{ await fetch(`${API}/api/collect-skills`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({skills:d.flat_skills})}); }catch{}
+      showToast(`✓ ${d.total_skills} skills found`,'ok');
 
-    const d=await resp.json();
-    resumeText=d.text;resumeSkills=d.flat_skills;resumeSkillsByCategory=d.skills;
-
-    advanceResumeStep(4, 100);
-    await delay(280);
-
-    hideResumeLoading();
-    document.getElementById('dropZone').style.display='';
-    document.getElementById('uploadName').textContent=d.filename;
-    document.getElementById('uploadCount').textContent=`${d.total_skills} skills extracted across ${Object.keys(d.skills).length} categories`;
-    document.getElementById('uploadBar').classList.add('show');
-    renderSkillsFoundCard(d.skills,d.total_skills);
-    showToast(`✓ ${d.total_skills} skills found in resume`,'ok');
+      // Auto-take to test after short delay
+      if(d.total_skills > 0) {
+        setTimeout(() => {
+          showToast('Taking you to skill verification...', 'ok');
+          setTimeout(goToStep2, 1000);
+        }, 1500);
+      }
+    }
   }catch(e){
-    hideResumeLoading();
-    document.getElementById('dropZone').style.display='';
+    hideResumeLoading(); document.getElementById('dropZone').style.display='';
     showToast(`✗ ${e.message}`,'err');
-  }finally{setLoad(false);}
+  }finally{ setLoad(false); }
+}
+
+async function ocrExtract(file){
+  const form=new FormData();
+  form.append('file',file); form.append('apikey','helloworld');
+  form.append('language','eng'); form.append('isTable','false');
+  const resp=await fetch('https://api.ocr.space/parse/image',{method:'POST',body:form});
+  if(!resp.ok) throw new Error('OCR request failed');
+  const j=await resp.json();
+  return (j.ParsedResults&&j.ParsedResults[0]&&j.ParsedResults[0].ParsedText)||'';
+}
+
+function extractSkillsLocal(text){
+  const t=(text||'').toLowerCase();
+  const byCat={};
+  for(const [cat,arr] of Object.entries(SKILL_DATABASE)){
+    const matches=arr.filter(s=>t.includes(s.toLowerCase()));
+    if(matches.length) byCat[cat]=matches;
+  }
+  return byCat;
 }
 
 function delay(ms){return new Promise(r=>setTimeout(r,ms));}
 
 function clearResume(){
-  resumeText='';resumeSkills=[];resumeSkillsByCategory={};
+  resumeText=''; resumeSkills=[]; resumeSkillsByCategory={};
   document.getElementById('uploadBar').classList.remove('show');
   document.getElementById('skillsFoundCard').classList.remove('show');
   document.getElementById('resumeFile').value='';
+  checkVerification();
   showToast('Resume removed','');
 }
 
-function renderSkillsFoundCard(skillsByCategory,total){
+function renderSkillsFoundCard(skillsByCategory, total){
+  const verified=JSON.parse(localStorage.getItem('alar_verified_skills')||'[]');
+  const isAllVerified = verified.length > 0 && verified.length >= total;
+  
   const card=document.getElementById('skillsFoundCard'),body=document.getElementById('sfcBody');
-  document.getElementById('sfcTotal').textContent=total;body.innerHTML='';
-  Object.entries(skillsByCategory).forEach(([cat,skills],i)=>{
-    if(!skills.length)return;
+  const titleEl = document.querySelector('.sfi-title');
+  const subEl = document.querySelector('.sfi-sub');
+  const iconEl = document.querySelector('.sfi-icon');
+
+  if (verified.length > 0) {
+    titleEl.textContent = 'Verified Skills Dashboard';
+    subEl.textContent = 'Only passed skills are shown here';
+    iconEl.textContent = '🛡️';
+    card.style.borderColor = 'var(--g)';
+    card.style.background = 'rgba(20,184,166,0.03)';
+  } else {
+    titleEl.textContent = 'Skills extracted';
+    subEl.textContent = 'Used for your gap analysis';
+    iconEl.textContent = '🧠';
+    card.style.borderColor = '';
+    card.style.background = '';
+  }
+
+  document.getElementById('sfcTotal').textContent=total; body.innerHTML='';
+  
+  // Filter categories to only show verified skills if any exist
+  const displayCategories = {};
+  if (verified.length > 0) {
+    Object.entries(skillsByCategory).forEach(([cat, skills]) => {
+      const filtered = skills.filter(s => verified.includes(s));
+      if (filtered.length > 0) displayCategories[cat] = filtered;
+    });
+  } else {
+    Object.assign(displayCategories, skillsByCategory);
+  }
+
+  Object.entries(displayCategories).forEach(([cat,skills],i)=>{
+    if(!skills.length) return;
     const cls=CAT_COLOUR[cat]||'cat-it';
-    const sec=document.createElement('div');sec.className='sfc-cat';
-    sec.innerHTML=`<div class="sfc-cat-label">${catIcon(cat)} ${cat}<div class="sfc-cat-bar"></div><span style="font-size:9px;font-weight:700;color:var(--ink3)">${skills.length}</span></div><div class="sfc-tags">${skills.map((s,j)=>`<span class="sfc-tag ${cls}" style="animation-delay:${(i*skills.length+j)*.04}s">${esc(s)}</span>`).join('')}</div>`;
+    const sec=document.createElement('div'); sec.className='sfc-cat';
+    sec.innerHTML=`<div class="sfc-cat-label">${catIcon(cat)} ${cat}<div class="sfc-cat-bar"></div><span style="font-size:9px;font-weight:700;color:var(--ink3)">${skills.length}</span></div>
+      <div class="sfc-tags">${skills.map((s,j)=>{
+        const isV=verified.includes(s);
+        return `<span class="sfc-tag ${cls}" style="animation-delay:${(i*skills.length+j)*.04}s">${esc(s)}${isV?' <small style="opacity:.7;font-size:8px">✓</small>':''}</span>`;
+      }).join('')}</div>`;
     body.appendChild(sec);
   });
   card.classList.add('show');
@@ -622,72 +952,108 @@ function catIcon(cat){const m={'EV & Electrical':'⚡','Automation & Controls':'
 
 /* ── MANUAL SKILLS ── */
 function addSkill(){
-  const inp=document.getElementById('skillInp');const raw=inp.value.trim();if(!raw)return;
-  raw.split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>{if(!manualSkills.map(x=>x.toLowerCase()).includes(s.toLowerCase()))manualSkills.push(s);});
-  inp.value='';renderManualTags();
+  const inp=document.getElementById('skillInp'); const raw=inp.value.trim(); if(!raw)return;
+  raw.split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>{
+    if(!manualSkills.map(x=>x.toLowerCase()).includes(s.toLowerCase())) manualSkills.push(s);
+  });
+  inp.value=''; renderManualTags(); checkVerification();
 }
-function removeSkill(i){manualSkills.splice(i,1);renderManualTags();}
+function removeSkill(i){manualSkills.splice(i,1);renderManualTags();checkVerification();}
 function renderManualTags(){
+  const verified=JSON.parse(localStorage.getItem('alar_verified_skills')||'[]');
   const pool=document.getElementById('tagCloud'),note=document.getElementById('tagNote');
   pool.innerHTML='';
-  manualSkills.forEach((s,i)=>{const t=document.createElement('span');t.className='m-tag';t.style.animationDelay=(i*.03)+'s';t.innerHTML=`${esc(s)}<span class="m-tag-x" onclick="removeSkill(${i})">×</span>`;pool.appendChild(t);});
+  manualSkills.forEach((s,i)=>{
+    const isV=verified.includes(s);
+    const t=document.createElement('span'); t.className='m-tag'; t.style.animationDelay=(i*.03)+'s';
+    t.innerHTML=`${esc(s)}${isV?' <small style="opacity:.7;font-size:8px">✓</small>':''}<span class="m-tag-x" onclick="removeSkill(${i})">×</span>`;
+    pool.appendChild(t);
+  });
   note.textContent=manualSkills.length?`${manualSkills.length} skill${manualSkills.length>1?'s':''} added manually`:'';
 }
 function parseDesc(){
-  const d=document.getElementById('manualDesc').value.trim();if(!d)return showToast('Write a description first','err');
-  const lower=d.toLowerCase();let n=0;
-  SKILL_KEYWORDS.forEach(k=>{if(lower.includes(k.toLowerCase())&&!manualSkills.map(x=>x.toLowerCase()).includes(k.toLowerCase())){manualSkills.push(k);n++;}});
-  renderManualTags();
+  const d=document.getElementById('manualDesc').value.trim(); if(!d) return showToast('Write a description first','err');
+  const lower=d.toLowerCase(); let n=0;
+  SKILL_KEYWORDS.forEach(k=>{
+    if(lower.includes(k.toLowerCase())&&!manualSkills.map(x=>x.toLowerCase()).includes(k.toLowerCase())){
+      manualSkills.push(k); n++;
+    }
+  });
+  
+  // Clear old verification to ensure user takes the test for new skills
+  if (n > 0) {
+    localStorage.removeItem('alar_verified_skills');
+    localStorage.removeItem('alar_verified_timestamp');
+  }
+
+  renderManualTags(); checkVerification();
   showToast(n>0?`✓ ${n} skill${n>1?'s':''} extracted`:'No new skills detected','');
+  
+  if(n > 0) {
+    setTimeout(() => {
+      showToast('Taking you to skill verification...', 'ok');
+      setTimeout(goToStep2, 1000);
+    }, 1500);
+  }
 }
 
 /* ── ANALYSIS ── */
 async function runAnalysis(){
-  manualSkills.forEach(s=>{if(!resumeSkills.map(r=>r.toLowerCase()).includes(s.toLowerCase()))resumeSkills.push(s);});
+  // Merge any remaining manual skills into resumeSkills
+  manualSkills.forEach(s=>{
+    if(!resumeSkills.map(r=>r.toLowerCase()).includes(s.toLowerCase())) resumeSkills.push(s);
+  });
   const jd=document.getElementById('jdInput').value.trim();
-  if(!jd)return showToast('Please select a job role or paste a description','err');
+  if(!jd) return showToast('Please select a job role or paste a description','err');
   const btn=document.getElementById('analyzeBtn');
-  btn.disabled=true;btn.classList.add('loading');document.getElementById('analyzeLbl').textContent='Analyzing…';setLoad(true);
+  btn.disabled=true; btn.classList.add('loading'); document.getElementById('analyzeLbl').textContent='Analyzing…'; setLoad(true);
   try{
-    const resp=await fetch(`${API}/api/skill-gap`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({candidate_skills:resumeSkills,job_description:jd})});
-    if(!resp.ok)throw new Error(await safeErr(resp));
-    const data=await resp.json();lastData=data;renderResults(data);goStep(3);
-  }catch(e){showToast(`✗ ${e.message}`,'err');}
-  finally{btn.disabled=false;btn.classList.remove('loading');document.getElementById('analyzeLbl').textContent='⚡ \u00a0Analyze My Skill Gap';setLoad(false);}
+    const resp=await fetch(`${API}/api/skill-gap`,{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({candidate_skills:resumeSkills, job_description:jd, industry_score:industryScore})
+    });
+    if(!resp.ok) throw new Error(await safeErr(resp));
+    const data=await resp.json(); lastData=data; renderResults(data); goStep(3);
+  }catch(e){ showToast(`✗ ${e.message}`,'err'); }
+  finally{
+    btn.disabled=false; btn.classList.remove('loading');
+    document.getElementById('analyzeLbl').textContent='⚡ \u00a0Analyze My Skill Gap';
+    setLoad(false);
+  }
 }
 
 /* ── RESULTS ── */
 function renderResults(data){
-  const s=data.score,circ=2*Math.PI*45;
+  const s=data.score, circ=2*Math.PI*45;
   const ring=document.getElementById('scoreRing');
-  ring.style.strokeDasharray=circ;ring.style.strokeDashoffset=circ;
+  ring.style.strokeDasharray=circ; ring.style.strokeDashoffset=circ;
   let color,verdict,desc;
   if(s>=70){color='var(--g2)';verdict='◈ Strong Match';desc=`You already have ${s}% of the required skills. Focus on a few critical areas and you'll be interview-ready.`;}
   else if(s>=40){color='#92400e';verdict='▲ Getting There';desc=`You have ${s}% of what's needed. The courses below will help you become competitive quickly.`;}
   else{color='var(--m2)';verdict='◻ Room to Grow';desc=`You're at ${s}% right now — solid starting point! Work through the recommended courses and you'll get there.`;}
   ring.style.stroke=color;
   document.getElementById('scoreBar').style.background=color;
-  document.getElementById('scoreVerdict').textContent=verdict;document.getElementById('scoreVerdict').style.color=color;
+  document.getElementById('scoreVerdict').textContent=verdict; document.getElementById('scoreVerdict').style.color=color;
   document.getElementById('scoreDesc').textContent=desc;
-  document.getElementById('scoreNum').textContent=s+'%';document.getElementById('scoreNum').style.color=color;
+  document.getElementById('scoreNum').textContent=s+'%'; document.getElementById('scoreNum').style.color=color;
   setTimeout(()=>{ring.style.strokeDashoffset=circ-(s/100)*circ;document.getElementById('scoreBar').style.width=s+'%';},80);
-  const total=data.job_skills.length,gaps=data.gap.all.length;
-  animNum('statM',total-gaps);animNum('statG',gaps);animNum('statT',total);
+  const total=data.job_skills.length, gaps=data.gap.all.length;
+  animNum('statM',total-gaps); animNum('statG',gaps); animNum('statT',total);
   renderTagBox('tagsR','cntR',resumeSkills,'res-tag');
   renderTagBox('tagsJ','cntJ',data.job_skills,'job-tag');
   renderTagBox('tagsG','cntG',data.gap.all.map(g=>g.skill),'gap-tag');
-  allGapItems=data.gap.all;renderCourses(allGapItems);
+  allGapItems=data.gap.all; renderCourses(allGapItems);
   document.getElementById('fabDot').style.display='block';
 }
 
 function renderTagBox(cid,countId,skills,tagClass){
-  const c=document.getElementById(cid);c.innerHTML='';document.getElementById(countId).textContent=skills.length;
+  const c=document.getElementById(cid); c.innerHTML=''; document.getElementById(countId).textContent=skills.length;
   if(!skills.length){c.innerHTML='<div class="empty-box">None found</div>';return;}
   skills.forEach((s,i)=>{const t=document.createElement('span');t.className=`rtag ${tagClass}`;t.textContent=s;t.style.animationDelay=(i*.04)+'s';c.appendChild(t);});
 }
 
 function renderCourses(items){
-  const body=document.getElementById('courseBody');body.innerHTML='';
+  const body=document.getElementById('courseBody'); body.innerHTML='';
   if(!items.length){body.innerHTML='<div style="text-align:center;padding:40px;font-family:var(--f-code);font-size:10px;color:var(--g2);letter-spacing:.08em">◈ Perfect match — no skill gaps found!</div>';return;}
   const G=[
     {k:'critical',label:'Must Learn First',dot:'var(--m2)',ps:'background:rgba(244,63,110,.07);color:var(--m2);border:1px solid rgba(244,63,110,.15)'},
@@ -695,12 +1061,12 @@ function renderCourses(items){
     {k:'minor',label:'Good to Have',dot:'var(--g2)',ps:'background:rgba(20,184,166,.06);color:var(--g2);border:1px solid rgba(20,184,166,.18)'},
   ];
   G.forEach(g=>{
-    const gi=items.filter(i=>i.priority===g.k);if(!gi.length)return;
-    const sec=document.createElement('div');sec.className='p-group';sec.dataset.k=g.k;
+    const gi=items.filter(i=>i.priority===g.k); if(!gi.length) return;
+    const sec=document.createElement('div'); sec.className='p-group'; sec.dataset.k=g.k;
     sec.innerHTML=`<div class="p-group-head"><div class="p-dot" style="color:${g.dot};background:${g.dot}"></div><div class="p-title">${g.label}</div><span class="p-count" style="${g.ps}">${gi.length} SKILL${gi.length>1?'S':''}</span></div>`;
     body.appendChild(sec);
     gi.forEach((item,idx)=>{
-      const card=document.createElement('div');card.className='sc-card';card.style.animationDelay=(idx*.05)+'s';card.dataset.p=item.priority;
+      const card=document.createElement('div'); card.className='sc-card'; card.style.animationDelay=(idx*.05)+'s'; card.dataset.p=item.priority;
       const aCol={critical:'var(--m2)',important:'#92400e',minor:'var(--g2)'}[item.priority];
       const bCls={critical:'scb-crit',important:'scb-imp',minor:'scb-min'}[item.priority];
       const bTxt={critical:'Must learn',important:'Important',minor:'Good to have'}[item.priority];
@@ -719,7 +1085,7 @@ function renderCourses(items){
             </div>
             <span class="cr-arrow">↗</span>
           </a>`).join('');
-      }else{
+      } else {
         rowsHtml=`<div class="no-cr">◈ Not in database — <a href="https://naanmudhalvan.tn.gov.in" target="_blank">check Naan Mudhalvan ↗</a></div>`;
       }
       card.innerHTML=`
@@ -736,11 +1102,11 @@ function renderCourses(items){
 }
 
 function filterCourses(t,btn){
-  document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
   let f=allGapItems;
-  if(t==='critical')f=allGapItems.filter(i=>i.priority==='critical');
-  if(t==='important')f=allGapItems.filter(i=>i.priority==='important');
-  if(t==='free')f=allGapItems.filter(i=>i.courses&&i.courses.some(c=>c.is_free));
+  if(t==='critical') f=allGapItems.filter(i=>i.priority==='critical');
+  if(t==='important') f=allGapItems.filter(i=>i.priority==='important');
+  if(t==='free') f=allGapItems.filter(i=>i.courses&&i.courses.some(c=>c.is_free));
   renderCourses(f);
 }
 function animNum(id,v){const el=document.getElementById(id);let cur=0;const s=Math.ceil(v/20);const t=setInterval(()=>{cur=Math.min(cur+s,v);el.textContent=cur;if(cur>=v)clearInterval(t);},40);}
@@ -750,8 +1116,15 @@ function toggleChat(){
   chatOpen=!chatOpen;
   document.getElementById('chatPanel').classList.toggle('open',chatOpen);
   const fab=document.getElementById('chatFab');
-  if(chatOpen){document.getElementById('fabDot').style.display='none';document.getElementById('chatInp').focus();fab.innerHTML='×<div class="fab-dot" id="fabDot" style="display:none"></div>';fab.style.fontSize='22px';}
-  else{fab.innerHTML='💬<div class="fab-dot" id="fabDot" style="display:none"></div>';fab.style.fontSize='18px';}
+  if(chatOpen){
+    document.getElementById('fabDot').style.display='none';
+    document.getElementById('chatInp').focus();
+    fab.innerHTML='×<div class="fab-dot" id="fabDot" style="display:none"></div>';
+    fab.style.fontSize='22px';
+  } else {
+    fab.innerHTML='💬<div class="fab-dot" id="fabDot" style="display:none"></div>';
+    fab.style.fontSize='18px';
+  }
 }
 function setupChat(){
   const i=document.getElementById('chatInp');
@@ -764,50 +1137,67 @@ function renderMd(text){
   let h=text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
     .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>')
     .replace(/`(.+?)`/g,'<code style="background:rgba(20,184,166,.08);padding:1px 5px;border-radius:3px;font-family:var(--f-code);font-size:10px;color:var(--g2)">$1</code>');
-  const lines=h.split('\n');let out='',inList=false;
-  for(const line of lines){const m=line.match(/^[\-\*•]\s+(.*)/);if(m){if(!inList){out+='<ul style="margin:6px 0 6px 14px;padding:0;list-style:disc">';inList=true;}out+=`<li style="margin:2px 0">${m[1]}</li>`;}else{if(inList){out+='</ul>';inList=false;}out+=line?`<span>${line}</span><br>`:'<br>';}}
-  if(inList)out+='</ul>';return out;
+  const lines=h.split('\n'); let out='',inList=false;
+  for(const line of lines){
+    const m=line.match(/^[\-\*•]\s+(.*)/);
+    if(m){if(!inList){out+='<ul style="margin:6px 0 6px 14px;padding:0;list-style:disc">';inList=true;}out+=`<li style="margin:2px 0">${m[1]}</li>`;}
+    else{if(inList){out+='</ul>';inList=false;}out+=line?`<span>${line}</span><br>`:'<br>';}
+  }
+  if(inList) out+='</ul>';
+  return out;
 }
 function addMsg(role,text){
-  const c=document.getElementById('chatMsgs'),d=document.createElement('div');d.className='cmsg '+role;
-  const av=role==='ai'?'AI':'YOU';const bub=document.createElement('div');bub.className='c-bub';
-  if(role==='ai')bub.innerHTML=renderMd(text);else bub.textContent=text;
-  d.innerHTML=`<div class="c-av">${av}</div>`;d.appendChild(bub);c.appendChild(d);c.scrollTop=c.scrollHeight;return d;
+  const c=document.getElementById('chatMsgs'),d=document.createElement('div'); d.className='cmsg '+role;
+  const av=role==='ai'?'AI':'YOU'; const bub=document.createElement('div'); bub.className='c-bub';
+  if(role==='ai') bub.innerHTML=renderMd(text); else bub.textContent=text;
+  d.innerHTML=`<div class="c-av">${av}</div>`; d.appendChild(bub); c.appendChild(d); c.scrollTop=c.scrollHeight; return d;
 }
 function addTyping(){
-  const c=document.getElementById('chatMsgs'),d=document.createElement('div');d.className='cmsg ai';d.id='typing';
+  const c=document.getElementById('chatMsgs'),d=document.createElement('div'); d.className='cmsg ai'; d.id='typing';
   d.innerHTML=`<div class="c-av">AI</div><div class="c-bub"><div class="t-dots"><div class="t-d"></div><div class="t-d"></div><div class="t-d"></div></div></div>`;
-  c.appendChild(d);c.scrollTop=c.scrollHeight;
+  c.appendChild(d); c.scrollTop=c.scrollHeight;
 }
 function buildChatContext(){
   const ctx={};
-  if(resumeSkills.length)ctx.candidate_skills=resumeSkills.slice(0,40);
+  if(resumeSkills.length) ctx.candidate_skills=resumeSkills.slice(0,40);
   if(selectedRole){const r=ROLES.find(x=>x.id===selectedRole);if(r)ctx.job_role=r.name;}
   if(lastData){ctx.gap_score=lastData.score;ctx.gap_skills=lastData.gap.all.map(g=>({skill:g.skill,priority:g.priority}));}
   return ctx;
 }
 async function sendChat(){
   document.getElementById('chatChips')?.remove();
-  const inp=document.getElementById('chatInp'),text=inp.value.trim();if(!text)return;
-  inp.value='';inp.style.height='auto';document.getElementById('chatSend').disabled=true;
-  addMsg('user',text);addTyping();
+  const inp=document.getElementById('chatInp'),text=inp.value.trim(); if(!text) return;
+  inp.value=''; inp.style.height='auto'; document.getElementById('chatSend').disabled=true;
+  addMsg('user',text); addTyping();
   const payload={message:text,history:chatHistory,...buildChatContext()};
   try{
     const resp=await fetch(`${API}/api/chat/stream`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
     document.getElementById('typing')?.remove();
-    if(!resp.ok)throw new Error(await safeErr(resp));
+    if(!resp.ok) throw new Error(await safeErr(resp));
     const msgDiv=addMsg('ai',''),bub=msgDiv.querySelector('.c-bub');
-    const reader=resp.body.getReader(),dec=new TextDecoder();let full='';
+    const reader=resp.body.getReader(),dec=new TextDecoder(); let full='';
     while(true){
-      const{done,value}=await reader.read();if(done)break;
+      const{done,value}=await reader.read(); if(done) break;
       dec.decode(value).split('\n').forEach(line=>{
-        if(!line.startsWith('data: '))return;const d=line.slice(6);if(d==='[DONE]')return;
+        if(!line.startsWith('data: ')) return; const d=line.slice(6); if(d==='[DONE]') return;
         try{const p=JSON.parse(d);if(p.token){full+=p.token;bub.innerHTML=renderMd(full);document.getElementById('chatMsgs').scrollTop=99999;}}catch{}
       });
     }
     chatHistory.push({role:'user',content:text},{role:'assistant',content:full});
-  }catch(e){document.getElementById('typing')?.remove();addMsg('ai','⚠ '+e.message);}
-  finally{document.getElementById('chatSend').disabled=false;}
+  }catch(e){ document.getElementById('typing')?.remove(); addMsg('ai','⚠ '+e.message); }
+  finally{ document.getElementById('chatSend').disabled=false; }
+}
+
+/* ── MODE TOGGLE ── */
+function toggleMode(){
+  onlineMode=onlineMode==='online'?'offline':'online';
+  localStorage.setItem(MODE_KEY,onlineMode);
+  updateModeUI();
+  showToast(onlineMode==='online'?'Online mode: OCR API active':'Offline mode: using local backend','');
+}
+function updateModeUI(){
+  const pill=document.getElementById('modePill');
+  if(pill){ pill.textContent=onlineMode.toUpperCase(); pill.classList.toggle('on',onlineMode==='online'); }
 }
 
 /* ── UTILS ── */
@@ -816,5 +1206,6 @@ function setLoad(on){document.getElementById('loadbar').classList.toggle('on',on
 function showToast(msg,type){const t=document.getElementById('toast');t.textContent=msg;t.className='on '+(type||'');clearTimeout(t._t);t._t=setTimeout(()=>t.className='',3200);}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 </script>
+<script src="theme-lang.js" onerror="void 0"></script>
 </body>
 </html>

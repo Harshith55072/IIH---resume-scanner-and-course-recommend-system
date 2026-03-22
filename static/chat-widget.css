@@ -5,7 +5,7 @@
 
 /* ── FAB ── */
 #chatFab {
-  position: fixed; bottom: 28px; right: 28px;
+  position: fixed; bottom: 84px; right: 28px;
   width: 52px; height: 52px;
   background: #0f172a;
   border: none; border-radius: 50%;
@@ -39,7 +39,7 @@
 
 /* ── PANEL ── */
 #chatPanel {
-  position: fixed; bottom: 92px; right: 28px;
+  position: fixed; bottom: 140px; right: 28px;
   width: 360px; height: 500px;
   background: #ffffff;
   border: 1px solid rgba(15,23,42,.09);
@@ -186,6 +186,6 @@
 
 /* ── RESPONSIVE ── */
 @media(max-width:480px){
-  #chatPanel { width: calc(100vw - 20px); right: 10px; bottom: 82px; }
-  #chatFab   { bottom: 16px; right: 16px; }
+  #chatPanel { width: calc(100vw - 20px); right: 10px; bottom: 120px; }
+  #chatFab   { bottom: 64px; right: 16px; }
 }

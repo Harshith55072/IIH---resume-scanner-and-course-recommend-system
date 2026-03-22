@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ALAR — Admin Dashboard</title>
+<link rel="stylesheet" href="theme-lang.css"/>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Figtree:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f8fafc;--bg2:#fff;--bg3:#f1f5f9;--ink:#0f172a;--ink2:#475569;--ink3:#94a3b8;--rim:rgba(15,23,42,.08);--g:#14b8a6;--b:#3b82f6;--m:#f43f6e;--v:#7c3aed}
+body{background:var(--bg);color:var(--ink);font-family:'Figtree',sans-serif;overflow-x:hidden}
+.nav{position:fixed;top:0;left:0;right:0;height:64px;display:flex;align-items:center;padding:0 28px;background:rgba(255,255,255,.92);border-bottom:1px solid var(--rim);backdrop-filter:blur(20px) saturate(1.6);z-index:100}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand-hex{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(20,184,166,.25);border-radius:8px;background:linear-gradient(135deg,rgba(20,184,166,.1),rgba(59,130,246,.1));font-size:18px}
+.brand-name{font-family:'Unbounded',monospace;font-size:12px;font-weight:800;letter-spacing:.06em;color:var(--ink)}
+.brand-name span{color:var(--g)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.ver{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink3);border:1px solid var(--rim);border-radius:4px;padding:3px 8px}
+main{max-width:1200px;margin:0 auto;padding:100px 24px}
+.head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:32px;animation:slideUp .5s ease both}
+.title{font-family:'Unbounded',monospace;font-size:28px;font-weight:800;letter-spacing:-.02em}
+.sub{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase;margin-top:4px}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:24px}
+.kpi{background:var(--bg2);border:1px solid var(--rim);border-radius:16px;padding:24px;box-shadow:0 4px 20px rgba(0,0,0,.04);animation:slideUp .5s ease both}
+.kpi-val{font-family:'Unbounded',monospace;font-size:32px;font-weight:800;color:var(--ink);line-height:1}
+.kpi-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ink3);text-transform:uppercase;margin-top:8px;letter-spacing:.05em}
+.panel{background:var(--bg2);border:1px solid var(--rim);border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.04);padding:24px;animation:slideUp .5s ease both}
+.row{display:grid;grid-template-columns:1.5fr 1fr;gap:20px;margin-top:20px}
+.stat{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink2);border:1px solid var(--rim);border-radius:16px;padding:6px 12px;background:var(--bg3);transition:all .2s}
+.chip:hover{border-color:var(--g);background:var(--bg2);transform:translateY(-2px)}
+.event-list{display:flex;flex-direction:column;gap:10px}
+.event-item{padding:12px;border-radius:10px;background:var(--bg3);display:flex;align-items:center;gap:12px;font-size:13px;animation:slideIn .3s ease both}
+.event-score{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Unbounded',monospace;font-size:11px;font-weight:700;color:#fff}
+.event-info{flex:1;min-width:0}
+.event-role{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+.event-ts{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ink3);margin-top:2px}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+.footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--rim);color:var(--ink3);font-family:'JetBrains Mono',monospace;font-size:10px;text-align:center}
+canvas{width:100%;height:360px}
+.note{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ink3);margin-top:12px;text-transform:uppercase;letter-spacing:.05em}
+@media(max-width:1000px){.grid{grid-template-columns:1fr 1fr}.row{grid-template-columns:1fr}}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="brand" href="overview.html">
+    <div class="brand-hex">⚡</div>
+    <div class="brand-name">ALAR</div>
+  </a>
+  <div class="nav-right">
+    <div id="st-theme-mount"></div>
+    <div id="st-lang-mount"></div>
+    <div class="ver">ADMIN</div>
+  </div>
+  </nav>
+<main>
+  <div class="head">
+    <div>
+      <div class="title">Admin Dashboard</div>
+      <div class="sub">// Intelligence & Analytics Command Center</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="kpi">
+      <div class="kpi-val" id="kpiAnalyses">0</div>
+      <div class="kpi-lbl">Total Analyses</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val" id="kpiAvgScore">0%</div>
+      <div class="kpi-lbl">Avg. Match Score</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val" id="kpiBackend">...</div>
+      <div class="kpi-lbl">Backend Mode</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="panel">
+      <canvas id="barCanvas"></canvas>
+      <div class="note">Skill Distribution Matrix (Last 90 Days)</div>
+    </div>
+    <div class="panel">
+      <div class="stat" id="statChips"></div>
+      <div class="note" style="margin-top:20px">Recent Activity Feed</div>
+      <div class="event-list" id="eventList" style="margin-top:12px"></div>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:16px">
+    <canvas id="trendCanvas"></canvas>
+    <div class="note">Daily counts for top skills (last 14 days)</div>
+  </div>
+  <div class="footer">© 2025 Alar · Internal Analytics</div>
+</main>
+<script src="theme-lang.js"></script>
+<script>
+const API = 'http://localhost:8000';
+let data=null;
+async function load(){
+  try{
+    const r=await fetch(API+'/api/skill-stats'); data=await r.json();
+    updateKPIs(); buildChips(); buildEvents(); drawBars(); drawTrend();
+  }catch(e){
+    console.error(e);
+    alert('Cannot load stats. Make sure backend is running.');
+  }
+}
+function updateKPIs(){
+  document.getElementById('kpiAnalyses').textContent = data.total_analyses || 0;
+  document.getElementById('kpiAvgScore').textContent = (data.avg_score || 0) + '%';
+  document.getElementById('kpiBackend').textContent = (data.backend || 'memory').toUpperCase();
+  document.getElementById('kpiBackend').style.color = data.backend === 'postgres' ? 'var(--g)' : 'var(--m)';
+}
+function buildEvents(){
+  const el=document.getElementById('eventList'); el.innerHTML='';
+  const events = data.analysis_recent || [];
+  if(!events.length){ el.innerHTML='<div class="note">No recent activity</div>'; return; }
+  events.forEach((ev,i)=>{
+    const d=document.createElement('div'); d.className='event-item';
+    d.style.animationDelay = (i*0.05)+'s';
+    const hue = ev.score >= 70 ? 'var(--g)' : (ev.score >= 40 ? 'var(--y)' : 'var(--m)');
+    d.innerHTML=`
+      <div class="event-score" style="background:${hue}">${ev.score}%</div>
+      <div class="event-info">
+        <div class="event-role">${ev.role || 'Unknown Role'}</div>
+        <div class="event-ts">${ev.ts}</div>
+      </div>`;
+    el.appendChild(d);
+  });
+}
+function buildChips(){
+  const el=document.getElementById('statChips'); el.innerHTML='';
+  const total = data.total_by_skill || {};
+  Object.entries(total).slice(0,12).forEach(([k,v])=>{
+    const d=document.createElement('div'); d.className='chip'; d.textContent=`${k}: ${v}`;
+    el.appendChild(d);
+  });
+}
+function drawBars(){
+  const cv=document.getElementById('barCanvas'), ctx=cv.getContext('2d');
+  const W=cv.width=cv.clientWidth, H=cv.height=360;
+  ctx.clearRect(0,0,W,H);
+  const items=Object.entries(data.total_by_skill||{}).slice(0,10);
+  if(!items.length){ ctx.font='12px monospace'; ctx.fillStyle='#94a3b8'; ctx.fillText('No data',12,20); return; }
+  const max=Math.max(...items.map(i=>i[1]));
+  const bw=(W-60)/items.length;
+  items.forEach((it,i)=>{
+    const x=40+i*bw, h=(it[1]/max)*(H-80), y=H-30-h;
+    const c = ['#14b8a6','#3b82f6','#f43f6e','#f59e0b','#7c3aed'][i%5];
+    ctx.fillStyle=c; ctx.fillRect(x+8,y,bw-16,h);
+    ctx.fillStyle='#64748b'; ctx.font='10px "JetBrains Mono"'; ctx.save(); ctx.translate(x+8+(bw-16)/2,H-12); ctx.rotate(-Math.PI/4); ctx.textAlign='center'; ctx.fillText(it[0],0,0); ctx.restore();
+    ctx.fillStyle='#0f172a'; ctx.font='700 11px "JetBrains Mono"'; ctx.fillText(it[1], x+8+(bw-16)/2-6, y-6);
+  });
+  ctx.strokeStyle='rgba(15,23,42,.08)'; for(let i=0;i<5;i++){const y=H-30-(i/4)*(H-80); ctx.beginPath(); ctx.moveTo(32,y); ctx.lineTo(W-12,y); ctx.stroke();}
+}
+function drawTrend(){
+  const cv=document.getElementById('trendCanvas'), ctx=cv.getContext('2d');
+  const W=cv.width=cv.clientWidth, H=cv.height=320;
+  ctx.clearRect(0,0,W,H);
+  const days=(data.by_day||[]); const skills=data.top_skills||[];
+  if(!days.length||!skills.length){ ctx.font='12px monospace'; ctx.fillStyle='#94a3b8'; ctx.fillText('No data',12,20); return; }
+  const ML=40, MR=10, MT=18, MB=26;
+  const px=i=>ML+(i/(days.length-1))*(W-ML-MR);
+  const maxV = Math.max(...days.flatMap(d=>Object.values(d.counts)));
+  const py=v=>MT+(1-(v/maxV||0))*(H-MT-MB);
+  const palette=['#14b8a6','#3b82f6','#f43f6e','#f59e0b','#7c3aed','#0ea5e9','#10b981','#a78bfa','#ef4444','#22c55e','#eab308','#06b6d4'];
+  skills.slice(0,6).forEach((s,si)=>{
+    ctx.beginPath(); ctx.strokeStyle=palette[si%palette.length]; ctx.lineWidth=2;
+    days.forEach((d,i)=>{const x=px(i), y=py(d.counts[s]||0); i?ctx.lineTo(x,y):ctx.moveTo(x,y);});
+    ctx.stroke();
+  });
+  ctx.strokeStyle='rgba(15,23,42,.08)'; for(let i=0;i<5;i++){const y=py((i/4)*maxV); ctx.beginPath(); ctx.moveTo(ML,y); ctx.lineTo(W-MR,y); ctx.stroke();}
+  ctx.font='9px "JetBrains Mono"'; ctx.fillStyle='#64748b';
+  days.forEach((d,i)=>{ if(i%2===0){ ctx.fillText(d.date.slice(5), px(i)-8, H-8); }});
+}
+load();
+</script>
+</body>
+</html>

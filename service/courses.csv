@@ -1,0 +1,318 @@
+skill,course_name,provider,duration,mode,cost,certification,url
+EV battery,Electric Vehicle Battery Systems,NPTEL,12 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc24_ee53/preview
+EV battery,Li-Ion Battery Pack Design for EVs,Coursera (University of Colorado),6 weeks,Online,Free to audit,Yes,https://www.coursera.org/learn/battery-pack-design
+EV battery,Electric Vehicle Battery Engineering,edX (Purdue University),8 weeks,Online,Free to audit,Yes,https://www.edx.org/learn/electric-vehicles/purdue-university-electric-vehicle-battery-engineering
+EV battery,Battery Technology for Electric Vehicles (Playlist),YouTube – NPTEL-NOC IITM,10 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PLyqSpQzTE6M81HJ26ZaNv0V3ROBrcv9Vb
+EV battery,Understanding EV Battery Systems,YouTube – Learn Engineering,2 hrs,Online,Free,No,https://www.youtube.com/watch?v=4kEod1fZTBY
+EV battery,Naan Mudhalvan – EV Battery Technology,Naan Mudhalvan,8 weeks,Online,Free,Yes,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+EV battery,Introduction to Electric Vehicles,SWAYAM – IIT Madras,12 weeks,Online,Free,Yes,https://swayam.gov.in/nd2_noc20_ee056/preview
+battery management,Battery Management Systems (BMS) – Full Course,YouTube – Texas Instruments,3 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PLZkdwFRQHbMgAjlq4oCxT2yYbnbLCHobh
+battery management,BMS Design and Implementation,NPTEL,8 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc23_ee61/preview
+battery management,Battery Management Systems for EVs,Coursera (Georgia Tech),6 weeks,Online,Free to audit,Yes,https://www.coursera.org/learn/battery-management-systems
+battery management,Battery Management Systems Design,NSDC Automotive Skill Council,4 weeks,Online,Free,Yes,https://www.nsdcindia.org/sector/automotive
+battery management,Lithium Battery BMS Explained,YouTube – Engineering Mindset,1 hr,Online,Free,No,https://www.youtube.com/watch?v=8qB8x3Kf6ao
+BMS,BMS for Electric Vehicles,Udemy,3 weeks,Online,₹455,No,https://www.udemy.com/course/battery-management-system/
+BMS,Battery Management Systems Design,NSDC Automotive Skill Council,4 weeks,Online,Free,Yes,https://www.nsdcindia.org/sector/automotive
+BMS,BMS Architecture and Cell Balancing,YouTube – NPTEL,2 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PLyqSpQzTE6M81HJ26ZaNv0V3ROBrcv9Vb
+BMS,Battery Management Systems,Coursera (Georgia Tech),6 weeks,Online,Free to audit,Yes,https://www.coursera.org/learn/battery-management-systems
+motor control,Motor Control and Power Electronics,NPTEL – IIT Bombay,8 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc20_ee47/preview
+motor control,Electric Motor Drives,NPTEL,12 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee68/preview
+motor control,Electric Motors and Control,YouTube – NPTEL,6 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PLbMVogVj5nJSvSuJYWnCsZwYRPTQq0qUH
+motor control,BLDC Motor Control,Naan Mudhalvan,4 weeks,Online,Free,Yes,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+motor control,Modern Electric Motor Control,edX (MIT),8 weeks,Online,Free to audit,Yes,https://www.edx.org/learn/electrical-engineering
+charging systems,EV Charging Infrastructure Design,NSDC EV Skill Program,4 weeks,Online,Free,Yes,https://www.nsdcindia.org/sector/automotive
+charging systems,Electric Vehicle Charging Technology,YouTube – Fully Charged Show,2 hrs,Online,Free,No,https://www.youtube.com/watch?v=pXTiJYxkbJ0
+charging systems,EV Charging Standards and Infrastructure,Coursera,6 weeks,Online,Free to audit,Yes,https://www.coursera.org/learn/electric-vehicles
+charging systems,AC/DC EV Charging Systems Deep Dive,YouTube – Engineering Explained,1 hr,Online,Free,No,https://www.youtube.com/watch?v=jBQtnW_Hq-s
+electric vehicle,Electric Vehicles and Mobility (NPTEL),NPTEL – IIT Madras,12 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee91/preview
+electric vehicle,Introduction to Electric Vehicles,SWAYAM,12 weeks,Online,Free,Yes,https://swayam.gov.in/nd2_noc20_ee056/preview
+electric vehicle,Electric Vehicle Technology,edX,6 weeks,Online,Free to audit,Yes,https://www.edx.org/learn/electric-vehicles
+electric vehicle,How Electric Vehicles Work – Full Playlist,YouTube – Learn Engineering,3 hrs,Online,Free,No,https://www.youtube.com/watch?v=3SAxXUIre28
+electric vehicle,EV Technology Overview,Naan Mudhalvan,4 weeks,Online,Free,Yes,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+electric vehicle,Electric Cars 101 – Engineering Explained,YouTube – Engineering Explained,2 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PLqk_GfOB4rLzDMLHqCMHGD-MsH8IhfIoO
+EV powertrain,EV Powertrain Engineering,NPTEL,10 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee91/preview
+EV powertrain,Electric Powertrain – Technology and Business,Coursera (TU Delft),6 weeks,Online,Free to audit,Yes,https://www.coursera.org/learn/electric-powertrain
+EV powertrain,EV Powertrain Design Explained,YouTube – Engineering Explained,1.5 hrs,Online,Free,No,https://www.youtube.com/watch?v=qPmBf09XRqI
+EV powertrain,Powertrain Electrification,edX,8 weeks,Online,Free to audit,Yes,https://www.edx.org/learn/electric-vehicles/tu-delft-electric-cars-technology
+power electronics,Power Electronics (NPTEL – IIT Kharagpur),NPTEL,12 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee21/preview
+power electronics,Power Electronics for EV Applications,Naan Mudhalvan,6 weeks,Online,Free,Yes,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+power electronics,Power Electronics,Coursera (University of Colorado),8 weeks,Online,Free to audit,Yes,https://www.coursera.org/specializations/power-electronics
+power electronics,Power Electronics Full Course,YouTube – NPTEL,12 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PLbMVogVj5nJTqZPT0R8ItNpKi7vaFPaZi
+power electronics,Fundamentals of Power Electronics,edX (TU Delft),6 weeks,Online,Free to audit,Yes,https://www.edx.org/learn/electronics/delft-university-of-technology-power-electronics
+inverter,Inverter Design for EVs,NPTEL,8 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee21/preview
+inverter,Power Inverter and Converter Design,Udemy,4 weeks,Online,₹455,No,https://www.udemy.com/course/power-electronics-course/
+inverter,How Inverters Work – DC to AC,YouTube – Engineering Mindset,1 hr,Online,Free,No,https://www.youtube.com/watch?v=N_8oz_NRtus
+inverter,Inverter Control Techniques,YouTube – NPTEL,2 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PLbMVogVj5nJTqZPT0R8ItNpKi7vaFPaZi
+BLDC,BLDC Motor Drives and Control,NPTEL,6 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee68/preview
+BLDC,Brushless DC Motor Systems,Naan Mudhalvan,4 weeks,Online,Free,Yes,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+BLDC,BLDC Motor Working and Control,YouTube – Learn Engineering,1 hr,Online,Free,No,https://www.youtube.com/watch?v=ZAY5JInyHXY
+BLDC,BLDC Motor Drive Design,Udemy,3 weeks,Online,₹455,No,https://www.udemy.com/course/bldc-motor-control/
+lithium ion,Li-Ion Battery Technology,NSDC,4 weeks,Online,Free,Yes,https://www.nsdcindia.org/sector/automotive
+lithium ion,Lithium Ion Cell Manufacturing,NPTEL,6 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc24_ee53/preview
+lithium ion,Lithium Battery Science,YouTube – Asianometry,2 hrs,Online,Free,No,https://www.youtube.com/watch?v=4mkdTzIFVqI
+lithium ion,Battery Cell Chemistry Deep Dive,YouTube – Engineering Explained,1 hr,Online,Free,No,https://www.youtube.com/watch?v=4kEod1fZTBY
+cell balancing,Battery Cell Balancing Techniques,Naan Mudhalvan,3 weeks,Online,Free,No,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+cell balancing,Cell Balancing in BMS Explained,YouTube – Texas Instruments,1 hr,Online,Free,No,https://www.youtube.com/watch?v=pXTiJYxkbJ0
+DC-DC converter,DC-DC Converter Design,NPTEL,6 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee21/preview
+DC-DC converter,Switch Mode Power Supplies,Udemy,4 weeks,Online,₹455,No,https://www.udemy.com/course/power-electronics-course/
+DC-DC converter,DC-DC Converters Explained,YouTube – Engineering Mindset,1 hr,Online,Free,No,https://www.youtube.com/watch?v=N_8oz_NRtus
+onboard charger,On-Board Charger Design for EVs,NSDC,4 weeks,Online,Free,Yes,https://www.nsdcindia.org/sector/automotive
+onboard charger,OBC Design Fundamentals,YouTube – Electric Vehicle Geek,1 hr,Online,Free,No,https://www.youtube.com/watch?v=jBQtnW_Hq-s
+regenerative braking,Regenerative Braking Systems,NPTEL,4 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee91/preview
+regenerative braking,How Regenerative Braking Works,YouTube – Engineering Explained,45 min,Online,Free,No,https://www.youtube.com/watch?v=0b6DtTdTaFs
+PLC,PLC Programming & Industrial Automation,NPTEL,12 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee49/preview
+PLC,PLC Programming with Siemens TIA Portal,Udemy,4 weeks,Online,₹455,No,https://www.udemy.com/course/step7-simatic-s7-300-400-plc-training/
+PLC,PLC Full Course – Siemens S7 1200,YouTube – RealPars,5 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PL9QcSPLYnzLtqGfX4gTFGjNAKuaQcxEL2
+PLC,PLC Programming Masterclass,Udemy,6 weeks,Online,₹455,No,https://www.udemy.com/course/plc-programming-from-scratch/
+PLC,Industrial PLC – Naan Mudhalvan,Naan Mudhalvan,4 weeks,Online,Free,Yes,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+SCADA,SCADA & DCS Systems,NSDC Smart Manufacturing Program,6 weeks,Online,Free,Yes,https://www.nsdcindia.org/sector/automotive
+SCADA,Industrial SCADA – Full Course,YouTube – RealPars,4 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PL9QcSPLYnzLtqGfX4gTFGjNAKuaQcxEL2
+SCADA,SCADA Systems for Industrial Automation,Udemy,4 weeks,Online,₹455,No,https://www.udemy.com/course/scada-training/
+SCADA,Industrial SCADA Programming,Naan Mudhalvan,4 weeks,Online,Free,Yes,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+HMI,HMI Design with WinCC,Udemy,3 weeks,Online,₹455,No,https://www.udemy.com/course/hmi-programming-siemens-tia-portal/
+HMI,SCADA and HMI Development – RealPars,YouTube – RealPars,3 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PL9QcSPLYnzLtqGfX4gTFGjNAKuaQcxEL2
+HMI,SCADA and HMI for Automation,Naan Mudhalvan,4 weeks,Online,Free,Yes,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+robotics,Robotics and Automation,NPTEL – IIT Kharagpur,12 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_me88/preview
+robotics,Robotics Specialization,Coursera (University of Pennsylvania),6 months,Online,Free to audit,Yes,https://www.coursera.org/specializations/robotics
+robotics,Industrial Robot Programming,YouTube – FANUC,3 hrs,Online,Free,No,https://www.youtube.com/c/FANUCAmerica
+robotics,Modern Robotics – Full Course,YouTube – Northwestern Engineering,8 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PLggLP4f-rq02vX0OQQ31plObqFqknTalo
+robotics,Robotics: Computational Motion Planning,Coursera (UPenn),6 weeks,Online,Free to audit,Yes,https://www.coursera.org/learn/robotics-motion-planning
+automation,Industrial Automation,NPTEL,8 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee49/preview
+automation,Factory Automation Fundamentals,YouTube – NPTEL,5 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PLbMVogVj5nJSvSuJYWnCsZwYRPTQq0qUH
+automation,Automation with Python,Udemy,4 weeks,Online,₹455,No,https://www.udemy.com/course/automate/
+automation,Industrial Automation – Full Course,YouTube – RealPars,6 hrs,Online,Free,No,https://www.youtube.com/c/RealPars
+DCS,DCS Programming and Configuration,NSDC,4 weeks,Online,Free,Yes,https://www.nsdcindia.org/sector/automotive
+DCS,Distributed Control Systems Explained,YouTube – RealPars,2 hrs,Online,Free,No,https://www.youtube.com/c/RealPars
+VFD,Variable Frequency Drive – Full Course,YouTube – RealPars,2 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PL9QcSPLYnzLtqGfX4gTFGjNAKuaQcxEL2
+VFD,VFD Installation and Troubleshooting,Naan Mudhalvan,3 weeks,Online,Free,Yes,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+VFD,Variable Speed Drives,Udemy,2 weeks,Online,₹455,No,https://www.udemy.com/course/variable-frequency-drive-vfd/
+motion control,Motion Control Systems,NPTEL,6 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee68/preview
+motion control,Servo and Motion Control,YouTube – Kollmorgen,2 hrs,Online,Free,No,https://www.youtube.com/c/Kollmorgen
+PID control,PID Control and Tuning,NPTEL,4 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee49/preview
+PID control,PID Controller Design,YouTube – Brian Douglas,2 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PLUMWjy5jgHK20UW0yM22HYEUTMJfla7Mb
+PID control,Control Systems – Full Course,YouTube – MATLAB,3 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PLn8PRpmsu08pFBqgd_6Bi7msgkWFKL33b
+ladder logic,PLC Ladder Logic Programming,YouTube – RealPars,3 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PL9QcSPLYnzLtqGfX4gTFGjNAKuaQcxEL2
+ladder logic,PLC Ladder Logic – Naan Mudhalvan,Naan Mudhalvan,3 weeks,Online,Free,Yes,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+ladder logic,Learn Ladder Logic Programming,Udemy,3 weeks,Online,₹455,No,https://www.udemy.com/course/plc-programming-from-scratch/
+CNC,CNC Machining and Programming,NSDC,6 weeks,Offline,Free,Yes,https://www.nsdcindia.org/sector/automotive
+CNC,CNC Programming – G-Code Masterclass,Udemy,4 weeks,Online,₹455,No,https://www.udemy.com/course/cnc-programming/
+CNC,CNC Machining Full Course,YouTube – Titans of CNC,5 hrs,Online,Free,No,https://www.youtube.com/c/TitansofCNC
+CNC,CNC Milling and Turning for Beginners,YouTube – NYC CNC,3 hrs,Online,Free,No,https://www.youtube.com/c/NYCCNC
+CNC,G-Code Programming,NPTEL,8 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc21_me95/preview
+CAD,AutoCAD for Engineers,Naan Mudhalvan,4 weeks,Online,Free,Yes,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+CAD,SolidWorks Fundamentals,CADD Centre Tamil Nadu,6 weeks,Offline,₹5000,Yes,https://www.caddcentre.com/solidworks-training.htm
+CAD,AutoCAD Complete Course,YouTube – CAD CAM Tutorial,5 hrs,Online,Free,No,https://www.youtube.com/watch?v=fZmPqAv2Zb8
+CAD,CAD/CAM Design,NPTEL,8 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc21_me95/preview
+CAD,Free AutoCAD Course,Autodesk Training,4 weeks,Online,Free,Yes,https://www.autodesk.com/certification/learn/catalog/product/AutoCAD
+AutoCAD,AutoCAD 2D and 3D Design,CADD Centre Tamil Nadu,4 weeks,Offline,₹3000,Yes,https://www.caddcentre.com/autocad-training.htm
+AutoCAD,AutoCAD for Engineers,Naan Mudhalvan,4 weeks,Online,Free,Yes,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+AutoCAD,Complete AutoCAD 2024 Course,Udemy,6 weeks,Online,₹455,No,https://www.udemy.com/course/autocad-2d-3d/
+AutoCAD,AutoCAD Tutorial Full Course,YouTube – Autodesk,4 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PL9UBjM5s-f5jSKvvBxNRDnAFZOG5E80q2
+SolidWorks,SolidWorks Professional Training,CADD Centre Tamil Nadu,8 weeks,Offline,₹8000,Yes,https://www.caddcentre.com/solidworks-training.htm
+SolidWorks,SolidWorks for Mechanical Engineers,Udemy,4 weeks,Online,₹455,No,https://www.udemy.com/course/solidworks-for-mechanical-design/
+SolidWorks,SolidWorks Full Course,YouTube – CAD CAM Tutorial,6 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PLrOFa8sDv6jdTMz6T7FYQZ9FD1W7X6A5n
+SolidWorks,SolidWorks CSWA Prep,LinkedIn Learning,4 weeks,Online,Free trial,Yes,https://www.linkedin.com/learning/solidworks-2023-essential-training
+FMEA,Quality Engineering & FMEA,IATF Training Centers TN,4 weeks,Offline,₹4000,Yes,https://www.tuv-sud.com/en-in/training-testing/training-courses
+FMEA,FMEA and Risk Management,ASQ Online,3 weeks,Online,₹2000,Yes,https://asq.org/quality-resources/fmea
+FMEA,FMEA Training – AIAG/VDA,Udemy,2 weeks,Online,₹455,No,https://www.udemy.com/course/fmea-training/
+FMEA,FMEA Explained – Full Tutorial,YouTube – Quality HUB India,2 hrs,Online,Free,No,https://www.youtube.com/watch?v=yG-YxcvQkWE
+six sigma,Lean Six Sigma Green Belt,Coursera (University System of Georgia),5 months,Online,Free to audit,Yes,https://www.coursera.org/specializations/six-sigma-green-belt
+six sigma,Six Sigma Yellow Belt,Naan Mudhalvan,4 weeks,Online,Free,Yes,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+six sigma,Six Sigma Full Course,YouTube – Quality HUB India,4 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PLHhFoiXb_mEn-HGg11OHr-MeR4o3i6d3c
+six sigma,Lean Six Sigma – edX,edX (TU Delft),6 weeks,Online,Free to audit,Yes,https://www.edx.org/learn/six-sigma/delft-university-of-technology-lean-six-sigma
+lean manufacturing,Lean Manufacturing Fundamentals,NPTEL – IIT Roorkee,8 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_me43/preview
+lean manufacturing,Lean Principles for Manufacturing,YouTube – Lean Smarts,2 hrs,Online,Free,No,https://www.youtube.com/c/LeanSmarts
+lean manufacturing,Lean Manufacturing – edX,edX (MIT),6 weeks,Online,Free to audit,Yes,https://www.edx.org/learn/lean-manufacturing
+lean manufacturing,Lean Six Sigma Specialization,Coursera,5 months,Online,Free to audit,Yes,https://www.coursera.org/specializations/six-sigma-green-belt
+IATF,IATF 16949 Internal Auditor,TÜV SÜD India,3 days,Offline,₹15000,Yes,https://www.tuv-sud.com/en-in/training-testing/training-courses
+IATF,IATF 16949 Awareness Course,Udemy,2 weeks,Online,₹455,No,https://www.udemy.com/course/iatf-16949-automotive-quality-management/
+IATF,IATF 16949 Overview,YouTube – Quality HUB India,2 hrs,Online,Free,No,https://www.youtube.com/watch?v=yG-YxcvQkWE
+production planning,Production Planning and Control,NPTEL – IIT Roorkee,8 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_me43/preview
+production planning,Production Planning Crash Course,YouTube – Quality HUB India,2 hrs,Online,Free,No,https://www.youtube.com/c/QualityHUBIndia
+transformer,Transformer Design and Testing,NPTEL,6 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc20_ee26/preview
+transformer,Transformer Technology Full Course,YouTube – Engineering Mindset,2 hrs,Online,Free,No,https://www.youtube.com/watch?v=sShqjS-OIPE
+substation,Substation Design and Operation,NPTEL,8 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee12/preview
+substation,Substation Basics,YouTube – Engineering Mindset,2 hrs,Online,Free,No,https://www.youtube.com/watch?v=WVeNaG2T3GM
+relay,Protection Relays and Systems,NPTEL,6 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee12/preview
+relay,Protective Relaying Explained,YouTube – Engineering Mindset,1.5 hrs,Online,Free,No,https://www.youtube.com/watch?v=WVeNaG2T3GM
+protection system,Power System Protection,NPTEL,10 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee12/preview
+switchgear,Switchgear and Protection,NPTEL,8 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee12/preview
+Python,Python for Everybody,Coursera (University of Michigan),5 months,Online,Free to audit,Yes,https://www.coursera.org/specializations/python
+Python,Python for Engineers,YouTube – freeCodeCamp,4 hrs,Online,Free,No,https://www.youtube.com/watch?v=rfscVS0vtbw
+Python,Python Full Course,YouTube – Programming with Mosh,6 hrs,Online,Free,No,https://www.youtube.com/watch?v=_uQrJ0TkZlc
+Python,Automate the Boring Stuff with Python,Udemy,4 weeks,Online,₹455,No,https://www.udemy.com/course/automate/
+Python,Python – Naan Mudhalvan GUVI,Naan Mudhalvan,6 weeks,Online,Free,Yes,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+Python,Python for Data Science and AI,Coursera (IBM),4 weeks,Online,Free to audit,Yes,https://www.coursera.org/learn/python-for-applied-data-science-ai
+MATLAB,MATLAB Onramp (Official),MathWorks,2 weeks,Online,Free,Yes,https://matlabacademy.mathworks.com/details/matlab-onramp/gettingstarted
+MATLAB,MATLAB for Engineers,NPTEL – IIT Bombay,10 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc20_ma02/preview
+MATLAB,MATLAB Tutorial Full Course,YouTube – freeCodeCamp,3 hrs,Online,Free,No,https://www.youtube.com/watch?v=7f50sQYjNRA
+MATLAB,MATLAB and Simulink Training,MathWorks Learning,4 weeks,Online,₹3000,Yes,https://matlabacademy.mathworks.com
+MATLAB,MATLAB Complete Beginner,YouTube – Programming Engineer,4 hrs,Online,Free,No,https://www.youtube.com/watch?v=NSSTkkBP1cs
+embedded systems,Embedded Systems – NPTEL,NPTEL – IIT Madras,12 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_cs76/preview
+embedded systems,ARM Embedded Programming,Naan Mudhalvan,6 weeks,Online,Free,Yes,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+embedded systems,Embedded Systems Programming,Udemy,6 weeks,Online,₹455,No,https://www.udemy.com/course/embedded-systems-bare-metal-programming/
+embedded systems,Embedded C Full Course,YouTube – FastBit ECA,6 hrs,Online,Free,No,https://www.youtube.com/watch?v=01AkdKpBJac
+embedded systems,Introduction to Embedded Systems,edX (University of Colorado),6 months,Online,Free to audit,Yes,https://www.coursera.org/specializations/embedding-hardware-software
+microcontroller,Microcontroller and Embedded System,NPTEL,12 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_cs76/preview
+microcontroller,Arduino and Embedded Systems,Naan Mudhalvan,4 weeks,Online,Free,Yes,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+microcontroller,STM32 Microcontroller Course,YouTube – Shawn Hymel / Digi-Key,5 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PLEBQazB0HUyRYuzfi4clXsKUSgorErmBv
+microcontroller,Arduino Complete Starter Kit,YouTube – freeCodeCamp,3 hrs,Online,Free,No,https://www.youtube.com/watch?v=zJ-LqeX_fLU
+IoT,Internet of Things (NPTEL – IIT Kharagpur),NPTEL,12 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_cs74/preview
+IoT,Industrial IoT for Manufacturing,Coursera (Cisco),8 weeks,Online,Free to audit,Yes,https://www.coursera.org/learn/iot-wireless-cloud-computing
+IoT,IoT Full Course,YouTube – Great Learning,4 hrs,Online,Free,No,https://www.youtube.com/watch?v=h0gWfVCSGQQ
+IoT,IoT & Embedded Systems,Naan Mudhalvan,6 weeks,Online,Free,Yes,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+IoT,IoT with Raspberry Pi and Arduino,Udemy,5 weeks,Online,₹455,No,https://www.udemy.com/course/iot-internet-of-things-with-raspberry-pi-python/
+machine learning,Machine Learning by Andrew Ng,Coursera (Stanford),3 months,Online,Free to audit,Yes,https://www.coursera.org/specializations/machine-learning-introduction
+machine learning,Machine Learning Full Course,YouTube – freeCodeCamp,6 hrs,Online,Free,No,https://www.youtube.com/watch?v=NWONeJKn6kc
+machine learning,ML for Engineers,YouTube – Sentdex,5 hrs,Online,Free,No,https://www.youtube.com/c/sentdex
+machine learning,Machine Learning – Naan Mudhalvan GUVI,Naan Mudhalvan,10 weeks,Online,Free,Yes,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+machine learning,Applied ML with Python,edX (MIT),12 weeks,Online,Free to audit,Yes,https://www.edx.org/learn/machine-learning/mit-machine-learning-with-python-from-linear-models-to-deep-learning
+data analysis,Data Analysis with Python,Coursera (IBM),4 weeks,Online,Free to audit,Yes,https://www.coursera.org/learn/data-analysis-with-python
+data analysis,Data Analysis Full Course,YouTube – freeCodeCamp,4 hrs,Online,Free,No,https://www.youtube.com/watch?v=r-uOLxNrNk8
+data analysis,Data Analytics for Manufacturing,NSDC,4 weeks,Online,Free,Yes,https://www.nsdcindia.org/sector/automotive
+data analysis,Data Analysis with Pandas,YouTube – Corey Schafer,3 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PL-osiE80TeTsWmV9i9c58mdDCSskIFdDS
+welding,Welding Technology,NPTEL – IIT Madras,8 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc20_me68/preview
+welding,Advanced Welding Processes,NSDC,6 weeks,Offline,Free,Yes,https://www.nsdcindia.org/sector/automotive
+welding,Welding Full Course for Beginners,YouTube – WeldTube,3 hrs,Online,Free,No,https://www.youtube.com/c/WeldTube
+welding,Welding Basics and Safety,YouTube – Miller Welding,2 hrs,Online,Free,No,https://www.youtube.com/c/MillerWelding
+fabrication,Sheet Metal Fabrication,NPTEL,6 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_me43/preview
+fabrication,Metal Fabrication Full Course,YouTube – WeldTube,2 hrs,Online,Free,No,https://www.youtube.com/c/WeldTube
+quality control,Statistical Quality Control,NPTEL,8 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_me43/preview
+quality control,Quality Control for Manufacturing,YouTube – Quality HUB India,4 hrs,Online,Free,No,https://www.youtube.com/c/QualityHUBIndia
+quality control,Quality Management – Google Certificate,Coursera (Google),4 weeks,Online,Free to audit,Yes,https://www.coursera.org/professional-certificates/google-project-management
+ISO,ISO 9001:2015 Internal Auditor,TÜV SÜD India,2 days,Offline,₹10000,Yes,https://www.tuv-sud.com/en-in/training-testing/training-courses
+ISO,ISO 9001:2015 Full Course,YouTube – Quality HUB India,3 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PLHhFoiXb_mEn-HGg11OHr-MeR4o3i6d3c
+ISO,ISO 9001 – Naan Mudhalvan,Naan Mudhalvan,2 weeks,Online,Free,Yes,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+safety management,Occupational Health and Safety,NPTEL,6 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_hs31/preview
+safety management,Industrial Safety Course,Udemy,3 weeks,Online,₹455,No,https://www.udemy.com/course/industrial-safety-management/
+safety management,Workplace Safety Full Course,YouTube – OSHA,2 hrs,Online,Free,No,https://www.youtube.com/c/OSHAonline
+5S,5S Workplace Organisation,Naan Mudhalvan,2 weeks,Online,Free,No,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+5S,Lean 5S Implementation,YouTube – Lean Smarts,1 hr,Online,Free,No,https://www.youtube.com/c/LeanSmarts
+5S,5S Methodology Full Guide,Udemy,1 week,Online,₹455,No,https://www.udemy.com/course/lean-manufacturing-5s/
+project management,Google Project Management Certificate,Coursera (Google),6 months,Online,Free to audit,Yes,https://www.coursera.org/professional-certificates/google-project-management
+project management,PMP Certification Prep,Udemy,12 weeks,Online,₹455,Yes,https://www.udemy.com/course/pmp-certification-exam-prep-course-pmbok-6th-edition/
+project management,Project Management Full Course,YouTube – Great Learning,3 hrs,Online,Free,No,https://www.youtube.com/watch?v=GC7pN8Mjot8
+kaizen,Kaizen and Continuous Improvement,YouTube – Lean Smarts,2 hrs,Online,Free,No,https://www.youtube.com/c/LeanSmarts
+kaizen,Lean Kaizen Full Course,Udemy,2 weeks,Online,₹455,No,https://www.udemy.com/course/lean-manufacturing-6s/
+metrology,Engineering Metrology,NPTEL,8 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc21_me95/preview
+metrology,Dimensional Metrology,YouTube – NPTEL,3 hrs,Online,Free,No,https://www.youtube.com/watch?v=iT5C8xqcYjk
+GD&T,GD&T Fundamentals,Udemy,3 weeks,Online,₹455,No,https://www.udemy.com/course/gdt-geometric-dimensioning-tolerancing/
+GD&T,GD&T Full Course,YouTube – Eric Doyle – GD&T Basics,3 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PLHTv74LNz3U-cUGEMXBYpBqb4pWm-VYi2
+GD&T,ASME GD&T Training,ASME Learning,4 weeks,Online,₹3000,Yes,https://www.asme.org/learning-development/find-a-course/details/GD-T
+hydraulics,Hydraulic Systems Full Course,YouTube – RealPars,3 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PL9QcSPLYnzLtqGfX4gTFGjNAKuaQcxEL2
+hydraulics,Hydraulics and Pneumatics,NPTEL,6 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc21_me21/preview
+pneumatics,Pneumatic Systems Full Course,YouTube – RealPars,2 hrs,Online,Free,No,https://www.youtube.com/playlist?list=PL9QcSPLYnzLtqGfX4gTFGjNAKuaQcxEL2
+pneumatics,Pneumatics and Hydraulics,NPTEL,6 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc21_me21/preview
+servo motor,Servo Motor Drives,YouTube – RealPars,1.5 hrs,Online,Free,No,https://www.youtube.com/c/RealPars
+servo motor,Servo Systems and Motion Control,Udemy,2 weeks,Online,₹455,No,https://www.udemy.com/course/servo-motor-drive-systems/
+communication,Business Communication for Engineers,Naan Mudhalvan,2 weeks,Online,Free,No,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+communication,English for Career Development,Coursera (University of Pennsylvania),4 weeks,Online,Free to audit,No,https://www.coursera.org/learn/careerdevelopment
+testing,Software Testing Fundamentals,NPTEL,8 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_cs77/preview
+testing,Quality Testing and Inspection,NSDC,3 weeks,Online,Free,Yes,https://www.nsdcindia.org/sector/automotive
+testing,Software Testing Full Course,YouTube – freeCodeCamp,3 hrs,Online,Free,No,https://www.youtube.com/watch?v=LdwPBhEA4Kk
+documentation,Technical Documentation Writing,Naan Mudhalvan,2 weeks,Online,Free,No,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+reporting,Report Writing for Engineers,NPTEL,3 weeks,Online,Free,No,https://onlinecourses.nptel.ac.in/noc22_hs31/preview
+leadership,Engineering Leadership,Coursera (University of Michigan),6 weeks,Online,Free to audit,Yes,https://www.coursera.org/learn/leadership-skills
+leadership,Leadership Full Course,YouTube – Great Learning,2 hrs,Online,Free,No,https://www.youtube.com/watch?v=vLJPMTfAJN0
+problem solving,Problem Solving and Critical Thinking,Coursera (University of Minnesota),4 weeks,Online,Free to audit,No,https://www.coursera.org/learn/problem-solving
+problem solving,Critical Thinking and Problem Solving,Naan Mudhalvan,2 weeks,Online,Free,No,https://naanmudhalvan.tn.gov.in/courses/courselist.html
+time management,Time Management – Full Course,YouTube – Thomas Frank,1 hr,Online,Free,No,https://www.youtube.com/watch?v=iONDebHX9qk
+time management,Work Smarter Not Harder,Coursera (UC San Diego),3 weeks,Online,Free to audit,No,https://www.coursera.org/learn/work-smarter-not-harder
+CAN Bus,CAN Bus and Automotive Protocols,NPTEL,4 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee91/preview
+CAN Bus,Automotive Communication – CAN/LIN/FlexRay,Udemy,3 weeks,Online,₹455,No,https://www.udemy.com/course/automotive-communication-protocols/
+CAN Bus,CAN Bus Explained – Full Tutorial,YouTube – CSS Electronics,2 hrs,Online,Free,No,https://www.youtube.com/watch?v=0_9CPKnwNPk
+CAN Bus,Vector CANalyzer and CANoe Training,Vector Academy,4 weeks,Online,₹5000,Yes,https://academy.vector.com/academy
+high voltage,High Voltage Safety for EV,NSDC EV Skill Program,3 weeks,Online,Free,Yes,https://www.nsdcindia.org/sector/automotive
+high voltage,EV High Voltage Safety Fundamentals,YouTube – Electric Vehicle Geek,1 hr,Online,Free,No,https://www.youtube.com/watch?v=jBQtnW_Hq-s
+high voltage,HV Safety and EV Systems,Udemy,2 weeks,Online,₹455,No,https://www.udemy.com/course/electric-vehicle-technology/
+circuit breaker,Protection Devices and Circuit Breakers,NPTEL,4 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee12/preview
+transmission,Power Transmission Systems,NPTEL,6 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee12/preview
+distribution,Power Distribution Engineering,NPTEL,6 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee12/preview
+earthing,Electrical Earthing and Grounding,YouTube – Engineering Mindset,45 min,Online,Free,No,https://www.youtube.com/watch?v=WVeNaG2T3GM
+load flow,Load Flow Analysis,NPTEL,4 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_ee12/preview
+power factor,Power Factor Correction,NPTEL,3 weeks,Online,Free,No,https://onlinecourses.nptel.ac.in/noc22_ee21/preview
+SQL,SQL for Data Science,Coursera (UC Davis),4 weeks,Online,Free to audit,Yes,https://www.coursera.org/learn/sql-for-data-science
+SQL,SQL Full Course,YouTube – freeCodeCamp,4 hrs,Online,Free,No,https://www.youtube.com/watch?v=HXV3zeQKqGY
+SQL,The Complete SQL Bootcamp,Udemy,6 weeks,Online,₹455,No,https://www.udemy.com/course/the-complete-sql-bootcamp/
+Power BI,Microsoft Power BI Desktop,Udemy,4 weeks,Online,₹455,No,https://www.udemy.com/course/microsoft-power-bi-up-running-with-power-bi-desktop/
+Power BI,Power BI Full Course,YouTube – freeCodeCamp,5 hrs,Online,Free,No,https://www.youtube.com/watch?v=ykvAWKML9Gk
+Power BI,Analyzing and Visualizing Data with Power BI,edX (Microsoft),6 weeks,Online,Free to audit,Yes,https://www.edx.org/learn/power-bi/microsoft-analyzing-and-visualizing-data-with-power-bi
+Tableau,Tableau Full Course,YouTube – freeCodeCamp,6 hrs,Online,Free,No,https://www.youtube.com/watch?v=TPMlZxRRaBQ
+Tableau,Tableau for Beginners,Udemy,4 weeks,Online,₹455,No,https://www.udemy.com/course/tableau10/
+Tableau,Data Visualization with Tableau,Coursera (UC Davis),5 months,Online,Free to audit,Yes,https://www.coursera.org/specializations/data-visualization
+AUTOSAR,AUTOSAR Fundamentals,Vector Academy,4 weeks,Online,₹5000,Yes,https://academy.vector.com/academy
+AUTOSAR,AUTOSAR Classic/Adaptive Overview,YouTube – Vector Informatik,2 hrs,Online,Free,No,https://www.youtube.com/c/VectorInformatik
+AUTOSAR,Automotive Embedded Systems and AUTOSAR,Udemy,5 weeks,Online,₹455,No,https://www.udemy.com/course/autosar/
+ISO 26262,ISO 26262 Functional Safety Fundamentals,Udemy,3 weeks,Online,₹455,No,https://www.udemy.com/course/iso26262-functional-safety/
+ISO 26262,Functional Safety for Automotive (ISO 26262),YouTube – Embitel,2 hrs,Online,Free,No,https://www.youtube.com/c/Embitel
+ISO 26262,Automotive Functional Safety,TÜV SÜD India,2 days,Offline,₹20000,Yes,https://www.tuv-sud.com/en-in/training-testing/training-courses
+ANSYS,ANSYS FEA Full Course,YouTube – ANSYS,4 hrs,Online,Free,No,https://www.youtube.com/c/AnsysInc
+ANSYS,Introduction to ANSYS Mechanical,Udemy,4 weeks,Online,₹455,No,https://www.udemy.com/course/ansys-mechanical-fea/
+ANSYS,ANSYS Simulation – Coursera,Coursera,4 weeks,Online,Free to audit,Yes,https://www.coursera.org/learn/introduction-to-ansys-fluent
+CATIA,CATIA V5 Complete Course,YouTube – Skill Lync,4 hrs,Online,Free,No,https://www.youtube.com/c/SkillLync
+CATIA,CATIA V5 for Beginners,Udemy,6 weeks,Online,₹455,No,https://www.udemy.com/course/catia-v5/
+CATIA,CATIA Training,CADD Centre Tamil Nadu,8 weeks,Offline,₹8000,Yes,https://www.caddcentre.com/catia-training.htm
+Git,Git and GitHub Full Course,YouTube – freeCodeCamp,5 hrs,Online,Free,No,https://www.youtube.com/watch?v=RGOj5yH7evk
+Git,Version Control with Git,Coursera (Atlassian),4 weeks,Online,Free to audit,Yes,https://www.coursera.org/learn/version-control-with-git
+Git,Git Complete – The Definitive Guide,Udemy,4 weeks,Online,₹455,No,https://www.udemy.com/course/git-complete/
+Industry 4.0,Industry 4.0 Fundamentals,Naan Mudhalvan,4 weeks,Online,Free,Yes,https://naanmudhalvan.tn.gov.in
+Industry 4.0,Introduction to Industry 4.0 and Industrial Internet of Things,NPTEL,12 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc22_cs93/preview
+Industry 4.0,Industry 4.0: How to Revolutionize your Business,edX,6 weeks,Online,Free to audit,Yes,https://www.edx.org/learn/industry-4-0
+EV battery,Electric & Hybrid Vehicle Engineering,Udemy,Self-paced,Online,Paid,Yes,https://www.udemy.com/course/electric-and-hybrid-vehicle-engineering/
+EV battery,EV Technology Course,Elevify,Self-paced,Online,Paid,Yes,https://www.elevify.com/en-in/courses/transportation-automotive-and-logistics/automobiles/ev-technology-course-f145b
+EV battery,Battery Technology in Electric Vehicles,Great Learning Academy,Self-paced,Online,Free,Yes,https://www.mygreatlearning.com/academy/learn-for-free/courses/battery-technology-in-electric-vehicles
+EV battery,Best Electric Vehicle Courses in India (Guide),Internshala,–,Online,Free,No,https://trainings.internshala.com/blog/best-electric-vehicle-courses-in-india/
+EV battery,Electric Vehicle Technology & Powertrain,IIT Kanpur (EICTA),Varies,Online,Paid,Yes,https://www.eicta.iitk.ac.in/courses/electric-vehicle-technology-and-powertrain
+EV battery,Battery Technology Courses (EV Academy),EVAcademy,Varies,Online,Varies,Yes,https://evacademy.in/find/battery-technology-courses
+EV battery,Battery Technologies,Alison,Self-paced,Online,Free,Yes,https://alison.com/course/battery-technologies
+motor control,Electric Vehicle Education (Motors & Drives),Udemy,Self-paced,Online,Paid,Yes,https://www.udemy.com/course/electric-vehicle-education/
+motor control,Motors & Drives Training,Pertecnica Engineering,3–5 days,Classroom/Online,Paid,Yes,https://www.pertecnica.in/motors-and-drives-training/
+motor control,Electrical Machines — NPTEL,NPTEL / IIT,12 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc23_ee140/preview
+motor control,Electric Motors — Subject Hub,Class Central,Varies,Online,Free,No,https://www.classcentral.com/subject/electric-motors
+motor control,Electric Motor Drives & Induction Motor,Udemy,Self-paced,Online,Paid,Yes,https://www.udemy.com/course/electric-motor-drives-induction-motor/
+motor control,AC Electric Motors & Drives Masterclass,Promise Training Global,Varies,Online,Paid,Yes,https://www.promisetrainingglobal.com/courses/ac-electric-motors-drives-masterclass/
+motor control,"Design: Electric Motors, Generators & Drive Systems",MIT Professional Education,Varies,Online,Paid,Yes,https://professional.mit.edu/course-catalog/design-electric-motors-generators-and-drive-systems
+motor control,Electric Motor Drives (ABB Resource),ABB,Self-paced,Online,Free,No,https://new.abb.com/news/detail/108787/electric-motor-drives
+power electronics,Electronics: Theory & Beginner's Guide,Udemy,Self-paced,Online,Paid,No,https://www.udemy.com/course/the-theory-behind-electronics-a-beginners-guide/
+power electronics,Power Electronics — Subject Hub,Class Central,Varies,Online,Free,No,https://www.classcentral.com/subject/power-electronics
+power electronics,Power Electronics Courses,Coursera,Varies,Online,Free to audit,Yes,https://www.coursera.org/courses?query=power+electronics
+power electronics,Power Electronics — NPTEL,NPTEL / IIT Bombay,12 weeks,Online,Free,Yes,https://nptel.ac.in/courses/108105066
+power electronics,Power Electronics — MIT OpenCourseWare (6.622),MIT OCW,Semester,Online,Free,No,https://ocw.mit.edu/courses/6-622-power-electronics-spring-2023/
+power electronics,Power Electronics (AISAT eLearning),AISAT,Varies,Online,Free,No,https://elearning.aisat.ac.in/courses/power-electronics/
+power electronics,Power Electronics Virtual Lab,IIT Roorkee (VLABS),Self-paced,Online,Free,No,https://pe-iitr.vlabs.ac.in/
+power electronics,Power Electronics Course for Electrical Engineers,Pertecnica Engineering,3–5 days,Classroom/Online,Paid,Yes,https://www.pertecnica.in/power-electronics-course-for-electrical-engineers/
+power electronics,Power Electronics — IIT Bombay,courses.com / IIT Bombay,Varies,Online,Free to audit,Yes,https://www.courses.com/indian-institute-of-technology-bombay/power-electronics
+power electronics,Power Electronics: Career Guide & Resources,Career Karma,–,Online,Free,No,https://careerkarma.com/blog/power-electronics/
+CAD,AutoCAD & CAD Training,Autodesk,Varies,Online/Classroom,Varies,Yes,https://www.autodesk.com/training
+CAD,CAD Software Courses,Class Central,Varies,Online,Free to audit,No,https://www.classcentral.com/subject/cad
+CAD,CAD Software Courses,Udemy,Self-paced,Online,Paid,Yes,https://www.udemy.com/topic/cad-software/
+CAD,Computer-Aided Design (Coursera),Coursera,4 weeks,Online,Free to audit,Yes,https://www.coursera.org/learn/computer-aided-design
+CAD,AutoCAD Certification Course,IID (Institute of Interior Design),Varies,Classroom,Paid,Yes,https://courses.iid.org.in/course/auto-cad-a
+CAD,CAD/CAM Training,CAD CAM Academy India,Varies,Classroom,Paid,Yes,https://cadcamacademy.co.in/
+CAD,CAD & Design Training,Jnana Infotech,Varies,Classroom,Paid,Yes,https://jnanainfotech.in/
+CAD,"CAD Course, Bangalore",PUMO Technovation,Varies,Classroom,Paid,Yes,https://pumotechnovation.com/cad-course-in-bangalore
+lean manufacturing,Manufacturing Process Courses,Coursera,Varies,Online,Free to audit,Yes,https://www.coursera.org/courses?query=manufacturing+process
+lean manufacturing,Material Processing in Manufacturing,Aztech Training,Varies,Online,Paid,Yes,https://aztechtraining.com/course/material-processing-in-manufacturing
+lean manufacturing,Manufacturing Classes (Online),Tooling U-SME,Self-paced,Online,Paid,Yes,https://learn.toolingu.com/manufacturing-products-services/manufacturing-classes/
+lean manufacturing,Advanced Manufacturing Program,IIS Ahmedabad,Varies,Classroom,Paid,Yes,https://iisahmedabad.org/advanced-manufacturing/
+lean manufacturing,Digital Manufacturing & Smart Factories — IISc,TalentSprint / IISc Bangalore,6 months,Online,Paid,Yes,https://talentsprint.com/course/digital-manufacturing-smart-factories-iisc-bangalore
+lean manufacturing,Manufacturing Courses,edX,Varies,Online,Free to audit,Yes,https://www.edx.org/learn/manufacturing
+lean manufacturing,Manufacturing Processes — NPTEL,NPTEL,12 weeks,Online,Free,Yes,https://onlinecourses.nptel.ac.in/noc24_me48/preview
+Python,freeCodeCamp — Web & Programming Courses,freeCodeCamp,Self-paced,Online,Free,Yes,https://www.freecodecamp.org/
+Python,Development Courses,Udemy,Self-paced,Online,Paid,Yes,https://www.udemy.com/courses/development/
+Python,Coding & Programming Courses,FutureLearn,Varies,Online,Free to audit,Yes,https://www.futurelearn.com/subjects/it-and-computer-science-courses/coding-programming
+Python,Programming Courses,Scaler Topics,Self-paced,Online,Free,No,https://www.scaler.com/topics/courses/
+Python,Introductory Programming — MIT OpenCourseWare,MIT OCW,Semester,Online,Free,No,https://ocw.mit.edu/collections/introductory-programming/
+Python,Free Coding Courses,Great Learning,Self-paced,Online,Free,Yes,https://www.mygreatlearning.com/coding/free-courses
+Python,Programming & Software Development — Subject Hub,Class Central,Varies,Online,Free to audit,No,https://www.classcentral.com/subject/programming-and-software-development
+Python,SoloLearn — Coding for Everyone,SoloLearn,Self-paced,Online,Free,Yes,https://www.sololearn.com/en/
+Python,Full-Stack & DSA Courses,Coding Blocks,Varies,Online/Classroom,Paid,Yes,https://www.codingblocks.com/
+safety management,Skill Development Schemes — DGE,Directorate General of Employment (GOI),Varies,Offline,Free,Yes,https://dge.gov.in/dge/schemes_programmes
+safety management,Employee Skill Development Schemes — DOPT,DOPT (GOI),Varies,Offline,Free,Yes,https://dopt.gov.in/employees-corner/schemes
+safety management,Top Skill Development Programs in India,Elysian Skill India,Varies,Online,Free,No,https://elysianskillindia.com/top-skill-development-programs/
+safety management,Top Courses That Get You Hired (India),CII Skills,Varies,Online,Free,No,https://ciiskills.in/blog/top-courses-and-skills-that-get-you-hired
+safety management,Government Schemes for Skill Development,India Souls / GOI,Varies,Online,Free,No,https://indiansouls.in/education/schemes-for-skill-development-training/
+safety management,Modular Employable Skills (MES) Scheme,MyScheme / GOI,Varies,Offline,Free,Yes,https://www.myscheme.gov.in/schemes/mes
+safety management,National Skill Development Corporation (NSDC),NSDC India,Varies,Online/Offline,Free/Subsidy,Yes,https://nsdcindia.org/sector-skill-councils
+safety management,India Science & Technology Skill Development,MHRD / GOI,Varies,Online,Free,No,https://www.indiascienceandtechnology.gov.in/youth-corner/courses-skill-development/skill-development
+safety management,Government of India Skill Programs — NSN,National Skills Network,Varies,Online,Free,No,https://nationalskillsnetwork.in/government-of-india/

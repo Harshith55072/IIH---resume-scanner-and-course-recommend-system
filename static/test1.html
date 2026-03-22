@@ -3,23 +3,18 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SkillTech AI — TN Workforce Command Center</title>
+<title>Alar — TN Workforce Command Center</title>
 <link rel="stylesheet" href="test1.css"/>
 <link rel="stylesheet" href="chat-widget.css"/>
+<link rel="stylesheet" href="theme-lang.css"/>
 </head>
 <body>
 
 <!-- LOADER -->
 <div id="loader">
-  <div class="loader-logo">Skill<span>Tech</span> AI</div>
+  <div class="loader-logo">Alar</div>
   <div class="loader-bar-track"><div class="loader-bar-fill"></div></div>
   <div class="loader-text">INITIALISING WORKFORCE ANALYTICS...</div>
-</div>
-
-<!-- CUSTOM CURSOR -->
-<div id="cursor">
-  <div id="cursor-ring"></div>
-  <div id="cursor-dot"></div>
 </div>
 
 <!-- PARTICLE CANVAS -->
@@ -36,7 +31,7 @@
       <div class="brand-inner">⚡</div>
     </div>
     <div>
-      <div class="brand-name">Skill<span>Tech</span></div>
+      <div class="brand-name">Alar</div>
       <div class="brand-tag">TN · EV · Automotive</div>
     </div>
   </a>
@@ -53,6 +48,8 @@
   </nav>
 
   <div class="nav-right">
+    <div id="st-theme-mount"></div>
+    <div id="st-lang-mount"></div>
     <div class="status-pill">
       <div style="width:5px;height:5px;border-radius:50%;background:var(--g);box-shadow:0 0 6px var(--g);animation:blink 1.6s ease infinite;"></div>
       SYSTEM ONLINE
@@ -125,7 +122,7 @@
         <div class="video-label-dot"></div>
       </div>
 
-      <h2 class="video-title reveal">See SkillTech AI <span>in action</span></h2>
+      <h2 class="video-title reveal">See Alar <span>in action</span></h2>
       <p class="video-subtitle reveal">Watch how we map your skills, find your gaps, and build you a personalised learning roadmap in under two minutes.</p>
 
       <!-- ╔══════════════════════════════════════╗
@@ -149,7 +146,7 @@
           <div class="video-placeholder-text">
             <div class="vpt-title">Watch Platform Demo</div>
             <div class="vpt-meta">
-              <span>SkillTech AI v2.0</span>
+              <span>Alar v2.0</span>
               <div class="vpt-meta-dot"></div>
               <span>Tamil Nadu EV Sector</span>
               <div class="vpt-meta-dot"></div>
@@ -347,7 +344,7 @@
         <div class="about-card reveal">
           <div class="about-title">About This Project</div>
           <p class="about-text">
-            A final-year project addressing the <strong>skill gap crisis</strong> in Tamil Nadu's EV and automotive manufacturing sector. Built for the <strong>SkillTech &amp; Workforce Analytics Hackathon</strong>, combining resume parsing, AI-based gap analysis, and a curated course database — entirely <strong>offline-capable</strong>.
+            A final-year project addressing the <strong>skill gap crisis</strong> in Tamil Nadu's EV and automotive manufacturing sector. Built for the <strong>Alar &amp; Workforce Analytics Hackathon</strong>, combining resume parsing, AI-based gap analysis, and a curated course database — entirely <strong>offline-capable</strong>.
           </p>
           <div class="tech-grid">
             <div class="tech-item">FASTAPI</div>
@@ -378,7 +375,7 @@
 </main>
 
 <footer class="footer">
-  <div class="footer-left">© 2025 SkillTech AI · Tamil Nadu Workforce Analytics</div>
+  <div class="footer-left">© 2025 Alar · Tamil Nadu Workforce Analytics</div>
   <div class="footer-right">Final Year Project · EV &amp; Automotive Sector</div>
 </footer>
 
@@ -399,18 +396,6 @@
     });
   }
 })();
-
-/* ─── 2. CUSTOM CURSOR ─── */
-const cursor = document.getElementById('cursor');
-const ring   = document.getElementById('cursor-ring');
-let mx = -100, my = -100, rx = -100, ry = -100;
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
-function animCursor() { rx += (mx-rx)*.12; ry += (my-ry)*.12; ring.style.transform = `translate(${rx-mx}px,${ry-my}px)`; requestAnimationFrame(animCursor); }
-animCursor();
-document.querySelectorAll('a,button,.tool-card,.role-card,.step,.tech-item').forEach(el => {
-  el.addEventListener('mouseenter', () => cursor.classList.add('cursor-expand'));
-  el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-expand'));
-});
 
 /* ─── 3. PARTICLE FIELD (adapted for light bg) ─── */
 (function() {
@@ -881,7 +866,7 @@ const steps = [
   {st:'curr',n:'02',title:'Select Your Target Job Role',         desc:'Choose from 20+ real EV & automotive roles — EV Technician, PLC Engineer, Battery Engineer and more.'},
   {st:'curr',n:'03',title:'Receive Gap Report & Match Score',    desc:'A 0–100% match score with prioritised breakdown of critical, important, and minor skill gaps.'},
   {st:'next',n:'04',title:'Get Course Recommendations',          desc:'Free & paid links from NPTEL, Naan Mudhalvan, Coursera, and YouTube matched to your exact gaps.'},
-  {st:'next',n:'05',title:'Ask the AI Anything',                 desc:'Chat with SkillTech AI (Mistral 7B) for career advice, interview prep, and salary benchmarks.'},
+  {st:'next',n:'05',title:'Ask the AI Anything',                 desc:'Chat with Alar AI (Mistral 7B) for career advice, interview prep, and salary benchmarks.'},
 ];
 document.getElementById('stepsList').innerHTML = steps.map(s => `
   <div class="step ${s.st} reveal">
@@ -956,5 +941,6 @@ const heroObs=new IntersectionObserver(entries=>{
 heroObs.observe(document.getElementById('hero'));
 </script>
 <script src="chat-widget.js"></script>
+<script src="theme-lang.js"></script>
 </body>
 </html>

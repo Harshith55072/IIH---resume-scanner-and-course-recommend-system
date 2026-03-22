@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Skill Verification — ALAR</title>
+<link rel="stylesheet" href="indexstyle.css"/>
+<style>
+body {
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh; padding: 20px;
+}
+
+.test-container {
+  width: 100%; max-width: 700px;
+  animation: slideUp .4s ease both;
+}
+
+.test-card {
+  background: var(--panel);
+  border: 1px solid var(--rim);
+  border-radius: 16px;
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  min-height: 520px;
+  position: relative;
+}
+.test-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--g), var(--b), var(--m));
+  opacity: .7;
+}
+
+/* ── AI PROCTORING SIMULATION ── */
+.proctor-overlay {
+  position: fixed; top: 20px; right: 20px; width: 180px;
+  background: var(--panel); border: 1.5px solid var(--rim);
+  border-radius: 16px; box-shadow: var(--shadow-lg);
+  z-index: 50; overflow: hidden; animation: slideInRight .5s ease;
+}
+.proctor-cam {
+  width: 100%; height: 120px; background: #000; position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.proctor-cam video { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; filter: grayscale(0.4); }
+.proctor-cam-overlay {
+  position: absolute; inset: 0; 
+  background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.4) 100%);
+  pointer-events: none;
+}
+.proctor-cam-grid {
+  position: absolute; inset: 0; opacity: 0.1;
+  background-image: linear-gradient(var(--g) 1px, transparent 1px), linear-gradient(90deg, var(--g) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.proctor-cam-scanning {
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--g); box-shadow: 0 0 8px var(--g);
+  animation: scanMove 3s ease-in-out infinite;
+}
+.proctor-status {
+  padding: 10px 14px; border-top: 1px solid var(--rim);
+  display: flex; align-items: center; gap: 8px;
+}
+.proctor-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--g);
+  box-shadow: 0 0 6px var(--g); animation: blink 1.5s infinite;
+}
+.proctor-text {
+  font-family: var(--f-code); font-size: 8px; font-weight: 700;
+  color: var(--ink2); text-transform: uppercase; letter-spacing: 0.05em;
+}
+.proctor-warning {
+  position: fixed; inset: 0; background: rgba(244,63,110,0.1);
+  border: 4px solid var(--m); z-index: 200; pointer-events: none;
+  display: none; animation: pulseRed 0.5s infinite;
+}
+.proctor-toast {
+  position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+  background: var(--m); color: #fff; padding: 12px 24px;
+  border-radius: 12px; font-family: var(--f-disp); font-size: 13px;
+  font-weight: 700; z-index: 300; display: none;
+  box-shadow: 0 10px 25px rgba(244,63,110,0.3);
+}
+
+@keyframes scanMove { 0%, 100% { top: 0; } 50% { top: 100%; } }
+@keyframes pulseRed { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.6; } }
+@keyframes slideInRight { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+.test-head {
+  padding: 24px 32px;
+  border-bottom: 1px solid var(--rim);
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.test-eyebrow {
+  font-family: var(--f-code); font-size: 9px; color: var(--g2);
+  letter-spacing: .15em; text-transform: uppercase; margin-bottom: 5px;
+}
+.test-title {
+  font-family: var(--f-disp); font-size: 15px; font-weight: 800;
+  color: var(--ink); letter-spacing: -.01em;
+}
+.test-progress {
+  font-family: var(--f-code); font-size: 10px; color: var(--ink3);
+  font-weight: 700; text-align: right; white-space: nowrap;
+}
+
+/* Progress bar under header */
+.test-progress-bar {
+  height: 3px; background: var(--rim); overflow: hidden;
+}
+.test-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--g), var(--b));
+  border-radius: 2px;
+  transition: width .5s var(--ease-expo);
+  width: 0;
+}
+
+.test-body {
+  padding: 40px 32px; flex: 1; overflow-y: auto;
+}
+
+.test-q-text {
+  font-family: var(--f-disp); font-size: 17px; font-weight: 700;
+  color: var(--ink); line-height: 1.4; margin-bottom: 28px;
+  letter-spacing: -.02em;
+}
+
+.test-options { display: flex; flex-direction: column; gap: 11px; }
+
+.test-opt {
+  width: 100%; padding: 15px 20px; text-align: left;
+  background: var(--bg); border: 1.5px solid var(--rim);
+  border-radius: 12px; font-family: var(--f-ui); font-size: 14px;
+  font-weight: 500; color: var(--ink2); cursor: pointer;
+  transition: all .2s; display: flex; align-items: center; gap: 14px;
+  outline: none;
+}
+.test-opt:hover {
+  border-color: var(--g); background: rgba(20,184,166,.04);
+  color: var(--ink); transform: translateX(4px);
+}
+.test-opt.selected {
+  border-color: var(--g); background: rgba(20,184,166,.08);
+  color: var(--g2); box-shadow: 0 0 0 4px rgba(20,184,166,.1);
+}
+.test-opt-idx {
+  width: 24px; height: 24px; border-radius: 8px; background: var(--bg3);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--f-code); font-size: 10px; font-weight: 700;
+  color: var(--ink3); flex-shrink: 0; transition: all .2s;
+}
+.test-opt.selected .test-opt-idx { background: var(--g2); color: #fff; }
+
+.test-foot {
+  padding: 20px 32px;
+  border-top: 1px solid var(--rim);
+  display: flex; justify-content: flex-end; align-items: center; gap: 12px;
+  background: var(--bg);
+}
+
+.test-btn {
+  padding: 12px 28px; border-radius: 10px; border: none;
+  font-family: var(--f-disp); font-size: 11px; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  cursor: pointer; transition: all .2s;
+}
+.test-btn-quit {
+  background: var(--bg3); color: var(--ink3);
+  border: 1px solid var(--rim);
+}
+.test-btn-quit:hover { border-color: var(--m); color: var(--m2); background: rgba(244,63,110,.05); }
+
+.test-btn-next {
+  background: var(--ink); color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+.test-btn-next:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.test-btn-next:disabled { opacity: .4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* Loading */
+.loading-overlay {
+  position: fixed; inset: 0; background: var(--bg); z-index: 100;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
+}
+.loading-spinner {
+  width: 40px; height: 40px; border: 3px solid var(--rim);
+  border-top-color: var(--g); border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+.loading-text {
+  font-family: var(--f-disp); font-size: 11px; font-weight: 700;
+  color: var(--ink); letter-spacing: .06em; text-transform: uppercase;
+}
+.loading-sub {
+  font-family: var(--f-code); font-size: 9px; color: var(--ink3);
+  letter-spacing: .08em;
+}
+
+/* Results */
+.results-view { text-align: center; animation: slideUp .5s ease; }
+.res-icon { font-size: 52px; margin-bottom: 18px; display: block; }
+.res-title {
+  font-family: var(--f-disp); font-size: 22px; font-weight: 800;
+  color: var(--ink); margin-bottom: 8px; letter-spacing: -.02em;
+}
+.res-subtitle {
+  font-family: var(--f-ui); font-size: 14px; color: var(--ink2);
+  line-height: 1.6; margin-bottom: 24px;
+}
+.res-score-row {
+  display: flex; gap: 12px; justify-content: center; margin-bottom: 24px;
+}
+.res-score-box {
+  background: rgba(20,184,166,.08); border: 1px solid rgba(20,184,166,.2);
+  border-radius: 12px; padding: 18px 28px; text-align: center;
+}
+.res-score-box.warn {
+  background: rgba(245,158,11,.07); border-color: rgba(245,158,11,.2);
+}
+.res-score-num {
+  font-family: var(--f-disp); font-size: 34px; font-weight: 900;
+  color: var(--g2); line-height: 1;
+}
+.res-score-box.warn .res-score-num { color: #92400e; }
+.res-score-lbl {
+  font-family: var(--f-code); font-size: 9px; color: var(--ink3);
+  margin-top: 6px; letter-spacing: .1em; text-transform: uppercase;
+}
+.res-list {
+  text-align: left; background: var(--bg); border: 1px solid var(--rim);
+  border-radius: 12px; overflow: hidden; margin-bottom: 28px;
+  max-height: 220px; overflow-y: auto;
+}
+.res-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 16px; border-bottom: 1px solid var(--rim);
+  font-family: var(--f-ui); font-size: 13px; font-weight: 500; color: var(--ink);
+  transition: background .15s;
+}
+.res-item:last-child { border-bottom: none; }
+.res-item:hover { background: rgba(20,184,166,.02); }
+.res-status {
+  font-family: var(--f-code); font-size: 8.5px; font-weight: 700;
+  padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
+  white-space: nowrap;
+}
+.res-pass { background: rgba(20,184,166,.1); color: var(--g2); border: 1px solid rgba(20,184,166,.2); }
+.res-fail { background: rgba(244,63,110,.08); color: var(--m2); border: 1px solid rgba(244,63,110,.15); }
+.res-skip { background: var(--bg3); color: var(--ink3); border: 1px solid var(--rim); }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes slideUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loader">
+  <div class="loading-spinner"></div>
+  <div class="loading-text" id="loaderText">Initializing Verification</div>
+  <div class="loading-sub" id="loaderSub">Loading Industry 4.0 assessment…</div>
+</div>
+
+<div class="proctor-overlay" id="proctorBox" style="display:none">
+  <div class="proctor-cam">
+    <video id="proctorVideo" autoplay playsinline muted></video>
+    <div class="proctor-cam-overlay"></div>
+    <div class="proctor-cam-grid"></div>
+    <div class="proctor-cam-scanning"></div>
+  </div>
+  <div class="proctor-status">
+    <div class="proctor-dot"></div>
+    <span class="proctor-text" id="proctorStatus">AI MONITORING ACTIVE</span>
+  </div>
+</div>
+
+<div class="proctor-warning" id="proctorWarning"></div>
+<div class="proctor-toast" id="proctorToast">⚠️ CHEATING DETECTED: TAB SWITCHING PROHIBITED</div>
+
+<div class="test-container" id="testContainer" style="display:none">
+  <div class="test-card">
+    <div class="test-head">
+      <div>
+        <div class="test-eyebrow" id="eyebrow">Industry 4.0</div>
+        <div class="test-title" id="title">Fundamentals Assessment</div>
+      </div>
+      <div class="test-progress" id="progress">Q 1 / 10</div>
+    </div>
+    <div class="test-progress-bar">
+      <div class="test-progress-fill" id="progressFill"></div>
+    </div>
+    <div class="test-body" id="testBody"><!-- dynamic --></div>
+    <div class="test-foot" id="testFoot">
+      <button class="test-btn test-btn-quit" id="quitBtn" onclick="confirmQuit()">Quit</button>
+      <button class="test-btn test-btn-next" id="nextBtn" onclick="handleNext()" disabled>Next Question</button>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+const API = 'http://localhost:8000';
+let industryQuestions = [];
+let skillAssessments = [];
+let currentMode = 'industry'; // 'industry' | 'skills' | 'results'
+let currentSkillIdx = 0;
+let currentQIdx = 0;
+let selectedAns = null;
+let industryScore = 0;
+let skillResults = []; // { skill, correct, total }
+let userSkills = [];
+
+/* FIX: Try to parse skills safely; redirect if none found */
+try {
+  userSkills = JSON.parse(localStorage.getItem('alar_temp_skills') || '[]');
+} catch(e) {
+  userSkills = [];
+}
+if (!Array.isArray(userSkills) || !userSkills.length) {
+  window.location.href = 'index.html';
+}
+
+async function init() {
+  try {
+    updateLoader('Loading Industry 4.0 Assessment…', 'Preparing your questions');
+    const indResp = await fetch(`${API}/api/industry-4-0-exam`);
+    if (!indResp.ok) throw new Error('Failed to load industry exam');
+    const indData = await indResp.json();
+    industryQuestions = indData.questions;
+
+    // Kick off skill question generation in the background with a timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 120000); // 2 minute timeout
+
+    window.skillGenerationPromise = fetch(`${API}/api/generate-skill-test`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ skills: userSkills }),
+      signal: controller.signal
+    }).then(r => {
+      clearTimeout(timeoutId);
+      return r.ok ? r.json() : Promise.reject('Skill test generation failed');
+    }).catch(err => {
+      clearTimeout(timeoutId);
+      console.warn('Skill generation background error:', err);
+      return { assessments: [] };
+    });
+
+    document.getElementById('loader').style.display = 'none';
+    document.getElementById('testContainer').style.display = 'block';
+    startProctoring();
+    renderQuestion();
+
+  } catch(e) {
+    document.getElementById('loaderText').textContent = 'Connection Error';
+    document.getElementById('loaderSub').textContent = e.message || 'Could not connect to backend';
+    setTimeout(() => { window.location.href = 'index.html'; }, 3000);
+  }
+}
+
+function updateLoader(text, sub) {
+  document.getElementById('loaderText').textContent = text;
+  if (sub) document.getElementById('loaderSub').textContent = sub;
+}
+
+function updateProgressBar() {
+  let total, done;
+  if (currentMode === 'industry') {
+    total = industryQuestions.length;
+    done = currentQIdx;
+  } else {
+    const totalQ = skillAssessments.reduce((a, s) => a + s.questions.length, 0);
+    const doneQ = skillAssessments.slice(0, currentSkillIdx).reduce((a, s) => a + s.questions.length, 0) + currentQIdx;
+    total = totalQ;
+    done = doneQ;
+  }
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function renderQuestion() {
+  const nextBtn = document.getElementById('nextBtn');
+  selectedAns = null;
+  nextBtn.disabled = true;
+
+  let q, eyebrow, titleText, progressText, nextLabel;
+
+  if (currentMode === 'industry') {
+    q = industryQuestions[currentQIdx];
+    eyebrow = 'Part 1 — General Industry 4.0';
+    titleText = 'Industry 4.0 Fundamentals';
+    progressText = `Q ${currentQIdx + 1} / ${industryQuestions.length}`;
+    nextLabel = (currentQIdx === industryQuestions.length - 1) ? 'Proceed to Skill Tests ▶' : 'Next Question ▶';
+  } else {
+    const assessment = skillAssessments[currentSkillIdx];
+    q = assessment.questions[currentQIdx];
+    eyebrow = `Part 2 — Skill ${currentSkillIdx + 1} of ${skillAssessments.length}`;
+    titleText = assessment.skill;
+    progressText = `Q ${currentQIdx + 1} / ${assessment.questions.length}`;
+    const isLastSkill = currentSkillIdx === skillAssessments.length - 1;
+    const isLastQ = currentQIdx === assessment.questions.length - 1;
+    nextLabel = (isLastSkill && isLastQ) ? 'Finish & See Results ✓' : 'Next Question ▶';
+  }
+
+  document.getElementById('eyebrow').textContent = eyebrow;
+  document.getElementById('title').textContent = titleText;
+  document.getElementById('progress').textContent = progressText;
+  nextBtn.textContent = nextLabel;
+
+  updateProgressBar();
+
+  document.getElementById('testBody').innerHTML = `
+    <div class="test-q-text">${escHtml(q.question)}</div>
+    <div class="test-options">
+      ${q.options.map((opt, i) => `
+        <button class="test-opt" onclick="selectOpt(${i})">
+          <div class="test-opt-idx">${String.fromCharCode(65 + i)}</div>
+          <span>${escHtml(opt)}</span>
+        </button>`).join('')}
+    </div>`;
+
+  // Scroll to top of body on each question
+  document.getElementById('testBody').scrollTop = 0;
+}
+
+function selectOpt(idx) {
+  selectedAns = idx;
+  document.querySelectorAll('.test-opt').forEach((btn, i) => {
+    btn.classList.toggle('selected', i === idx);
+  });
+  document.getElementById('nextBtn').disabled = false;
+}
+
+async function handleNext() {
+  if (selectedAns === null) return;
+
+  if (currentMode === 'industry') {
+    if (selectedAns === industryQuestions[currentQIdx].answer_idx) {
+      industryScore++;
+    }
+
+    if (currentQIdx < industryQuestions.length - 1) {
+      currentQIdx++;
+      renderQuestion();
+    } else {
+      // Industry done — wait for skill generation
+      document.getElementById('testContainer').style.display = 'none';
+      document.getElementById('loader').style.display = 'flex';
+      
+      let waitTimer = setTimeout(() => {
+        updateLoader('Almost there…', 'The AI is taking a moment to refine your skill questions. This is common for complex skills.');
+      }, 5000);
+
+      try {
+        const skillData = await window.skillGenerationPromise;
+        clearTimeout(waitTimer);
+        skillAssessments = (skillData.assessments || []).filter(a => a.questions && a.questions.length > 0);
+      } catch(e) {
+        clearTimeout(waitTimer);
+        console.warn('Skill generation failed, showing results with industry score only:', e);
+        skillAssessments = [];
+      }
+
+      if (skillAssessments.length > 0) {
+        currentMode = 'skills';
+        currentSkillIdx = 0;
+        currentQIdx = 0;
+        skillResults = skillAssessments.map(a => ({ skill: a.skill, correct: 0, total: a.questions.length }));
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('testContainer').style.display = 'block';
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+  } else {
+    const assessment = skillAssessments[currentSkillIdx];
+    if (selectedAns === assessment.questions[currentQIdx].answer_idx) {
+      skillResults[currentSkillIdx].correct++;
+    }
+
+    if (currentQIdx < assessment.questions.length - 1) {
+      currentQIdx++;
+      renderQuestion();
+    } else if (currentSkillIdx < skillAssessments.length - 1) {
+      currentSkillIdx++;
+      currentQIdx = 0;
+      renderQuestion();
+    } else {
+      showResults();
+    }
+  }
+}
+
+function showResults() {
+  currentMode = 'results';
+
+  /* Save all results to localStorage here consistently */
+  const passedSkills = skillResults.filter(r => r.total > 0 && (r.correct / r.total) >= 0.66).map(r => r.skill);
+  localStorage.setItem('alar_verified_skills', JSON.stringify(passedSkills));
+  localStorage.setItem('alar_industry_score', String(industryScore));
+  localStorage.setItem('alar_verified_timestamp', String(Date.now()));
+  // Signal to index.html to jump to step 2
+  localStorage.setItem('alar_jump_to_step', '2');
+  
+  // Clean up temp storage
+  localStorage.removeItem('alar_temp_skills');
+
+  const industryPct = Math.round((industryScore / Math.max(industryQuestions.length, 1)) * 100);
+
+  document.getElementById('eyebrow').textContent = 'Assessment Complete';
+  document.getElementById('title').textContent = 'Verified Skills Dashboard';
+  document.getElementById('progress').textContent = '';
+  document.getElementById('progressFill').style.width = '100%';
+
+  const passedSkillsHtml = passedSkills.length > 0 ? `
+    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-top: 20px; text-align: left;">
+      ${passedSkills.map(skill => `
+        <div style="background:rgba(20,184,166,.08); border:1.5px solid var(--g); border-radius:12px; padding:14px; display:flex; flex-direction:column; align-items:center; gap:8px; animation: slideUp .3s ease both;">
+          <div style="font-size:24px;">✅</div>
+          <div style="font-family:var(--f-disp); font-size:11px; font-weight:800; color:var(--ink); text-align:center; text-transform:uppercase; letter-spacing:0.02em;">${escHtml(skill)}</div>
+          <div style="font-family:var(--f-code); font-size:8px; color:var(--g2); font-weight:700;">VERIFIED</div>
+        </div>
+      `).join('')}
+    </div>` : `
+    <div style="padding:40px; background:var(--bg3); border-radius:16px; margin-top:20px;">
+      <div style="font-size:32px; margin-bottom:12px;">📋</div>
+      <div style="font-family:var(--f-ui); font-size:14px; color:var(--ink2);">No skills were verified this time. You can still proceed to explore job roles and see recommended learning paths.</div>
+    </div>`;
+
+  document.getElementById('testBody').innerHTML = `
+    <div class="results-view">
+      <div style="display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:24px;">
+        <div class="res-score-box ${industryScore < 7 ? 'warn' : ''}" style="margin-bottom:0; padding:12px 20px;">
+          <div class="res-score-num" style="font-size:24px;">${industryScore}/${industryQuestions.length}</div>
+          <div class="res-score-lbl" style="font-size:8px;">Industry 4.0</div>
+        </div>
+        <div style="text-align:left;">
+          <div class="res-title" style="margin-bottom:2px; font-size:18px;">${passedSkills.length > 0 ? 'Verification Successful!' : 'Assessment Finished'}</div>
+          <div class="res-subtitle" style="margin-bottom:0; font-size:13px;">${passedSkills.length} skills added to your professional profile.</div>
+        </div>
+      </div>
+      
+      <div style="border-top:1px solid var(--rim); padding-top:20px; margin-top:10px;">
+        <div style="font-family:var(--f-code); font-size:9px; color:var(--ink3); text-transform:uppercase; letter-spacing:0.1em; text-align:left; margin-bottom:12px;">Your Verified Skillset</div>
+        ${passedSkillsHtml}
+      </div>
+
+      <p style="font-family:var(--f-ui); font-size:12px; color:var(--ink3); line-height:1.6; margin-top:32px; border-top:1px solid var(--rim); padding-top:16px;">
+        These skills are now unlocked for your gap analysis. Failed skills will be flagged as "Must Learn" areas in your final report.
+      </p>
+    </div>`;
+
+  document.getElementById('quitBtn').style.display = 'none';
+  stopProctoring();
+  const nextBtn = document.getElementById('nextBtn');
+  nextBtn.innerHTML = 'Continue to Target Jobs &nbsp;▶';
+  nextBtn.style.background = 'var(--g)';
+  nextBtn.disabled = false;
+  nextBtn.onclick = () => { window.location.href = 'index.html'; };
+}
+
+function confirmQuit() {
+  if (confirm('Quit verification? Your progress will be lost.')) {
+    stopProctoring();
+    window.location.href = 'index.html';
+  }
+}
+
+/* ── PROCTORING LOGIC ── */
+let stream = null;
+function startProctoring() {
+  const video = document.getElementById('proctorVideo');
+  const box = document.getElementById('proctorBox');
+  
+  box.style.display = 'block';
+
+  // Attempt real camera access
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(s => {
+      stream = s;
+      video.srcObject = s;
+      document.getElementById('proctorStatus').textContent = 'AI MONITORING ACTIVE';
+    })
+    .catch(err => {
+      console.warn('Camera access denied, using simulation mode:', err);
+      document.getElementById('proctorStatus').textContent = 'AI SIMULATION MODE';
+      // Fallback: visual feedback only if camera is blocked
+      video.style.background = '#111';
+    });
+
+  // Visibility change detection (Tab switching)
+  document.addEventListener('visibilitychange', handleVisibilityChange);
+}
+
+function handleVisibilityChange() {
+  const warning = document.getElementById('proctorWarning');
+  const toast = document.getElementById('proctorToast');
+  
+  if (document.hidden) {
+    // User switched tabs
+    warning.style.display = 'block';
+    toast.style.display = 'block';
+    document.getElementById('proctorStatus').textContent = '⚠️ ANOMALY DETECTED';
+    document.getElementById('proctorStatus').style.color = 'var(--m)';
+  } else {
+    // User came back
+    setTimeout(() => {
+      warning.style.display = 'none';
+      toast.style.display = 'none';
+      document.getElementById('proctorStatus').textContent = 'AI MONITORING ACTIVE';
+      document.getElementById('proctorStatus').style.color = '';
+    }, 3000);
+  }
+}
+
+function stopProctoring() {
+  if (stream) {
+    stream.getTracks().forEach(track => track.stop());
+  }
+  document.removeEventListener('visibilitychange', handleVisibilityChange);
+  document.getElementById('proctorBox').style.display = 'none';
+}
+
+function escHtml(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+init();
+</script>
+</body>
+</html>

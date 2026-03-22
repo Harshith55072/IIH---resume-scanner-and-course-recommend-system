@@ -7,21 +7,7 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── CURSOR ── */
-* { cursor: none !important; }
-#cursor { position: fixed; z-index: 9999; pointer-events: none; }
-#cursor-ring {
-  width: 32px; height: 32px;
-  border: 1.5px solid rgba(20,184,166,.6);
-  border-radius: 50%;
-  position: absolute; top: -16px; left: -16px;
-  transition: width .25s, height .25s, border-color .25s;
-}
-#cursor-dot {
-  width: 4px; height: 4px; background: #14b8a6;
-  border-radius: 50%; position: absolute; top: -2px; left: -2px;
-}
-.cursor-expand #cursor-ring { width: 52px; height: 52px; top: -26px; left: -26px; border-color: rgba(244,63,110,.5); }
+/* Removed custom cursor for standard system cursor */
 
 /* ── TOKENS ── */
 :root {

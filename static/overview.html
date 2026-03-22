@@ -3,16 +3,18 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SkillTech AI — TN Workforce Command Center</title>
+<title>ALAR — TN Workforce Command Center</title>
 <link rel="stylesheet" href="overviewstyles.css"/>
+<link rel="stylesheet" href="theme-lang.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <link rel="stylesheet" href="chat-widget.css"/>
+
 </head>
 <body>
 
 <!-- LOADER -->
 <div id="loader">
-  <div class="loader-logo">Skill<span>Tech</span> AI</div>
+  <div class="loader-logo">ALAR</div>
   <div class="loader-bar-track"><div class="loader-bar-fill"></div></div>
   <div class="loader-text">INITIALISING WORKFORCE ANALYTICS...</div>
 </div>
@@ -37,7 +39,7 @@
       <div class="brand-inner">⚡</div>
     </div>
     <div>
-      <div class="brand-name">Skill<span>Tech</span></div>
+      <div class="brand-name">ALAR</div>
       <div class="brand-tag">TN · EV · Automotive</div>
     </div>
   </a>
@@ -54,11 +56,14 @@
   </nav>
 
   <div class="nav-right">
+    <div id="st-theme-mount"></div>
+    <div id="st-lang-mount"></div>
     <div class="status-pill">
-      <div style="width:5px;height:5px;border-radius:50%;background:var(--g);box-shadow:0 0 6px var(--g);animation:blink 1.6s ease infinite;"></div>
-      SYSTEM ONLINE
+      <div id="sdot"></div>
+      <span id="stext">Connecting…</span>
     </div>
-    <div class="ver-badge">v2.0</div>
+    <button class="btn-reset" onclick="resetApp()" title="Reset all data and start over" style="margin-left: 10px; padding: 6px 12px; font-size: 10px; border-radius: 6px; background: var(--bg3); border: 1px solid var(--rim); color: var(--ink3); cursor: pointer; font-family: var(--f-code); font-weight: 700; text-transform: uppercase;">Reset</button>
+    <div class="ver-badge">v2.1</div>
   </div>
 </nav>
 
@@ -320,6 +325,31 @@
 <script>
 /* ─── 1. LOADER — first visit only ─── */
 (function(){
+  const API = 'http://localhost:8000';
+
+  /* ── HEALTH CHECK ── */
+  async function checkHealth(){
+    try{
+      const d=await fetch(`${API}/api/health`).then(r=>r.json());
+      const dot=document.getElementById('sdot');
+      const txt=document.getElementById('stext');
+      if(dot) dot.style.cssText='width:6px;height:6px;border-radius:50%;background:var(--g);box-shadow:0 0 6px var(--g);animation:blink 2s ease infinite;flex-shrink:0;';
+      if(txt) txt.textContent=d.model_loaded?'MODEL READY':'SERVER READY';
+    }catch{
+      const txt=document.getElementById('stext');
+      if(txt) txt.textContent='OFFLINE MODE';
+    }
+  }
+  checkHealth();
+
+  window.resetApp = function() {
+    if (confirm('Reset everything? This clears all skills and verification data.')) {
+      ['alar_verified_skills','alar_verified_timestamp','alar_industry_score','alar_temp_skills']
+        .forEach(k => localStorage.removeItem(k));
+      window.location.reload();
+    }
+  };
+
   const loader = document.getElementById('loader');
   if(localStorage.getItem('st_visited')){
     // Already visited — hide immediately with no flash
@@ -931,7 +961,7 @@ const steps = [
   {st:'curr',n:'02',title:'Select Your Target Job Role',         desc:'Choose from 20+ real EV & automotive roles — EV Technician, PLC Engineer, Battery Engineer and more.'},
   {st:'curr',n:'03',title:'Receive Gap Report & Match Score',    desc:'A 0–100% match score with prioritised breakdown of critical, important, and minor skill gaps.'},
   {st:'next',n:'04',title:'Get Course Recommendations',          desc:'Free & paid links from NPTEL, Naan Mudhalvan, Coursera, and YouTube matched to your exact gaps.'},
-  {st:'next',n:'05',title:'Ask the AI Anything',                 desc:'Chat with SkillTech AI (Mistral 7B) for career advice, interview prep, and salary benchmarks.'},
+  {st:'next',n:'05',title:'Ask the AI Anything',                 desc:'Chat with Alar AI (Mistral 7B) for career advice, interview prep, and salary benchmarks.'},
 ];
 document.getElementById('stepsList').innerHTML = steps.map(s => `
   <div class="step ${s.st} reveal">
@@ -1006,5 +1036,6 @@ const heroObs=new IntersectionObserver(entries=>{
 heroObs.observe(document.getElementById('hero'));
 </script>
 <script src="chat-widget.js"></script>
+  <script src="theme-lang.js"></script>
 </body>
 </html>
